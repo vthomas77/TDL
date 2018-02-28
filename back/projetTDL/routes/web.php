@@ -11,12 +11,6 @@
 |
 */
 
-/*
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
-*/
-
-use Illuminate\Http\Response;
-
-$router->get('foo', 'Controller@test');
