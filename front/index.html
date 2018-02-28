@@ -6,9 +6,9 @@
         <link rel="stylesheet" href="assets/style.css">
         <!-- Insert and parameter jquery for electron -->
         <script src="vendor/jquery-3.3.1.min.js"></script>
-        <script type="text/javascript">
-            window.$ = require('./vendor/jquery-3.3.1.min.js');
-            window.jQuery = require('./vendor/jquery-3.3.1.min.js');
+       <script type="text/javascript">
+           window.$ = require('./vendor/jquery-3.3.1.min.js');
+           window.jQuery = require('./vendor/jquery-3.3.1.min.js');
         </script>
         <script src="assets/js/script.js"></script>
     </head>
@@ -34,8 +34,14 @@
                 <input type="text" placeholder="repeat password" name="repeat-password" data-signin="repeat-password">
                 <input type="submit" value="OK" data-submit="signin" class="button">
                 <input type="submit" value="◄ I have an account !" data-submit="back-to-login" class="button">
-                <script>debugger;</script>
             </div>
         </div>
+        <section data-use="create-card" class="content">
+          <h2>New Card</h2>
+          <input type="text" data-card="new-card-title" placeholder="New card title">
+          <input type="text" data-card="new-card-title" placeholder="New card priority">
+          <input type="text" data-card="new-card-title" placeholder="New card category">
+          <input type="text" data-card="new-card-title" placeholder="New card deadline">
+        </section>
     </body>
   </html>
