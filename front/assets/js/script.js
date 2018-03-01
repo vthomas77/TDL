@@ -22,7 +22,14 @@ $(document).ready(function(){
         var username = $('[data-login="username"]')[0].value;
         var password = $('[data-login="password"]')[0].value;
         debugger;
-        $('[data-use="sidebar"] h1').append(username + " !").toUpperCase;
+        
+
+        $.get('http://192.168.33.10:8000/login/', function(data) {
+            debugger;
+        });
+        
+        //personalize the interface
+        $('[data-use="sidebar"] h1').html("Hello " + username + " !").toUpperCase;
     });
 
     //when submit sign in to create account
@@ -30,11 +37,20 @@ $(document).ready(function(){
         var username = $('[data-signin="username"]')[0].value;
         var password = $('[data-signin="password"]')[0].value;
         var repeatPassword = $('[data-signin="repeat-password"]')[0].value;
-        debugger;
+        var email = $('[data-signin="email"]')[0].value;
         if(password === repeatPassword) {
-            console.log('OK pw');
+            if($('#passwordError').hasClass('hidden')) {
+                console.log('log ok');
+            } else {
+                $('#passwordError').addClass('hidden');
+            }
+            //do ur biz
+            debugger;
+            $.post('http://192.168.33.10:8000/signin/', function(data) {
+                debugger;
+            })
         } else {
-            console.log('not ok pw');
+            $('#passwordError').removeClass('hidden');
         }
     });
 
