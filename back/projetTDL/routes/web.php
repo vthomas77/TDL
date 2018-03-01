@@ -11,6 +11,14 @@
 |
 */
 
+
 $router->get('/', function () use ($router) {
     return $router->app->version();
+});
+
+//$router->post('showCard', 'CardController@showCard');
+
+$router->post('createCard/{id}', function ($id) {
+    $results = DB::select("SELECT * FROM cards");
+    return $results;
 });
