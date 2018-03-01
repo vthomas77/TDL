@@ -38,12 +38,11 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `tododb`.`cards` (
   `id_card` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL,
-  `priority` VARCHAR(45) NOT NULL,
-  `status` VARCHAR(45) NOT NULL,
+  `priority` INT NOT NULL,
+  `status` INT NOT NULL,
   `deadline` DATETIME NOT NULL,
   `category` VARCHAR(255) NULL,
-  PRIMARY KEY (`id_card`),
-  UNIQUE INDEX `title_UNIQUE` (`title` ASC))
+  PRIMARY KEY (`id_card`))
 ENGINE = InnoDB;
 
 
