@@ -32,7 +32,14 @@
                 <input type="text" placeholder="email" name="email" data-signin="email">
                 <input type="password" placeholder="password" name="password" data-signin="password">
                 <input type="text" placeholder="repeat password" name="repeat-password" data-signin="repeat-password">
+                
+                <!-- if password doesn't match -->
                 <p id="passwordError" class="hidden">Password doesn't match ! try again</p>
+                
+                <!-- fill itself with confirmation message when user has been created -->
+                <p data-use="notification-signin">
+                </p>
+                
                 
                 <input type="file" name="avatar" data-signin="avatar" placeholder="avatar" >
                 

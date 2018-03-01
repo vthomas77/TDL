@@ -28,16 +28,15 @@ $router->get('login', function() {
     return 'hackathons';
 });
 
-//To manage users CRUD
+//CRUD USERS
 //$router->get('/api/user', 'UserController@index');
 $router->get('/api/user', function(){
-    $render = BD::select('SELECT * FROM users');
-    return $render;
+    return DB::select('SELECT * FROM users');
 });
 
 $router->get('api/user/{id}','UserController@getuser');
  
-$router->post('signin/','UserController@saveUser');
+$router->post('signin/{username}/{password}/{email}','UserController@saveUser');
  
 $router->put('api/user/{id}','UserController@updateUser');
  

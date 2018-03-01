@@ -21,7 +21,6 @@ $(document).ready(function(){
     $('[data-submit="login"]').on('click', function(){
         var username = $('[data-login="username"]')[0].value;
         var password = $('[data-login="password"]')[0].value;
-        debugger;
         
 
         $.get('http://192.168.33.10:8000/login/', function(data) {
@@ -32,22 +31,31 @@ $(document).ready(function(){
         $('[data-use="sidebar"] h1').html("Hello " + username + " !").toUpperCase;
     });
 
-    //when submit sign in to create account
+    //when submit signin 
     $('[data-submit="signin"]').on('click', function(){
         var username = $('[data-signin="username"]')[0].value;
         var password = $('[data-signin="password"]')[0].value;
         var repeatPassword = $('[data-signin="repeat-password"]')[0].value;
         var email = $('[data-signin="email"]')[0].value;
         if(password === repeatPassword) {
+            
+            //manage to toggle hidden class of passwordError the right way
             if($('#passwordError').hasClass('hidden')) {
                 console.log('log ok');
             } else {
                 $('#passwordError').addClass('hidden');
             }
-            //do ur biz
+            
+            var username = $('[data-signin="username"]')[0].value;
+            var password = $('[data-signin="password"]')[0].value;
+            var email = $('[data-signin="email"]')[0].value;
+            var avatar = $('[data-signin="avatar"]')[0].value;
+            
+            //ajax request 
             debugger;
-            $.post('http://192.168.33.10:8000/signin/', function(data) {
+            $.post('http://192.168.33.10:8000/signin/' + username + '/' + password + '/' + email, function(data) {
                 debugger;
+                $('[data-use="notification-signin"]').html('<span class="checked" style="padding-right:12px;font-weight:bold;">√</span>' +  data + "'s account has been successfully created !");
             })
         } else {
             $('#passwordError').removeClass('hidden');

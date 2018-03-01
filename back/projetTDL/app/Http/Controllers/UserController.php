@@ -17,21 +17,9 @@ class UserController extends Controller {
         return response()->json($users);
     }
     
-    //add in function arg : Request $request
-    public function saveUser() {
-        $newUser = BD::table('users')->insert([
-            'id_user' => NULL,
-            'username' => 'Christine',
-            'email' => 'the@queen.com',
-            'avatar' => 'http://myimgurl.com',
-            'password' => 'and',
-            'token' => 'f5zJJdf5z88De5a6d6fiizDse2E6ty3h0cd', 
-            'token_expiration' => '12.12.12'
-        ]);
-        return response()->json('new user added');
-        
-        //$users = User::create($request->all());
-        //return response()->json($users);
+    public function saveUser($username, $password, $email) {
+        $newUser = User::createUser($username, $password, $email);
+        return response()->json($newUser);
     }
     
     public function deleteUser($id) {

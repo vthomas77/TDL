@@ -21,6 +21,16 @@ body {
             max-width: 80%;
         }
     }
+    [data-use="notification"] {
+        color: @grey;
+        font-weight: bold;
+        .checked {
+            color: #296e10;
+            font-size: 34px;
+            font-weight: bold;
+            padding-right: 9px;
+        }
+    }
     .content {
         margin-left: 30vw;
         padding: 10%;
@@ -49,7 +59,7 @@ body {
         display: none;
     }
     #passwordError {
-        color: #131313;
+        color: @grey;
         font-weight: bold;
     }
 }

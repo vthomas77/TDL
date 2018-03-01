@@ -20,6 +20,16 @@ body [data-use="sidebar"] h1 {
   text-transform: uppercase;
   max-width: 80%;
 }
+body [data-use="notification"] {
+  color: #26282a;
+  font-weight: bold;
+}
+body [data-use="notification"] .checked {
+  color: #296e10;
+  font-size: 34px;
+  font-weight: bold;
+  padding-right: 9px;
+}
 body .content {
   margin-left: 30vw;
   padding: 10%;
@@ -48,6 +58,6 @@ body .hidden {
   display: none;
 }
 body #passwordError {
-  color: #131313;
+  color: #26282a;
   font-weight: bold;
 }
