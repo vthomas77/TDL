@@ -1,0 +1,6 @@
+1 - Copy the 'Vagrantfile' file to origin folder ==> The folder will have the folders (back and front) and the 'Vagrantfile' file copied.
+
+2 - Copy the 'php.ini', 'mysqld.cnf' and 'scriptdb.sql' to the 'back' folder.
+
+3 - Run the vagrant !
+
