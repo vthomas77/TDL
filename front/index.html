@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-  <html>
+  <html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>Hello shit!</title>
@@ -42,10 +42,19 @@
         </div>
         <section data-use="create-card" class="content">
           <h2>New Card</h2>
-          <input type="text" data-use="new-card" placeholder="Title">
-          <input type="text" data-use="new-card" placeholder="Priority">
-          <input type="text" data-use="new-card" placeholder="Category">
-          <input type="text" data-use="new-card" placeholder="Deadline - yyyy-MM-dd hh:mm:ss">
+          <label for="new-card-title">Title</label>
+          <input type="text" data-use="new-card-title" id="new-card-title" placeholder="MyCard">
+          <span data-use="new-card-title-asterisk">*</span>
+          <label for="new-card-priority">Priority</label>
+          <select data-use="new-card-priority" id="new-card-priority">
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+          </select>
+          <label for="new-card-category">Category</label>
+          <input type="text" data-use="new-card-category" id="new-card-category" placeholder="Global by default">
+          <label for="new-card-deadline">Deadline</label>
+          <input type="date" data-use="new-card-deadline" id="new-card-deadline">
           <input type="submit" data-use="new-card-submit" class="button" value="Create">
           <p data-use="new-card-notification"></p>
         </section>
