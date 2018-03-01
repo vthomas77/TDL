@@ -11,11 +11,11 @@ class CardController extends Controller
      *
      * @return void
      */
-    public function showCard()
+
+    // Create Card
+    public function CreateCard($id_user,$title,$priority,$category,$deadline)
     {
-        $MyCard = new Card("Carte1","","","","");
-        return $MyCard->name;
+        return response()->json(card::CreateCard("Carte5","1","en cours","2018-03-01 17:30:00","projet"));
     }
 
-    //
 }

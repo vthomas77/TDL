@@ -33,20 +33,21 @@
                 <input type="password" placeholder="password" name="password" data-signin="password">
                 <input type="text" placeholder="repeat password" name="repeat-password" data-signin="repeat-password">
                 <p id="passwordError" class="hidden">Password doesn't match ! try again</p>
-                
+
                 <input type="file" name="avatar" data-signin="avatar" placeholder="avatar" >
-                
+
                 <input type="submit" value="OK" data-submit="signin" class="button">
                 <input type="submit" value="◄ I have an account !" data-submit="back-to-login" class="button">
             </div>
         </div>
         <section data-use="create-card" class="content">
           <h2>New Card</h2>
-          <input type="text" data-card="new-card" placeholder="Title">
-          <input type="text" data-card="new-card" placeholder="Priority">
-          <input type="text" data-card="new-card" placeholder="Category">
-          <input type="text" data-card="new-card" placeholder="Deadline - yyyy-MM-dd hh:mm:ss">
-          <input type="submit" data-card="new-card-title" class="button" value="Create">
+          <input type="text" data-use="new-card" placeholder="Title">
+          <input type="text" data-use="new-card" placeholder="Priority">
+          <input type="text" data-use="new-card" placeholder="Category">
+          <input type="text" data-use="new-card" placeholder="Deadline - yyyy-MM-dd hh:mm:ss">
+          <input type="submit" data-use="new-card-submit" class="button" value="Create">
+          <p data-use="new-card-notification"></p>
         </section>
     </body>
   </html>

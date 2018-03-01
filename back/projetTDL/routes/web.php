@@ -16,13 +16,17 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+// Create Card
+$router->post('createCard/{id_user}/{title}/{priority}/{category}/{deadline}', 'CardController@CreateCard');
 
-//$router->post('showCard', 'CardController@showCard');
+/*
+$router->post('createCard', function(){
 
-$router->post('createCard/{id}', function ($id) {
-    $results = DB::select("SELECT * FROM cards");
-    return $results;
+  var_dump('heelo');
 });
+*/
+
+
 
 $router->get('login', function() {
     return 'hackathons';
@@ -36,10 +40,9 @@ $router->get('/api/user', function(){
 });
 
 $router->get('api/user/{id}','UserController@getuser');
- 
-$router->post('signin/','UserController@saveUser');
- 
-$router->put('api/user/{id}','UserController@updateUser');
- 
-$router->delete('api/user/{id}','UserController@deleteUser');
 
+$router->post('signin/','UserController@saveUser');
+
+$router->put('api/user/{id}','UserController@updateUser');
+
+$router->delete('api/user/{id}','UserController@deleteUser');
