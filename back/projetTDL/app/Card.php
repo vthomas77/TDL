@@ -10,4 +10,8 @@ class Card {
     $this->status = $status;
     $this->deadline = $deadline;
   }
+
+  static public function CreateCard ($name,$category,$priority,$status,$deadline){
+    $results = DB::select("SELECT * FROM cards");
+  }
 }

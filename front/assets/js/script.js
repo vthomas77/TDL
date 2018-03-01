@@ -38,9 +38,9 @@ $(document).ready(function(){
         }
     });
 
-    //Test show Card
-    $.post('http://192.168.33.10:8000/createCard/1',function(data){
+    //Create new card
+    var id_user = 1;
+    $.post('http://192.168.33.10:8000/createCard/' + id_user,function(data){
       console.log(data);
-      debugger;
     })
 });
