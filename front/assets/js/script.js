@@ -74,16 +74,18 @@ $(document).ready(function(){
       var userID;
       //Get ID user
       var userToken = localStorage.getItem('token');
-      $.post('http://192.168.33.10:8000/getIDUser/' + userToken, function(data){
-        if (data == 1){
-          $('[data-use="new-card-notification"]').removeClass('success');
-          $('[data-use="new-card-notification"]').addClass('error');
-          $('[data-use="new-card-notification"]').html('An error occured');
-        } else {
-          userID = data;
-        }
-        debugger;
-      })
+      $.ajax({
+        method: "POST",
+        url: 'http://192.168.33.10:8000/getIDUser/' + userToken,
+        async: false}).done(function(data){
+            if (data == 1){
+              $('[data-use="new-card-notification"]').removeClass('success');
+              $('[data-use="new-card-notification"]').addClass('error');
+              $('[data-use="new-card-notification"]').html('An error occured');
+            } else {
+              userID = data;
+            }
+          })
 
       // Check title field
       var title = $('[data-use="new-card-title"]')[0].value;
@@ -129,9 +131,10 @@ $(document).ready(function(){
         // 0 : Idle
         var status = 0;
 
+        // Create card
         $.post('http://192.168.33.10:8000/createCard/' + userID + '/' + title + '/' + priority + '/' + category + '/' + deadline + '/' + status,function(data){
 
-          if (data == true){
+          if (data == 0){
             $('[data-use="new-card-notification"]').removeClass('error');
             $('[data-use="new-card-notification"]').addClass('success');
             $('[data-use="new-card-notification"]').html("Card created successfully");
