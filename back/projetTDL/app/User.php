@@ -39,11 +39,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         $this->password = $password;
     }
     
-    static public function CreateUser($username, $password, $email){
+    static public function CreateUser($username, $email , $password){
         
         //put some if here to test avatar existance
         //if not, initialize avatar to NULL
-        $avatar = "avrrowowowooowaaaaaar";
+        $avatar = "NULL";
         
         DB::table('users')->insert([
             'id_user' => NULL,
@@ -52,7 +52,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             'avatar' => $avatar,
             'password' => $password,
             //still need to be randomly generated
-            'token' => 'ezr157fersadzhnv0cd', 
+            'token' => 'ezFRG44sduihzk54nv0cd', 
             'token_expiration' => '09.11.19'
         ]);
         

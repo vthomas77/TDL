@@ -53,7 +53,7 @@ $(document).ready(function(){
             
             //ajax request 
             debugger;
-            $.post('http://192.168.33.10:8000/signin/' + username + '/' + password + '/' + email, function(data) {
+            $.post('http://192.168.33.10:8000/signin/' + encodeURI(username) + '/' + encodeURI(email) + '/' + encodeURI(password), function(data) {
                 debugger;
                 $('[data-use="notification-signin"]').html('<span class="checked" style="padding-right:12px;font-weight:bold;">√</span>' +  data + "'s account has been successfully created !");
             })

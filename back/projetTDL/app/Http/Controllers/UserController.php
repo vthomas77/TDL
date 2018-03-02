@@ -17,8 +17,8 @@ class UserController extends Controller {
         return response()->json($users);
     }
     
-    public function saveUser($username, $password, $email) {
-        $newUser = User::createUser($username, $password, $email);
+    public function saveUser($username, $email , $password) {
+        $newUser = User::createUser($username, $email, $password);
         return response()->json($newUser);
     }
     
