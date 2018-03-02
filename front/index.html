@@ -17,6 +17,9 @@
             <div data-use="insidebar">
                 <h1>Hello </h1>
             </div>
+            <div data-use="sidebar-connected" class="hidden">
+                 <input type="submit" data-action="updateUser" class="button" value="update account">
+            </div>
         </div>
         
         <div data-use="login" class="flex content">
@@ -52,7 +55,28 @@
                 <input type="submit" value="◄ I have an account !" data-submit="back-to-login" class="button">
             </div>
         </div>
-        <section data-use="create-card" class="content">
+        
+        <!-- appears when updating user account -->
+        <div data-use="update-user" class="hidden content">
+            <h2>Update your account</h2>
+            <div data-update="login">
+                <input type="text" data-login="username" placeholder="username">
+                <input type="password" data-login="password" placeholder="password">
+            </div>
+            
+            <div data-update="update">
+                <input type="text" data-update="username" placeholder="update username">
+                <input type="text" data-update="password" placeholder="update password">
+                <input type="text" data-update="repeat-password" placeholder="repeat password">
+                <input type="text" data-update="email" placeholder="update email">
+            </div>
+            
+            <div data-update="submit">
+                <input type="submit" data-submit="update-user" class="button big" value="Update now !">
+            </div>
+        </div>
+        
+        <section data-use="create-card" class="content hidden">
           <h2>New Card</h2>
           <input type="text" data-card="new-card" placeholder="Title">
           <input type="text" data-card="new-card" placeholder="Priority">

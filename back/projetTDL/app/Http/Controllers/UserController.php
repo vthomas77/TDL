@@ -29,15 +29,8 @@ class UserController extends Controller {
         return response()->json('success');
     }
     
-    public function updateUser(Request $request, $id) {
-        $users = User::find($id);
-        
-        $users->username = $request->input('username');
-        $users->email = $request->input('email');
-        $users->avatar = $request->input('avatar');
-        $users->password = $request->input('password');
-        
-        $users->save();
+    public function updateUser($username, $password, $newPassword, $newUsername, $newEmail) {
+        $users = User::updateUser($username, $password, $newPassword, $newUsername, $newEmail);
         
         return response()->json($users);
     }

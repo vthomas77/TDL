@@ -49,13 +49,13 @@ body .content .button:hover {
   background-color: #26282a;
   color: white;
 }
-body .content [data-action="lets-go"] {
+body .content .big {
   padding: 15px;
   font-size: 1.2rem;
   background-color: #26282a;
   color: white;
 }
-body .content [data-action="lets-go"]:hover {
+body .content .big:hover {
   background-color: white;
   color: #26282a;
 }
