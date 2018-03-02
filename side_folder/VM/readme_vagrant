@@ -10,8 +10,10 @@ Structure pour la Vagrant :
 - hackathonDFS
     - back
         - php.ini
-        - mysql.cnf
+        - mysqld.cnf
         - scriptdb.sql
+        - ports.conf
+        - 000-default.conf
     - front
     - Vagrantfile
 

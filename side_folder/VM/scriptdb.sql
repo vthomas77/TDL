@@ -26,7 +26,6 @@ CREATE TABLE IF NOT EXISTS `tododb`.`users` (
   `token` VARCHAR(200) NULL,
   `token_expiration` DATETIME NULL,
   PRIMARY KEY (`id_user`),
-  UNIQUE INDEX `idUsers_UNIQUE` (`id_user` ASC),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
   UNIQUE INDEX `token_UNIQUE` (`token` ASC))
@@ -39,13 +38,11 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `tododb`.`cards` (
   `id_card` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL,
-  `priority` VARCHAR(45) NOT NULL,
-  `status` VARCHAR(45) NOT NULL,
+  `priority` INT NOT NULL,
+  `status` INT NOT NULL,
   `deadline` DATETIME NOT NULL,
   `category` VARCHAR(255) NULL,
-  PRIMARY KEY (`id_card`),
-  UNIQUE INDEX `idCards_UNIQUE` (`id_card` ASC),
-  UNIQUE INDEX `title_UNIQUE` (`title` ASC))
+  PRIMARY KEY (`id_card`))
 ENGINE = InnoDB;
 
 
@@ -58,7 +55,6 @@ CREATE TABLE IF NOT EXISTS `tododb`.`tasks` (
   `rank` INT NOT NULL,
   `cards_id_card` INT NOT NULL,
   PRIMARY KEY (`id_task`),
-  UNIQUE INDEX `idTasks_UNIQUE` (`id_task` ASC),
   INDEX `fk_tasks_cards1_idx` (`cards_id_card` ASC),
   CONSTRAINT `fk_tasks_cards1`
     FOREIGN KEY (`cards_id_card`)
@@ -75,7 +71,6 @@ CREATE TABLE IF NOT EXISTS `tododb`.`groups` (
   `id_group` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NULL,
   PRIMARY KEY (`id_group`),
-  UNIQUE INDEX `id_group_UNIQUE` (`id_group` ASC),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB;
 
@@ -91,7 +86,6 @@ CREATE TABLE IF NOT EXISTS `tododb`.`logs` (
   `users_id_user` INT NOT NULL,
   `content` TEXT NULL,
   PRIMARY KEY (`id_log`),
-  UNIQUE INDEX `id_log_UNIQUE` (`id_log` ASC),
   INDEX `fk_logs_cards1_idx` (`cards_id_card` ASC),
   INDEX `fk_logs_users1_idx` (`users_id_user` ASC),
   CONSTRAINT `fk_logs_cards1`
@@ -119,7 +113,6 @@ CREATE TABLE IF NOT EXISTS `tododb`.`properties` (
   `cards_id_card` INT NOT NULL,
   `users_id_user` INT NOT NULL,
   PRIMARY KEY (`id_property`),
-  UNIQUE INDEX `id_property_UNIQUE` (`id_property` ASC),
   INDEX `fk_properties_cards1_idx` (`cards_id_card` ASC),
   INDEX `fk_properties_users1_idx` (`users_id_user` ASC),
   CONSTRAINT `fk_properties_cards1`
