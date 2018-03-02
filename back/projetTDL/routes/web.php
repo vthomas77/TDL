@@ -17,15 +17,10 @@ $router->get('/', function () use ($router) {
 });
 
 // Create Card
-$router->post('createCard/{id_user}/{title}/{priority}/{category}/{deadline}', 'CardController@CreateCard');
+$router->post('createCard/{userID}/{title}/{priority}/{category}/{deadline}/{status}', 'CardController@CreateCard');
 
-/*
-$router->post('createCard', function(){
-
-  var_dump('heelo');
-});
-*/
-
+// Get Id users
+$router->post('getIDUser/{userToken}', 'UserController@GetUserID');
 
 
 $router->get('login', function() {

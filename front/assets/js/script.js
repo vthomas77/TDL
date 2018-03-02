@@ -66,20 +66,49 @@ $(document).ready(function(){
       } else {
         $('[data-use="new-card-title-asterisk"]').removeClass('blanked');
       }
-
     })
 
-
+    // Click on create button
     $('[data-use="new-card-submit"]').on('click', function(){
-      var id_user = 1;
+
+      var userID;
+      //Get ID user
+      var userToken = localStorage.getItem('token');
+      $.post('http://192.168.33.10:8000/getIDUser/' + userToken, function(data){
+        if (data == 1){
+          $('[data-use="new-card-notification"]').removeClass('success');
+          $('[data-use="new-card-notification"]').addClass('error');
+          $('[data-use="new-card-notification"]').html('An error occured');
+        } else {
+          userID = data;
+        }
+        debugger;
+      })
 
       // Check title field
       var title = $('[data-use="new-card-title"]')[0].value;
       if (title == "") {
+        $('[data-use="new-card-notification"]').removeClass('success');
+        $('[data-use="new-card-notification"]').addClass('error');
         $('[data-use="new-card-notification"]').html("Card title is necessary");
       } else {
 
-        var priority = $('[data-use="new-card-priority"]')[0].value;
+        // Define Priority
+        // 0 : Low
+        // 1 : Medium
+        // 2 : High
+        var priority;
+        switch ($('[data-use="new-card-priority"]')[0].value) {
+          case 'Low':
+          priority = 0;
+          break;
+          case 'Medium':
+          priority = 1;
+          break;
+          case 'High':
+          priority = 2;
+          break;
+        }
 
         // Check category field
         // Assign global by default
@@ -91,11 +120,17 @@ $(document).ready(function(){
         // Check deadline field
         // Assign NULL by default
         var deadline = $('[data-use="new-card-deadline"]')[0].value;
-        if (deadline == ""){
-          deadline = 'NULL';
+        if (deadline == "")
+        {
+          deadline='NULL';
         }
 
-        $.post('http://192.168.33.10:8000/createCard/' + id_user + '/' + title + '/' + priority + '/' + category + '/' + deadline,function(data){
+        // Assign the status Idle
+        // 0 : Idle
+        var status = 0;
+
+        $.post('http://192.168.33.10:8000/createCard/' + userID + '/' + title + '/' + priority + '/' + category + '/' + deadline + '/' + status,function(data){
+
           if (data == true){
             $('[data-use="new-card-notification"]').removeClass('error');
             $('[data-use="new-card-notification"]').addClass('success');

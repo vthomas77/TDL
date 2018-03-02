@@ -17,11 +17,8 @@ class Card {
          'category' => $category]
       );
       return $resCreateCard;
-    } catch (\Illuminate\Database\QueryException $e){
-      if ($e->getCode() == 23000){
-        $resCreateCard = "Ce nom de carte existe déjà";
-      }
-      return $resCreateCard;
+    } catch (\Exception $e) {
+      return "An error occured";
     }
   }
 

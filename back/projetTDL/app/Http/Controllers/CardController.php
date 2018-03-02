@@ -13,9 +13,9 @@ class CardController extends Controller
      */
 
     // Create Card
-    public function CreateCard($id_user,$title,$priority,$category,$deadline)
+    public function CreateCard($userID,$title,$priority,$category,$deadline,$status)
     {
-        return response()->json(card::CreateCard("Carte5","1","en cours","2018-03-01 17:30:00","projet"));
+        return response()->json(card::CreateCard($title,$priority,$status,$deadline,$category));
     }
 
 }

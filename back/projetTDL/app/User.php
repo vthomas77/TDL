@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use DB;
 
 use Illuminate\Auth\Authenticatable;
 use Laravel\Lumen\Auth\Authorizable;
@@ -29,5 +30,18 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
-    
+
+    // Get user ID from token in Database
+    static public function GetUserID ($userToken){
+      try {
+        $resGetUserID = DB::table('users')
+          ->select('id_user')
+          ->where('token','=',$userToken)
+          ->get();
+        return $resGetUserID[0]->id_user;
+      } catch (\Exception $e) {
+        return "1";
+      }
+    }
+
 }
