@@ -78,7 +78,7 @@ $(document).ready(function(){
         method: "POST",
         url: 'http://192.168.33.10:8000/getIDUser/' + userToken,
         async: false}).done(function(data){
-            if (data == 1){
+            if (data == 'error'){
               $('[data-use="new-card-notification"]').removeClass('success');
               $('[data-use="new-card-notification"]').addClass('error');
               $('[data-use="new-card-notification"]').html('An error occured');

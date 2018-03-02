@@ -40,7 +40,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
           ->get();
         return $resGetUserID[0]->id_user;
       } catch (\Exception $e) {
-        return "1";
+        return 'error';
       }
     }
 
