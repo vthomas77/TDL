@@ -42,8 +42,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     static public function CreateUser($username, $email , $password){
         
         //put some if here to test avatar existance
-        //if not, initialize avatar to NULL
+        //if not, initialize avatar to a chosen generic link 
         $avatar = "NULL";
+        $token = bin2hex(random_bytes(20));
         
         DB::table('users')->insert([
             'id_user' => NULL,
@@ -51,12 +52,15 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             'email' => $email,
             'avatar' => $avatar,
             'password' => $password,
-            //still need to be randomly generated
-            'token' => 'ezFRG44sduihzk54nv0cd', 
+            'token' => $token, 
             'token_expiration' => '09.11.19'
         ]);
         
-        //$render = DB::select('SELECT username FROM users WHERE username="' + $username + '"');
-        return $username;
+        $dataTable = [
+            'token' => $token,
+            'username' => $username
+        ];
+        
+        return $dataTable;
     }
 }

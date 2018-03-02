@@ -18,7 +18,7 @@ body [data-use="sidebar"] {
 body [data-use="sidebar"] h1 {
   color: white;
   text-transform: uppercase;
-  max-width: 80%;
+  font-size: 1rem;
 }
 body [data-use="notification"] {
   color: #26282a;
@@ -56,6 +56,10 @@ body .flex {
 }
 body .hidden {
   display: none;
+}
+body .img-avatar {
+  width: 100%;
+  border-radius: 5px;
 }
 body #passwordError {
   color: #26282a;

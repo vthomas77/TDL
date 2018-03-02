@@ -37,6 +37,8 @@ $(document).ready(function(){
         var password = $('[data-signin="password"]')[0].value;
         var repeatPassword = $('[data-signin="repeat-password"]')[0].value;
         var email = $('[data-signin="email"]')[0].value;
+        var avatar = $('[data-signin="avatar"]')[0].value;
+        
         if(password === repeatPassword) {
             
             //manage to toggle hidden class of passwordError the right way
@@ -46,16 +48,17 @@ $(document).ready(function(){
                 $('#passwordError').addClass('hidden');
             }
             
-            var username = $('[data-signin="username"]')[0].value;
-            var password = $('[data-signin="password"]')[0].value;
-            var email = $('[data-signin="email"]')[0].value;
-            var avatar = $('[data-signin="avatar"]')[0].value;
-            
             //ajax request 
             debugger;
             $.post('http://192.168.33.10:8000/signin/' + encodeURI(username) + '/' + encodeURI(email) + '/' + encodeURI(password), function(data) {
                 debugger;
-                $('[data-use="notification-signin"]').html('<span class="checked" style="padding-right:12px;font-weight:bold;">√</span>' +  data + "'s account has been successfully created !");
+                $('[data-use="notification-signin"]').html('<span class="checked" style="padding-right:12px;font-weight:bold;">√</span>' +  data.username + "'s account has been successfully created !");
+                
+                //set profile in sidebar
+                $('[data-use="insidebar"]').html('<img src="' + avatar + '" class="img-avatar"><h1>' + username + '</h1>');
+                
+                //put token in localstorage
+                localStorage.setItem('token', data.token);
             })
         } else {
             $('#passwordError').removeClass('hidden');
