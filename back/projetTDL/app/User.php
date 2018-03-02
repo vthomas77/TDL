@@ -45,22 +45,33 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         //if not, initialize avatar to a chosen generic link 
         $avatar = "NULL";
         $token = bin2hex(random_bytes(20));
-        
-        DB::table('users')->insert([
-            'id_user' => NULL,
-            'username' => $username,
-            'email' => $email,
-            'avatar' => $avatar,
-            'password' => $password,
-            'token' => $token, 
-            'token_expiration' => '09.11.19'
-        ]);
-        
-        $dataTable = [
-            'token' => $token,
-            'username' => $username
-        ];
-        
-        return $dataTable;
+
+        try {
+            DB::table('users')->insert([
+                'id_user' => NULL,
+                'username' => $username,
+                'email' => $email,
+                'avatar' => $avatar,
+                'password' => $password,
+                'token' => $token, 
+                'token_expiration' => '09.11.19'
+            ]);
+            
+            $dataTable = [
+                'token' => $token,
+                'username' => $username,
+                'status' => 200
+            ];
+
+            return $dataTable;
+        }
+        //return status 500 if input username or email already exist in db
+        catch(\Illuminate\Database\QueryException $e) {
+            $dataTable = [
+                'status' => 500
+            ];
+
+            return $dataTable;
+        }
     }
 }
