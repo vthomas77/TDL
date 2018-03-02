@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use DB;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +31,21 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
-    
+
+    // Get user ID from token in Database
+    static public function GetUserID ($userToken){
+      try {
+        $resGetUserID = DB::table('users')
+          ->select('id_user')
+          ->where('token','=',$userToken)
+          ->get();
+        return $resGetUserID[0]->id_user;
+      } catch (\Exception $e) {
+        return 'error';
+      }
+    }
+
+
     //might be unecessary
     public function __construct($username, $email, $avatar, $password) {
         $this->username = $username;
@@ -38,11 +53,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         $this->avatar = $avatar;
         $this->password = $password;
     }
-    
+
     static public function CreateUser($username, $email , $password){
-        
+
         //put some if here to test avatar existance
-        //if not, initialize avatar to a chosen generic link 
+        //if not, initialize avatar to a chosen generic link
         $avatar = "./assets/img/default.png";
         $token = bin2hex(random_bytes(20));
 
@@ -53,10 +68,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
                 'email' => $email,
                 'avatar' => $avatar,
                 'password' => $password,
-                'token' => $token, 
+                'token' => $token,
                 'token_expiration' => '09.11.19'
             ]);
-            
+
             $dataTable = [
                 'token' => $token,
                 'username' => $username,

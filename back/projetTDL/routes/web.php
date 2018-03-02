@@ -16,13 +16,12 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+// Create Card
+$router->post('createCard/{userID}/{title}/{priority}/{category}/{deadline}/{status}', 'CardController@CreateCard');
 
-//$router->post('showCard', 'CardController@showCard');
+// Get Id users
+$router->post('getIDUser/{userToken}', 'UserController@GetUserID');
 
-$router->post('createCard/{id}', function ($id) {
-    $results = DB::select("SELECT * FROM cards");
-    return $results;
-});
 
 $router->get('login', function() {
     return 'hackathons';
@@ -35,10 +34,9 @@ $router->get('/api/user', function(){
 });
 
 $router->get('api/user/{id}','UserController@getuser');
- 
-$router->post('signin/{username}/{email}/{password}','UserController@saveUser');
- 
-$router->put('api/user/{id}','UserController@updateUser');
- 
-$router->delete('api/user/{id}','UserController@deleteUser');
 
+$router->post('signin/{username}/{email}/{password}','UserController@saveUser');
+
+$router->put('api/user/{id}','UserController@updateUser');
+
+$router->delete('api/user/{id}','UserController@deleteUser');

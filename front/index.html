@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-  <html>
+  <html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>Hello shit!</title>
@@ -18,7 +18,7 @@
                 <h1>Hello </h1>
             </div>
         </div>
-        
+
         <div data-use="login" class="flex content">
             <div>
                 <h2>Login</h2>
@@ -35,30 +35,41 @@
                 <input type="text" placeholder="email" name="email" data-signin="email">
                 <input type="password" placeholder="password" name="password" data-signin="password">
                 <input type="text" placeholder="repeat password" name="repeat-password" data-signin="repeat-password">
-                
+
                 <!--
                 <input type="file" name="avatar" data-signin="avatar" placeholder="copy your avatar url here" >
                 -->
-                
+
                 <!-- if password doesn't match -->
                 <p id="passwordError" class="hidden">Password doesn't match ! try again</p>
-                
+
+
                 <!-- fill itself with confirmation message when user has been created -->
                 <p data-use="notification-signin">
                 </p>
-                
-                
+
+
                 <input type="submit" value="OK" data-submit="signin" class="button">
                 <input type="submit" value="◄ I have an account !" data-submit="back-to-login" class="button">
             </div>
         </div>
         <section data-use="create-card" class="content">
           <h2>New Card</h2>
-          <input type="text" data-card="new-card" placeholder="Title">
-          <input type="text" data-card="new-card" placeholder="Priority">
-          <input type="text" data-card="new-card" placeholder="Category">
-          <input type="text" data-card="new-card" placeholder="Deadline - yyyy-MM-dd hh:mm:ss">
-          <input type="submit" data-card="new-card-title" class="button" value="Create">
+          <label for="new-card-title">Title</label>
+          <input type="text" data-use="new-card-title" id="new-card-title" placeholder="MyCard">
+          <span data-use="new-card-title-asterisk">*</span>
+          <label for="new-card-priority">Priority</label>
+          <select data-use="new-card-priority" id="new-card-priority">
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+          </select>
+          <label for="new-card-category">Category</label>
+          <input type="text" data-use="new-card-category" id="new-card-category" placeholder="Global by default">
+          <label for="new-card-deadline">Deadline</label>
+          <input type="date" data-use="new-card-deadline" id="new-card-deadline">
+          <input type="submit" data-use="new-card-submit" class="button" value="Create">
+          <p data-use="new-card-notification"></p>
         </section>
     </body>
   </html>

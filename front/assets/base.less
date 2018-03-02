@@ -6,7 +6,7 @@ body {
     background-color: @main;
     color: white;
     font-family: 'Arial', sans-serif;
-    
+
     [data-use="sidebar"] {
         background-color: @grey;
         width: 20vw;
@@ -37,7 +37,7 @@ body {
         input {
             margin-bottom: 10px;
             border: none;
-            padding: 5px;  
+            padding: 5px;
         }
         .button {
             color: @main;
@@ -72,8 +72,22 @@ body {
     .hidden {
         display: none;
     }
+
+    .blanked {
+      visibility: hidden;
+    }
+    #passwordError {
+        color: #131313;
+        font-weight: bold;
     .img-avatar {
         width: 100%;
         border-radius: 5px;
+
+    }
+    .error {
+      color: yellow;
+    }
+    .success {
+      color: white;
     }
 }
