@@ -49,6 +49,20 @@ body .content .button:hover {
   background-color: #26282a;
   color: white;
 }
+body .content [data-action="lets-go"] {
+  padding: 15px;
+  font-size: 1.2rem;
+  background-color: #26282a;
+  color: white;
+}
+body .content [data-action="lets-go"]:hover {
+  background-color: white;
+  color: #26282a;
+}
+body .content #passwordError {
+  color: #26282a;
+  font-weight: bold;
+}
 body .flex {
   display: flex;
   align-items: flex-end;
@@ -60,8 +74,4 @@ body .hidden {
 body .img-avatar {
   width: 100%;
   border-radius: 5px;
-}
-body #passwordError {
-  color: #26282a;
-  font-weight: bold;
 }

@@ -43,7 +43,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         
         //put some if here to test avatar existance
         //if not, initialize avatar to a chosen generic link 
-        $avatar = "NULL";
+        $avatar = "./assets/img/default.png";
         $token = bin2hex(random_bytes(20));
 
         try {

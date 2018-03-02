@@ -49,6 +49,20 @@ body {
                 color: white;
             }
         }
+        [data-action="lets-go"] {
+            padding: 15px;
+            font-size: 1.2rem;
+            background-color: #26282a;
+            color: white;
+            &:hover {
+                background-color: white;
+                color: @grey;
+            }
+        }
+        #passwordError {
+            color: @grey;
+            font-weight: bold;
+        }
     }
     .flex {
         display: flex;
@@ -61,9 +75,5 @@ body {
     .img-avatar {
         width: 100%;
         border-radius: 5px;
-    }
-    #passwordError {
-        color: @grey;
-        font-weight: bold;
     }
 }
