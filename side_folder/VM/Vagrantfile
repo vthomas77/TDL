@@ -67,6 +67,10 @@ Vagrant.configure("2") do |config|
     cd /var/www/html/
     sudo apt-get update
     sudo apt-get install apache2 -y
+    sudo cp ports.conf /etc/apache2/
+    sudo cp 000-default.conf /etc/apache2/sites-enabled/
+    sudo ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load
+    sudo service apache2 restart
     sudo debconf-set-selections <<< "mysql-server-5.7 mysql-server/root_password password 0000"
     sudo debconf-set-selections <<< "mysql-server-5.7 mysql-server/root_password_again password 0000"
     sudo DEBIAN_FRONTEND=noninteractive apt-get -y install mysql-server-5.7
@@ -95,6 +99,7 @@ Vagrant.configure("2") do |config|
     sudo apt-get update
     sudo service apache2 restart
     composer create-project --prefer-dist laravel/lumen projetTDL
+    sudo chmod 777 /var/www/html/projetTDL/storage/ -R
     sudo apt-get update
     sudo service mysql restart
     sudo service apache2 restart
@@ -102,5 +107,6 @@ Vagrant.configure("2") do |config|
     sudo apt-get update
     sudo apt-get upgrade -y
     sudo apt-get update
+    clear
   SHELL
 end
