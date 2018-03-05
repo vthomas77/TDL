@@ -81,17 +81,26 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             DB::table('users')
                 ->where([
                     ['username', '=', $username],
-                    ['password', '=', $username],
+                    ['password', '=', $password],
                 ])->update(array(
                     'username' => $newUsername,
                     'password' => $newPassword,
                     'email' => $newEmail
                 ));
             
-            return 'updateok';
+            $dataTable = [
+                'username' => $newUsername,
+                'status' => 200
+            ];
+            
+            return $dataTable;
         }
         catch(\Illuminate\Database\QueryException $e) {
-            return 'oops...';
+            $dataTable = [
+                'status' => 500
+            ];
+
+            return $dataTable;
         }
     }
 }

@@ -60,8 +60,8 @@
         <div data-use="update-user" class="hidden content">
             <h2>Update your account</h2>
             <div data-update="login">
-                <input type="text" data-login="username" placeholder="username">
-                <input type="password" data-login="password" placeholder="password">
+                <input type="text" data-auth="username" placeholder="username">
+                <input type="password" data-auth="password" placeholder="password">
             </div>
             
             <div data-update="update">
@@ -73,7 +73,9 @@
             
             <div data-update="submit">
                 <input type="submit" data-submit="update-user" class="button big" value="Update now !">
+                <input type="submit" data-submit="update-back" class="button big" value="Back">
             </div>
+            <div data-use="notification-update-user"></div>
         </div>
         
         <section data-use="create-card" class="content hidden">

@@ -119,9 +119,21 @@ $(document).ready(function(){
         $('[data-use="update-user"]').removeClass('hidden');
         
         $('body').on('click', '[data-submit="update-user"]', function(){
-            debugger;
+            
+            var username = $('[data-auth="username"]')[0].value;
+            var password = $('[data-auth="password"]')[0].value;
+            
+            var newUsername = $('[data-update="username"]')[0].value;
+            var newPassword = $('[data-update="password"]')[0].value;
+            var newEmail = $('[data-update="email"]')[0].value;
+            
+            $.post('http://192.168.33.10:8000/admin/update/' + encodeURI(username) + '/' + encodeURI(password) + '/' + encodeURI(newPassword) + '/' + encodeURI(newUsername) + '/' + encodeURI(newEmail) , function(data) {
+                debugger;
+                
+                //notification to user
+                $('[data-use="notification-update-user"]').html(data.username + ', your account has been successfully updated !');
+            });
         });
-        
     });
 
     //Create new card
