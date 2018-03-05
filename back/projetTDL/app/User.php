@@ -89,6 +89,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
             return $dataTable;
         }
+        catch(\Exception $e) {
+            $dataTable = [
+                'status' => 500
+            ];
+
+            return $dataTable;
+        }
     }
     
     static public function updateUser($username, $password, $newPassword, $newUsername, $newEmail) {
@@ -112,6 +119,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             return $dataTable;
         }
         catch(\Illuminate\Database\QueryException $e) {
+            $dataTable = [
+                'status' => 500
+            ];
+
+            return $dataTable;
+        }
+        catch(\Exception $e) {
             $dataTable = [
                 'status' => 500
             ];
@@ -145,6 +159,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
             return $dataTable;
         }
+        catch(\Exception $e) {
+            $dataTable = [
+                'status' => 500
+            ];
+
+            return $dataTable;
+        }
     }
     
     static public function readUser($token) {
@@ -156,6 +177,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
               ->get();
             
             return $res;
+        }
+        catch(\Illuminate\Database\QueryException $e) {
+            $dataTable = [
+                'status' => 500
+            ];
+
+            return $dataTable;
         }
         catch(\Exception $e) {
             return 'ko bitch';

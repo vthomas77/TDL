@@ -75,9 +75,6 @@ $(document).ready(function(){
                                         $('[data-submit="signin"]').addClass('hidden');
                                         $('[data-submit="back-to-login"]').addClass('hidden');
 
-                                        //replace by next button
-                                        $('[data-use="signin"] div').append('<input type="submit" data-action="lets-go" value="Let\'s go ! ►" class="button big">')
-
                                         //put token in localstorage
                                         localStorage.setItem('token', data.token);
                                         
@@ -136,11 +133,15 @@ $(document).ready(function(){
             
             $.post('http://192.168.33.10:8000/admin/update/' + encodeURI(username) + '/' + encodeURI(password) + '/' + encodeURI(newPassword) + '/' + encodeURI(newUsername) + '/' + encodeURI(newEmail) , function(data) {
                 
-                //notification to user
-                $('[data-use="notification-update-user"]').html(data.username + ', your account has been successfully updated !');
-                
-                //refresh name in sidebar
-                 $('[data-use="insidebar"] h1').html(newUsername + '<i class="fa fa-cog"></i>');
+                if(data.status == 200) {
+                    //notification to user
+                    $('[data-use="notification-update-user"]').html(data.username + ', your account has been successfully updated !');
+
+                    //refresh name in sidebar
+                     $('[data-use="insidebar"] h1').html(newUsername + '<i class="fa fa-cog"></i>');
+                } else {
+                    $('[data-use="notification-update-user"]').html('<span class="error">Error with your update, check your inputs or try another username</span>');
+                } 
             });
         });
         
