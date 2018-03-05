@@ -50,7 +50,6 @@ $(document).ready(function(){
                         for(var i = 0; i < email.length; i++ ) {
                             if(email.charAt(i) == ".") {
                                 //everything is ok, go into the ajax request
-                                debugger;
                                 $.post('http://192.168.33.10:8000/signin/' + encodeURI(username) + '/' + encodeURI(email) + '/' + encodeURI(password), function(data) {
                                     if(data.status == 200) {
 
@@ -61,9 +60,6 @@ $(document).ready(function(){
                                             avatar = avatar.substr(12);
                                         }
                                         */
-
-
-                                        debugger;
                                         $('[data-use="notification-signin"]').html('<span class="checked" style="padding-right:12px;font-weight:bold;">√</span>' +  data.username + "'s account has been successfully created !");
 
                                         //set profile in sidebar
@@ -74,11 +70,14 @@ $(document).ready(function(){
                                         $('[data-submit="back-to-login"]').addClass('hidden');
 
                                         //replace by next button
-                                        $('[data-use="signin"] div').append('<input type="submit" data-action="lets-go" value="Let\'s go ! ►" class="button">')
+                                        $('[data-use="signin"] div').append('<input type="submit" data-action="lets-go" value="Let\'s go ! ►" class="button big">')
+ 
+                                        //makes admin tools appear
+                                        $('[data-use="sidebar-connected"]').removeClass('hidden');
 
                                         //put token in localstorage
                                         localStorage.setItem('token', data.token);
-                                    }else if(data.status == 500){
+                                    } else if(data.status == 500){
                                         //if username already exist
                                         $('[data-use="notification-signin"]').html('<p>This username or email already exist, please try an other one</p>');
                                     }
@@ -109,6 +108,29 @@ $(document).ready(function(){
             //wrong password in confirmation
             $('#passwordError').removeClass('hidden');
         }
+    });
+    
+    //update user profile
+    $('[data-action="updateUser"]').on('click', function(){
+        $('[data-use="signin"]').addClass('hidden');
+        $('[data-use="update-user"]').removeClass('hidden');
+        
+        $('body').on('click', '[data-submit="update-user"]', function(){
+            
+            var username = $('[data-auth="username"]')[0].value;
+            var password = $('[data-auth="password"]')[0].value;
+            
+            var newUsername = $('[data-update="username"]')[0].value;
+            var newPassword = $('[data-update="password"]')[0].value;
+            var newEmail = $('[data-update="email"]')[0].value;
+            
+            $.post('http://192.168.33.10:8000/admin/update/' + encodeURI(username) + '/' + encodeURI(password) + '/' + encodeURI(newPassword) + '/' + encodeURI(newUsername) + '/' + encodeURI(newEmail) , function(data) {
+                debugger;
+                
+                //notification to user
+                $('[data-use="notification-update-user"]').html(data.username + ', your account has been successfully updated !');
+            });
+        });
     });
 
     /*

@@ -36,7 +36,8 @@ $router->get('/api/user', function(){
 $router->get('api/user/{id}','UserController@getuser');
 
 $router->post('signin/{username}/{email}/{password}','UserController@saveUser');
-
-$router->put('api/user/{id}','UserController@updateUser');
-
+ 
+$router->post('admin/update/{username}/{password}/{newPassword}/{newUsername}/{newEmail}','UserController@updateUser');
+ 
 $router->delete('api/user/{id}','UserController@deleteUser');
+

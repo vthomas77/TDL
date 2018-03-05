@@ -54,10 +54,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         $this->password = $password;
     }
 
-    static public function CreateUser($username, $email , $password){
-
-        //put some if here to test avatar existance
-        //if not, initialize avatar to a chosen generic link
+    
+    static public function createUser($username, $email , $password){
+        
+        //put some if here to test avatar existance ?
+        //if not, initialize avatar to a chosen generic link 
         $avatar = "./assets/img/default.png";
         $token = bin2hex(random_bytes(20));
 
@@ -81,6 +82,35 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             return $dataTable;
         }
         //return status 500 if input username or email already exist in db
+        catch(\Illuminate\Database\QueryException $e) {
+            $dataTable = [
+                'status' => 500
+            ];
+
+            return $dataTable;
+        }
+    }
+    
+    static public function updateUser($username, $password, $newPassword, $newUsername, $newEmail) {
+        //
+        try {
+            DB::table('users')
+                ->where([
+                    ['username', '=', $username],
+                    ['password', '=', $password],
+                ])->update(array(
+                    'username' => $newUsername,
+                    'password' => $newPassword,
+                    'email' => $newEmail
+                ));
+            
+            $dataTable = [
+                'username' => $newUsername,
+                'status' => 200
+            ];
+            
+            return $dataTable;
+        }
         catch(\Illuminate\Database\QueryException $e) {
             $dataTable = [
                 'status' => 500
