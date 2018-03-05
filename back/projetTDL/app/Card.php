@@ -7,7 +7,7 @@ use App\User;
 
 class Card {
 
-  public function __construct($id,$title,$priority,$status,$deadline,$category,$authorAvatar){
+  public function __construct($id,$title,$priority,$status,$deadline,$category,$authorAvatar,$rank){
     $this->id = $id;
     $this->title = $title;
     $this->priority = $priority;
@@ -15,6 +15,7 @@ class Card {
     $this->deadline = $deadline;
     $this->category = $category;
     $this->authorAvatar = $authorAvatar;
+    $this->rank = $rank;
   }
 
 
@@ -87,19 +88,20 @@ class Card {
       $userID = user::GetUserID($userToken);
       $userAvatar = user::GetUserAvatar($userID);
       $resGetCards = DB::table('properties')
-        ->select('cards_id_card')
+        ->select('cards_id_card','rank')
         ->where('users_id_user','=',$userID)
         ->get();
       $cardsCollection = [];
       foreach($resGetCards as $key => $value){
         $cardID = $value->cards_id_card;
-        $cardsCollection[] = $cardID;
+        $cardRank = $value->rank;
+        $cardsCollection[] = [$cardID,$cardRank];
       }
       $cardsPropertiesCollection = [];
       foreach($cardsCollection as $cc){
         $resGetCardsProperties = DB::table('cards')
           ->select('id_card','title','priority','status','deadline','category')
-          ->where('id_card','=',$cc)
+          ->where('id_card','=',$cc[0])
           ->get();
           foreach($resGetCardsProperties as $key => $value){
             $cardsPropertiesCollection[] = new Card(
@@ -109,7 +111,8 @@ class Card {
               $value -> status,
               $value -> deadline,
               $value -> category,
-              $userAvatar
+              $userAvatar,
+              $cc[1]
             );
           }
       }

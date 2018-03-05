@@ -225,6 +225,12 @@ $(document).ready(function(){
     // Get card
     var userToken = localStorage.getItem('token');
     $.post('http://192.168.33.10:8000/getCard/' + userToken,function(data){
+
+      // Sort array relative to rank card
+      data.sort(function(a,b){
+        return b.rank - a.rank;
+      });
+
       // Cards creation
       var cardRender = '';
       for (var i=0; i < data.length; i++){
