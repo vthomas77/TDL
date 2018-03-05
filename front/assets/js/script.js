@@ -43,7 +43,7 @@ $(document).ready(function(){
 
 
         if(password === repeatPassword) {
-
+            debugger;
             //test the input existance
             if(username && email) {
                 //test the email format
