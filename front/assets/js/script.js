@@ -116,10 +116,12 @@ $(document).ready(function(){
     /*
     //update user profile
     */
+    
     $('[data-action="updateUser"]').on('click', function(){        
         $('[data-use="delete-user"]').addClass('hidden');
         $('[data-use="signin"]').addClass('hidden');
         $('[data-use="update-user"]').removeClass('hidden');
+        $('[data-use="login"]').addClass('hidden');
         
         $('body').on('click', '[data-submit="update-user"]', function(){
             
@@ -136,6 +138,13 @@ $(document).ready(function(){
                 $('[data-use="notification-update-user"]').html(data.username + ', your account has been successfully updated !');
             });
         });
+        
+        $('[data-submit="update-back" ]').on('click', function(){
+            $('[data-use="delete-user"]').addClass('hidden');
+            $('[data-use="signin"]').addClass('hidden');
+            $('[data-use="update-user"]').addClass('hidden');
+            $('[data-use="login"]').removeClass('hidden');
+        });
     });
     
     /*
@@ -146,6 +155,7 @@ $(document).ready(function(){
         $('[data-use="delete-user"]').removeClass('hidden');
         $('[data-use="signin"]').addClass('hidden');
         $('[data-use="update-user"]').addClass('hidden');
+        $('[data-use="login"]').addClass('hidden');
         
         $('[data-submit="delete-user"]').on('click', function(){
             var username = $('[data-delete="username"]')[0].value;
@@ -159,6 +169,13 @@ $(document).ready(function(){
                 $('[data-use="delete-user"]').append('<p class="error">Please, enter your username first</p>');
                 debugger;
             }
+        });
+        
+        $('[data-submit="keep-my-account"]').on('click', function(){
+            $('[data-use="delete-user"]').addClass('hidden');
+            $('[data-use="signin"]').addClass('hidden');
+            $('[data-use="update-user"]').addClass('hidden');
+            $('[data-use="login"]').removeClass('hidden');
         });
     });
 
