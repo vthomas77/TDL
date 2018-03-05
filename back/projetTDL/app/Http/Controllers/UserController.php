@@ -12,9 +12,10 @@ class UserController extends Controller {
         return response()->json($users);
     }
 
-    public function getUser($id) {
-        $users = User::find($id);
-        return response()->json($users);
+    public function readUser($token) {
+        $getUsers = User::readUser($token);
+        
+        return response()->json($getUsers);
     }
 
     public function saveUser($username, $email , $password) {

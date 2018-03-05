@@ -81,6 +81,7 @@ body #passwordError {
 body .img-avatar {
   width: 100%;
   border-radius: 5px;
+  max-width: 150px;
 }
 body .error {
   color: yellow;

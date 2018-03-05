@@ -122,6 +122,7 @@ $(document).ready(function(){
         $('[data-use="signin"]').addClass('hidden');
         $('[data-use="update-user"]').removeClass('hidden');
         $('[data-use="login"]').addClass('hidden');
+        $('[data-use="read-user"]').addClass('hidden');
         
         $('body').on('click', '[data-submit="update-user"]', function(){
             
@@ -144,6 +145,7 @@ $(document).ready(function(){
             $('[data-use="signin"]').addClass('hidden');
             $('[data-use="update-user"]').addClass('hidden');
             $('[data-use="login"]').removeClass('hidden');
+            $('[data-use="read-user"]').addClass('hidden');
         });
     });
     
@@ -156,6 +158,7 @@ $(document).ready(function(){
         $('[data-use="signin"]').addClass('hidden');
         $('[data-use="update-user"]').addClass('hidden');
         $('[data-use="login"]').addClass('hidden');
+        $('[data-use="read-user"]').addClass('hidden');
         
         $('[data-submit="delete-user"]').on('click', function(){
             var username = $('[data-delete="username"]')[0].value;
@@ -176,9 +179,42 @@ $(document).ready(function(){
             $('[data-use="signin"]').addClass('hidden');
             $('[data-use="update-user"]').addClass('hidden');
             $('[data-use="login"]').removeClass('hidden');
+            $('[data-use="read-user"]').addClass('hidden');
         });
     });
 
+    /*
+    // Read user account
+    */
+    
+    $('[data-action="readUser"]').on('click', function(){
+        var token = localStorage.getItem('token');
+        
+        $.post('http://192.168.33.10:8000/admin/read_account/' + token, function(data) {
+            $('[data-use="delete-user"]').addClass('hidden');
+            $('[data-use="signin"]').addClass('hidden');
+            $('[data-use="update-user"]').addClass('hidden');
+            $('[data-use="login"]').addClass('hidden');
+            $('[data-use="read-user"]').removeClass('hidden');
+            
+            var htmlRender = '<h2>Your profile :</h2>';
+            var htmlRender = htmlRender + '<img src="' + data[0].avatar + '" class="img-avatar">';
+            var htmlRender = htmlRender + '<p>Your username : ' + data[0].username + '</p>';
+            var htmlRender = htmlRender + '<p>Your email : ' + data[0].email + '</p>';
+            var htmlRender = htmlRender + '<input type="submit" value="Back" data-submit="back" class="button">';
+            
+            $('[data-use="read-user"]').html(htmlRender);
+        });
+        
+        $('body').on('click', '[data-submit="back"]', function(){
+            $('[data-use="delete-user"]').addClass('hidden');
+            $('[data-use="signin"]').addClass('hidden');
+            $('[data-use="update-user"]').addClass('hidden');
+            $('[data-use="login"]').removeClass('hidden');
+            $('[data-use="read-user"]').addClass('hidden');
+        });
+    });
+    
     /*
     // Create new card
     */

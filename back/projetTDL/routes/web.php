@@ -27,17 +27,22 @@ $router->get('login', function() {
     return 'hackathons';
 });
 
+/*
 //CRUD USERS
-//$router->get('/api/user', 'UserController@index');
+*/
 $router->get('/api/user', function(){
     return DB::select('SELECT * FROM users');
 });
 
-$router->get('api/user/{id}','UserController@getuser');
-
+//C
 $router->post('signin/{username}/{email}/{password}','UserController@saveUser');
+
+//R
+$router->post('admin/read_account/{token}','UserController@readUser');
  
+//U
 $router->post('admin/update/{username}/{password}/{newPassword}/{newUsername}/{newEmail}','UserController@updateUser');
- 
+
+//D
 $router->post('admin/remove_user/{username}','UserController@deleteUser');
 

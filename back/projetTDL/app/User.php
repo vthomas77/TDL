@@ -146,4 +146,20 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             return $dataTable;
         }
     }
+    
+    static public function readUser($token) {
+        
+        try {
+            $res = DB::table('users')
+              ->select('username', 'email', 'avatar')
+              ->where('token','=',$token)
+              ->get();
+            
+            return $res;
+        }
+        catch(\Exception $e) {
+            return 'ko bitch';
+        }
+        
+    }
 }
