@@ -86,7 +86,7 @@ class Card {
       $cardsPropertiesCollection = [];
       foreach($cardsCollection as $cc){
         $resGetCardsProperties = DB::table('cards')
-          ->select('title','priority','status','deadline','category')
+          ->select('id_card','title','priority','status','deadline','category')
           ->where('id_card','=',$cc)
           ->get();
           foreach($resGetCardsProperties as $key => $value){

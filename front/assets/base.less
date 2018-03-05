@@ -32,38 +32,43 @@ body {
         }
 
     }
-    [data-use="get-card"] > div {
-      width: 250px;
-      border: solid 2px black;
-      border-radius: 5px;
-      > div:first-of-type {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        h3 {
-          width: 80%;
-          text-align: center;
-        }
-        div {
-          position: relative;
-          width: 20%;
-          nav {
-            width: 500%;
-            position: absolute;
-            top: 100%;
-            right: 0px;
-            ul li {
-            list-style-type: none;
-            text-align: right;
+    [data-use="get-card"] {
+    display: flex;
+    flex-direction : row;
+      > div {
+        width: 250px;
+
+        border: solid 2px black;
+        border-radius: 5px;
+        > div:first-of-type {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          h3 {
+            width: 80%;
+            text-align: center;
+          }
+          div {
+            position: relative;
+            width: 20%;
+            nav {
+              width: 500%;
+              position: absolute;
+              top: 100%;
+              right: 0px;
+              ul li {
+              list-style-type: none;
+              text-align: right;
+              }
             }
           }
-        }
-        img {
-          width: 80%;
-        }
-        img:hover {
-          cursor: pointer;
-          color: yellow;
+          img {
+            width: 80%;
+          }
+          img:hover {
+            cursor: pointer;
+            color: yellow;
+          }
         }
       }
     }

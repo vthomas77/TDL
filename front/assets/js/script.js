@@ -209,17 +209,17 @@ $(document).ready(function(){
     */
 
     // Change image menu when mouse over it
-    $('[data-action="card-menu"]').on('mouseenter',function(){
-      $('[data-action="card-menu"]').attr('src','./assets/img/cardMenuGold.svg');
+    $('body').on('mouseenter','[data-action="card-menu"]',function(event){
+      $(event.target).attr('src','./assets/img/cardMenuGold.svg');
     })
 
-    $('[data-action="card-menu"]').on('mouseleave',function(){
-      $('[data-action="card-menu"]').attr('src','./assets/img/cardMenu.svg');
+    $('body').on('mouseleave','[data-action="card-menu"]',function(event){
+      $(event.target).attr('src','./assets/img/cardMenu.svg');
     })
 
     // Show card menu when click on hamburger menu
-    $('[data-action="card-menu"]').on('click',function(){
-      $('[data-use="card-menu"]').toggleClass('hidden');
+    $('body').on('click','[data-action="card-menu"]',function(event){
+      $(event.target).next().toggleClass('hidden');
     })
 
     // Get card
@@ -227,6 +227,26 @@ $(document).ready(function(){
     $.post('http://192.168.33.10:8000/getCard/' + userToken,function(data){
       // Cards creation
       var cardRender = '';
+      for (var i=0; i < data.length; i++){
+        cardRender += '<div>';
+        cardRender += '<div>';
+        cardRender += '<h3>' + data[i].title + '</h3>';
+        cardRender += '<div>';
+        cardRender += '<img data-action="card-menu" src="./assets/img/cardMenu.svg" alt="card menu">';
+        cardRender += '<nav data-use="card-menu" class="hidden">';
+        cardRender += '<ul>';
+        cardRender += '<li>Add Task</li>';
+        cardRender += '<li>Edit Card</li>';
+        cardRender += '<li>Share Card</li>';
+        cardRender += '<li>Delete Card</li>';
+        cardRender += '</ul>';
+        cardRender += '</nav>';
+        cardRender += '</div>';
+        cardRender += '</div>';
+        cardRender += '</div>';
+      }
+      $('[data-use="get-card"]').html(cardRender);
+
     })
 
 

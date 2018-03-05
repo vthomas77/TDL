@@ -29,6 +29,10 @@ body [data-use="notification"] .checked {
   font-weight: bold;
   padding-right: 9px;
 }
+body [data-use="get-card"] {
+  display: flex;
+  flex-direction: row;
+}
 body [data-use="get-card"] > div {
   width: 250px;
   border: solid 2px black;
