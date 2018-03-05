@@ -37,13 +37,13 @@ body {
     flex-direction : row;
       > div {
         width: 250px;
-
         border: solid 2px black;
         border-radius: 5px;
         > div:first-of-type {
           display: flex;
           flex-direction: row;
           align-items: center;
+          border-bottom: solid 2px black;
           h3 {
             width: 80%;
             text-align: center;
@@ -68,6 +68,11 @@ body {
           img:hover {
             cursor: pointer;
             color: yellow;
+          }
+        }
+        > div:nth-of-type(2){
+          img {
+            width: 20px;
           }
         }
       }

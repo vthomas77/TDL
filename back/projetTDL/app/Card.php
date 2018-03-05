@@ -7,6 +7,17 @@ use App\User;
 
 class Card {
 
+  public function __construct($id,$title,$priority,$status,$deadline,$category,$authorAvatar){
+    $this->id = $id;
+    $this->title = $title;
+    $this->priority = $priority;
+    $this->status = $status;
+    $this->deadline = $deadline;
+    $this->category = $category;
+    $this->authorAvatar = $authorAvatar;
+  }
+
+
   // Create Card + Properties + Logs
   static public function CreateCard ($userID,$title,$priority,$status,$deadline,$category){
 
@@ -72,8 +83,9 @@ class Card {
 
   // Get cards from user
   static public function GetCard ($userToken){
-    try {
+//    try {
       $userID = user::GetUserID($userToken);
+      $userAvatar = user::GetUserAvatar($userID);
       $resGetCards = DB::table('properties')
         ->select('cards_id_card')
         ->where('users_id_user','=',$userID)
@@ -90,13 +102,21 @@ class Card {
           ->where('id_card','=',$cc)
           ->get();
           foreach($resGetCardsProperties as $key => $value){
-            $cardsPropertiesCollection[] = $value;
+            $cardsPropertiesCollection[] = new Card(
+              $value -> id_card,
+              $value -> title,
+              $value -> priority,
+              $value -> status,
+              $value -> deadline,
+              $value -> category,
+              $userAvatar
+            );
           }
       }
       return $cardsPropertiesCollection;
-    } catch (\Exception $e) {
-      return "4";
-    }
+//    } catch (\Exception $e) {
+//      return "4";
+//    }
   }
 
 }

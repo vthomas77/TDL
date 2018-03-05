@@ -229,20 +229,23 @@ $(document).ready(function(){
       var cardRender = '';
       for (var i=0; i < data.length; i++){
         cardRender += '<div>';
-        cardRender += '<div>';
-        cardRender += '<h3>' + data[i].title + '</h3>';
-        cardRender += '<div>';
-        cardRender += '<img data-action="card-menu" src="./assets/img/cardMenu.svg" alt="card menu">';
-        cardRender += '<nav data-use="card-menu" class="hidden">';
-        cardRender += '<ul>';
-        cardRender += '<li>Add Task</li>';
-        cardRender += '<li>Edit Card</li>';
-        cardRender += '<li>Share Card</li>';
-        cardRender += '<li>Delete Card</li>';
-        cardRender += '</ul>';
-        cardRender += '</nav>';
-        cardRender += '</div>';
-        cardRender += '</div>';
+          cardRender += '<div>';
+            cardRender += '<h3>' + data[i].title + '</h3>';
+            cardRender += '<div>';
+              cardRender += '<img data-action="card-menu" src="./assets/img/cardMenu.svg" alt="card menu">';
+              cardRender += '<nav data-use="card-menu" class="hidden">';
+              cardRender += '<ul>';
+              cardRender += '<li>Add Task</li>';
+              cardRender += '<li>Edit Card</li>';
+              cardRender += '<li>Share Card</li>';
+              cardRender += '<li>Delete Card</li>';
+              cardRender += '</ul>';
+              cardRender += '</nav>';
+            cardRender += '</div>';
+          cardRender += '</div>';
+          cardRender += '<div>';
+            cardRender += '<img data-use="avatar" src="' + data[i].authorAvatar + '" alt="author avatar">';
+          cardRender += '</div>';
         cardRender += '</div>';
       }
       $('[data-use="get-card"]').html(cardRender);

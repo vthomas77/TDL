@@ -45,6 +45,18 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
       }
     }
 
+    // Get user avatar from user_id in database
+    static public function GetUserAvatar ($userID){
+      try {
+        $resGetUserAvatar = DB::table('users')
+          ->select('avatar')
+          ->where('id_user','=',$userID)
+          ->get(); 
+        return $resGetUserAvatar[0]->avatar;
+      } catch (\Exception $e) {
+        return 'error';
+      }
+    }
 
     //might be unecessary
     public function __construct($username, $email, $avatar, $password) {

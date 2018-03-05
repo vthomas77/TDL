@@ -42,6 +42,7 @@ body [data-use="get-card"] > div > div:first-of-type {
   display: flex;
   flex-direction: row;
   align-items: center;
+  border-bottom: solid 2px black;
 }
 body [data-use="get-card"] > div > div:first-of-type h3 {
   width: 80%;
@@ -67,6 +68,9 @@ body [data-use="get-card"] > div > div:first-of-type img {
 body [data-use="get-card"] > div > div:first-of-type img:hover {
   cursor: pointer;
   color: yellow;
+}
+body [data-use="get-card"] > div > div:nth-of-type(2) img {
+  width: 20px;
 }
 body .content {
   margin-left: 30vw;
