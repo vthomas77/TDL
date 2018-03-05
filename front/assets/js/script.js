@@ -116,7 +116,8 @@ $(document).ready(function(){
     /*
     //update user profile
     */
-    $('[data-action="updateUser"]').on('click', function(){
+    $('[data-action="updateUser"]').on('click', function(){        
+        $('[data-use="delete-user"]').addClass('hidden');
         $('[data-use="signin"]').addClass('hidden');
         $('[data-use="update-user"]').removeClass('hidden');
         
@@ -142,8 +143,9 @@ $(document).ready(function(){
     */
     
     $('[data-action="deleteUser"]').on('click', function(){
-        $('[data-use="delete-user"]').toggleClass('hidden');
-        $('[data-use="signin"]').toggleClass('hidden');
+        $('[data-use="delete-user"]').removeClass('hidden');
+        $('[data-use="signin"]').addClass('hidden');
+        $('[data-use="update-user"]').addClass('hidden');
         
         $('[data-submit="delete-user"]').on('click', function(){
             var username = $('[data-delete="username"]')[0].value;
