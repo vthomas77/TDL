@@ -43,7 +43,6 @@ $(document).ready(function(){
 
 
         if(password === repeatPassword) {
-            debugger;
             //test the input existance
             if(username && email) {
                 //test the email format
@@ -79,6 +78,8 @@ $(document).ready(function(){
 
                                         //put token in localstorage
                                         localStorage.setItem('token', data.token);
+                                        
+                                        debugger;
                                     } else if(data.status == 500){
                                         //if username already exist
                                         $('[data-use="notification-signin"]').html('<p>This username or email already exist, please try an other one</p>');

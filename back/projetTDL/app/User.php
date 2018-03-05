@@ -57,10 +57,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     
     static public function createUser($username, $email , $password){
         
-        //put some if here to test avatar existance ?
-        //if not, initialize avatar to a chosen generic link 
         $avatar = "./assets/img/default.png";
         $token = bin2hex(random_bytes(20));
+        $token_expiration = date('Y/m/d h:i:s', time() + 7200);
 
         try {
             DB::table('users')->insert([
@@ -70,11 +69,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
                 'avatar' => $avatar,
                 'password' => $password,
                 'token' => $token,
-                'token_expiration' => '09.11.19'
+                'token_expiration' => $token_expiration
             ]);
 
             $dataTable = [
                 'token' => $token,
+                'expiration' => $token_expiration,
                 'username' => $username,
                 'status' => 200
             ];
