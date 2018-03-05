@@ -204,5 +204,25 @@ $(document).ready(function(){
       }
     })
 
+    /*
+    // Show card
+    */
+
+    // Change image menu when mouse over it
+    $('[data-action="card-menu"]').on('mouseenter',function(){
+      $('[data-action="card-menu"]').attr('src','./assets/img/cardMenuGold.svg');
+    })
+
+    $('[data-action="card-menu"]').on('mouseleave',function(){
+      $('[data-action="card-menu"]').attr('src','./assets/img/cardMenu.svg');
+    })
+
+    // Show card menu when click on hamburger menu
+    $('[data-action="card-menu"]').on('click',function(){
+      $('[data-use="card-menu"]').toggleClass('hidden');
+    })
+
+    // Get card
+
 
 });

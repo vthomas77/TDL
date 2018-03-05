@@ -30,7 +30,44 @@ body {
             font-weight: bold;
             padding-right: 9px;
         }
+
     }
+    [data-use="get-card"] > div {
+      width: 250px;
+      border: solid 2px black;
+      border-radius: 5px;
+      > div:first-of-type {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        h3 {
+          width: 80%;
+          text-align: center;
+        }
+        div {
+          position: relative;
+          width: 20%;
+          nav {
+            width: 500%;
+            position: absolute;
+            top: 100%;
+            right: 0px;
+            ul li {
+            list-style-type: none;
+            text-align: right;
+            }
+          }
+        }
+        img {
+          width: 80%;
+        }
+        img:hover {
+          cursor: pointer;
+          color: yellow;
+        }
+      }
+    }
+
     .content {
         margin-left: 30vw;
         padding: 10%;
@@ -76,13 +113,14 @@ body {
     .blanked {
       visibility: hidden;
     }
+
     #passwordError {
         color: #131313;
         font-weight: bold;
     .img-avatar {
         width: 100%;
         border-radius: 5px;
-
+        }
     }
     .error {
       color: yellow;

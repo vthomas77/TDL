@@ -29,6 +29,41 @@ body [data-use="notification"] .checked {
   font-weight: bold;
   padding-right: 9px;
 }
+body [data-use="get-card"] > div {
+  width: 250px;
+  border: solid 2px black;
+  border-radius: 5px;
+}
+body [data-use="get-card"] > div > div:first-of-type {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+body [data-use="get-card"] > div > div:first-of-type h3 {
+  width: 80%;
+  text-align: center;
+}
+body [data-use="get-card"] > div > div:first-of-type div {
+  position: relative;
+  width: 20%;
+}
+body [data-use="get-card"] > div > div:first-of-type div nav {
+  width: 500%;
+  position: absolute;
+  top: 100%;
+  right: 0px;
+}
+body [data-use="get-card"] > div > div:first-of-type div nav ul li {
+  list-style-type: none;
+  text-align: right;
+}
+body [data-use="get-card"] > div > div:first-of-type img {
+  width: 80%;
+}
+body [data-use="get-card"] > div > div:first-of-type img:hover {
+  cursor: pointer;
+  color: yellow;
+}
 body .content {
   margin-left: 30vw;
   padding: 10%;
@@ -76,7 +111,8 @@ body .blanked {
 body #passwordError {
   color: #131313;
   font-weight: bold;
-body .img-avatar {
+}
+body #passwordError .img-avatar {
   width: 100%;
   border-radius: 5px;
 }
