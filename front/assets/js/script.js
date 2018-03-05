@@ -16,6 +16,11 @@ $(document).ready(function(){
         $('[data-use="login"]').toggleClass('hidden');
         //$.post('192.168.33.10:8000/singin')
     });
+    
+    //toggle down options when connected ans when clicking on the crossed wheel icon
+    $('body').on('click', '[data-use="sidebar"] h1 svg', function(){
+        $('[data-use="sidebar-connected"]').toggleClass('hidden');
+    });
 
     //when submit the login
     $('[data-submit="login"]').on('click', function(){
@@ -64,7 +69,7 @@ $(document).ready(function(){
                                         $('[data-use="notification-signin"]').html('<span class="checked" style="padding-right:12px;font-weight:bold;">√</span>' +  data.username + "'s account has been successfully created !");
 
                                         //set profile in sidebar
-                                        $('[data-use="insidebar"]').html('<img src="' + avatar + '" class="img-avatar"><h1>' + username + '</h1>');
+                                        $('[data-use="insidebar"]').html('<img src="' + avatar + '" class="img-avatar"><h1>' + username + '<i class="fa fa-cog"></i></h1>');
 
                                         //hide the submit
                                         $('[data-submit="signin"]').addClass('hidden');
@@ -72,14 +77,10 @@ $(document).ready(function(){
 
                                         //replace by next button
                                         $('[data-use="signin"] div').append('<input type="submit" data-action="lets-go" value="Let\'s go ! ►" class="button big">')
- 
-                                        //makes admin tools appear
-                                        $('[data-use="sidebar-connected"]').removeClass('hidden');
 
                                         //put token in localstorage
                                         localStorage.setItem('token', data.token);
                                         
-                                        debugger;
                                     } else if(data.status == 500){
                                         //if username already exist
                                         $('[data-use="notification-signin"]').html('<p>This username or email already exist, please try an other one</p>');
@@ -137,6 +138,9 @@ $(document).ready(function(){
                 
                 //notification to user
                 $('[data-use="notification-update-user"]').html(data.username + ', your account has been successfully updated !');
+                
+                //refresh name in sidebar
+                 $('[data-use="insidebar"] h1').html(newUsername + '<i class="fa fa-cog"></i>');
             });
         });
         
@@ -162,15 +166,12 @@ $(document).ready(function(){
         
         $('[data-submit="delete-user"]').on('click', function(){
             var username = $('[data-delete="username"]')[0].value;
-            debugger;
             if(username) {
                 $.post('http://192.168.33.10:8000/admin/remove_user/' + encodeURI(username), function(data) {
-                    debugger;
                     $('[data-use="delete-user"]').html('<p>Your account has been successfully removed !</p>');
                 });
             } else {
                 $('[data-use="delete-user"]').append('<p class="error">Please, enter your username first</p>');
-                debugger;
             }
         });
         

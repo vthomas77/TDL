@@ -20,6 +20,13 @@ body [data-use="sidebar"] h1 {
   text-transform: uppercase;
   font-size: 1rem;
 }
+body [data-use="sidebar"] h1 svg {
+  padding-left: 10px;
+  cursor: pointer;
+}
+body [data-use="sidebar"] h1 svg:hover {
+  color: #db4c3f;
+}
 body [data-use="notification"] {
   color: #26282a;
   font-weight: bold;
