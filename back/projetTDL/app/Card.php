@@ -3,6 +3,7 @@
 namespace App;
 
 use DB;
+use App\User;
 
 class Card {
 
@@ -67,6 +68,35 @@ class Card {
       return "4";
     }
 
+  }
+
+  // Get cards from user
+  static public function GetCard ($userToken){
+    try {
+      $userID = user::GetUserID($userToken);
+      $resGetCards = DB::table('properties')
+        ->select('cards_id_card')
+        ->where('users_id_user','=',$userID)
+        ->get();
+      $cardsCollection = [];
+      foreach($resGetCards as $key => $value){
+        $cardID = $value->cards_id_card;
+        $cardsCollection[] = $cardID;
+      }
+      $cardsPropertiesCollection = [];
+      foreach($cardsCollection as $cc){
+        $resGetCardsProperties = DB::table('cards')
+          ->select('title','priority','status','deadline','category')
+          ->where('id_card','=',$cc)
+          ->get();
+          foreach($resGetCardsProperties as $key => $value){
+            $cardsPropertiesCollection[] = $value;
+          }
+      }
+      return $cardsPropertiesCollection;
+    } catch (\Exception $e) {
+      return "4";
+    }
   }
 
 }

@@ -223,6 +223,11 @@ $(document).ready(function(){
     })
 
     // Get card
+    var userToken = localStorage.getItem('token');
+    $.post('http://192.168.33.10:8000/getCard/' + userToken,function(data){
+      // Cards creation
+      var cardRender = '';
+    })
 
 
 });

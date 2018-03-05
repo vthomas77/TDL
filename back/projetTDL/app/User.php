@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-use DB;
+//use DB;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Support\Facades\DB;

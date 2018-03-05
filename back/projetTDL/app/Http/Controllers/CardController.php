@@ -18,4 +18,10 @@ class CardController extends Controller
         return response()->json(card::CreateCard($userID,$title,$priority,$status,$deadline,$category));
     }
 
+    // Get Card
+    public function GetCard($userToken)
+    {
+        return response()->json(card::GetCard($userToken));
+    }
+
 }

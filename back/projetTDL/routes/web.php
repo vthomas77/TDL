@@ -19,6 +19,9 @@ $router->get('/', function () use ($router) {
 // Create Card
 $router->post('createCard/{userID}/{title}/{priority}/{category}/{deadline}/{status}', 'CardController@CreateCard');
 
+// Get Card
+$router->post('getCard/{userToken}', 'CardController@GetCard');
+
 // Get Id users
 $router->post('getIDUser/{userToken}', 'UserController@GetUserID');
 
