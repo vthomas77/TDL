@@ -18,7 +18,8 @@
                 <h1>Hello </h1>
             </div>
             <div data-use="sidebar-connected" class="hidden">
-                 <input type="submit" data-action="updateUser" class="button" value="update account">
+                <input type="submit" data-action="updateUser" class="button" value="update account">
+                <input type="submit" data-action="deleteUser" class="button" value="delete account">
             </div>
         </div>
 
@@ -77,6 +78,19 @@
                 <input type="submit" data-submit="update-back" class="button big" value="Back">
             </div>
             <div data-use="notification-update-user"></div>
+        </div>
+        
+        <!-- appears when deleting user account -->
+        <div data-use="delete-user" class="hidden content">
+            <h2>Delete account</h2>
+            <p><span class="warning">WARNING</span> By deleting your account, you're exposing yourself to the risk, not to recover your username. If someone else choose this username, you'll have to find another one to create a new account. The information will be immiedately drop from our database, we don't keep archive of your data.</p>
+            
+            <p>If you still want to delete your account, please press the confirmation button down here.</p>
+            
+            <!-- ask user to rewrite username to auth -->
+            <input type="text" data-delete="username" placeholder="Enter your username">
+            
+            <input type="submit" data-submit="delete-user" value="I delete my account now" class="button big">
         </div>
         
         <section data-use="create-card" class="content hidden">

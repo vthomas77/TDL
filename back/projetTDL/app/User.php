@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-use DB;
+//use DB;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Support\Facades\DB;
@@ -106,6 +106,33 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             
             $dataTable = [
                 'username' => $newUsername,
+                'status' => 200
+            ];
+            
+            return $dataTable;
+        }
+        catch(\Illuminate\Database\QueryException $e) {
+            $dataTable = [
+                'status' => 500
+            ];
+
+            return $dataTable;
+        }
+    }
+    
+    static public function deleteUser($username) {
+        
+        try {
+            
+            DB::table('users')
+                ->where([
+                    ['username', '=', $username],
+                ])->delete();
+            
+            //$deletedUsers = User::find($username);
+            //$deletedUsers->delete();
+            
+            $dataTable = [
                 'status' => 200
             ];
             

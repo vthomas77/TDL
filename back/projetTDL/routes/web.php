@@ -39,5 +39,5 @@ $router->post('signin/{username}/{email}/{password}','UserController@saveUser');
  
 $router->post('admin/update/{username}/{password}/{newPassword}/{newUsername}/{newEmail}','UserController@updateUser');
  
-$router->delete('api/user/{id}','UserController@deleteUser');
+$router->post('admin/remove_user/{username}','UserController@deleteUser');
 
