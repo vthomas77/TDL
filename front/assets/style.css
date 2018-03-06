@@ -58,7 +58,11 @@ body [data-use="get-card"] > div > div:first-of-type div nav {
   top: 100%;
   right: 0px;
 }
+body [data-use="get-card"] > div > div:first-of-type div nav ul {
+  padding: 0px;
+}
 body [data-use="get-card"] > div > div:first-of-type div nav ul li {
+  background-color: black;
   list-style-type: none;
   text-align: right;
 }
