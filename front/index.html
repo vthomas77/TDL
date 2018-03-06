@@ -32,8 +32,13 @@
                 <h2>Login</h2>
                 <input type="text" data-login="username" placeholder="username">
                 <input type="password" data-login="password" placeholder="password">
-                <input type="submit" data-submit="login" value="OK" class="button">
-                <input type="submit" data-submit="go-to-signin" value="I create my account now ►" class="button">
+                
+                <p data-use="notification-login">
+                </p>
+                
+                <input type="submit" data-submit="login" value="OK" class="button big">
+                <br><br>
+                <input type="submit" data-submit="go-to-signin" value="I don't have any account" class="button">
             </div>
         </div>
         <div data-use="signin" class="hidden content">
@@ -57,7 +62,7 @@
                 </p>
 
 
-                <input type="submit" value="OK" data-submit="signin" class="button">
+                <input type="submit" value="OK" data-submit="signin" class="button big">
                 <input type="submit" value="◄ I have an account !" data-submit="back-to-login" class="button">
             </div>
         </div>

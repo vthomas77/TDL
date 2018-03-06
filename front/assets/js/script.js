@@ -22,19 +22,29 @@ $(document).ready(function(){
         $('[data-use="sidebar-connected"]').toggleClass('hidden');
     });
 
-    //when submit the login
+    /*
+    // Login user
+    */
+    
     $('[data-submit="login"]').on('click', function(){
         var username = $('[data-login="username"]')[0].value;
         var password = $('[data-login="password"]')[0].value;
 
-        $.get('http://192.168.33.10:8000/login/', function(data) {
+        
+        debugger;
+        $.get('http://192.168.33.10:8000/login/' + username + '/' + password, function(data) {
             debugger;
+            if(data.length > 0) {
+                //makes dashboard appears
+
+                //set profile in sidebar
+                $('[data-use="insidebar"]').html('<img src="' + data[0].avatar + '" class="img-avatar"><h1>' + data[0].username + '<i class="fa fa-cog"></i></h1>');
+            } else {
+                $('[data-use="notification-login"]').html('<p class="error">username and password doesn\'t seems to match... Please try again !</p>');
+            }
         });
-
-        //personalize the interface
-        $('[data-use="sidebar"] h1').html("Hello " + username + " !").toUpperCase;
     });
-
+    
     /*
     //create user profile
     */
@@ -216,7 +226,7 @@ $(document).ready(function(){
             $('[data-use="read-user"]').addClass('hidden');
         });
     });
-    
+
     /*
     // Create new card
     */

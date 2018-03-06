@@ -22,11 +22,6 @@ $router->post('createCard/{userID}/{title}/{priority}/{category}/{deadline}/{sta
 // Get Id users
 $router->post('getIDUser/{userToken}', 'UserController@GetUserID');
 
-
-$router->get('login', function() {
-    return 'hackathons';
-});
-
 /*
 //CRUD USERS
 */
@@ -46,3 +41,8 @@ $router->post('admin/update/{username}/{password}/{newPassword}/{newUsername}/{n
 //D
 $router->post('admin/remove_user/{username}','UserController@deleteUser');
 
+/*
+//Auth user     
+*/
+
+$router->get('login/{username}/{password}', 'UserController@authUser');

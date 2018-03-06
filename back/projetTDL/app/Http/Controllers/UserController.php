@@ -39,5 +39,12 @@ class UserController extends Controller {
     public function GetUserID($userToken){
       return response()->json(User::GetUserID($userToken));
     }
+    
+    //auth user
+    public function authUser($username, $password) {
+        $auth = User::authUser($username, $password);
+        
+        return response()->json($auth);
+    }
 
 }

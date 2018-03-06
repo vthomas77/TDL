@@ -186,8 +186,46 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             return $dataTable;
         }
         catch(\Exception $e) {
-            return 'ko bitch';
+            $dataTable = [
+                'status' => 500
+            ];
+
+            return $dataTable;
         }
         
+    }
+    
+    static public function authUser($username, $password) {
+        
+        try {
+            $res = DB::table('users')
+              ->select('username', 'avatar')
+              ->where([
+                    ['username', '=', $username],
+                    ['password', '=', $password],
+                ])
+              ->get();
+                        
+            $dataTable = [
+                'res' => $res,
+                'status' => 200
+            ];
+
+            return $res;
+        }
+        catch(\Illuminate\Database\QueryException $e) {
+            $dataTable = [
+                'status' => 500
+            ];
+
+            return $dataTable;
+        }
+        catch(\Exception $e) {
+            $dataTable = [
+                'status' => 500
+            ];
+
+            return $dataTable;
+        }
     }
 }

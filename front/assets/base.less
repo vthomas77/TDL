@@ -28,6 +28,21 @@ body {
             }
         }
     }
+    [data-use="sidebar-connected"] {
+        input {
+            border: none;
+            background-color: @grey;
+            color: white;
+            padding: 10px 2px;
+            border-bottom: 1px solid white;
+            text-transform: uppercase;
+            &:hover {
+                border-bottom: 1px solid @main;
+                color: @main;
+                cursor: pointer;
+            }
+        }
+    }
     [data-use="notification"] {
         color: @grey;
         font-weight: bold;
