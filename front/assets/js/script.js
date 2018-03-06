@@ -39,6 +39,10 @@ $(document).ready(function(){
 
                 //set profile in sidebar
                 $('[data-use="insidebar"]').html('<img src="' + data[0].avatar + '" class="img-avatar"><h1>' + data[0].username + '<i class="fa fa-cog"></i></h1>');
+                
+                $('[data-use="notification-login"]').addClass('hidden');
+                
+                localStorage.setItem('token', data[0].token);
             } else {
                 $('[data-use="notification-login"]').html('<p class="error">username and password doesn\'t seems to match... Please try again !</p>');
             }
@@ -134,25 +138,30 @@ $(document).ready(function(){
         
         $('body').on('click', '[data-submit="update-user"]', function(){
             
-            var username = $('[data-auth="username"]')[0].value;
-            var password = $('[data-auth="password"]')[0].value;
+            var token = localStorage.getItem('token');
             
-            var newUsername = $('[data-update="username"]')[0].value;
-            var newPassword = $('[data-update="password"]')[0].value;
-            var newEmail = $('[data-update="email"]')[0].value;
-            
-            $.post('http://192.168.33.10:8000/admin/update/' + encodeURI(username) + '/' + encodeURI(password) + '/' + encodeURI(newPassword) + '/' + encodeURI(newUsername) + '/' + encodeURI(newEmail) , function(data) {
-                
-                if(data.status == 200) {
-                    //notification to user
-                    $('[data-use="notification-update-user"]').html(data.username + ', your account has been successfully updated !');
+            if(token) {
 
-                    //refresh name in sidebar
-                     $('[data-use="insidebar"] h1').html(newUsername + '<i class="fa fa-cog"></i>');
-                } else {
-                    $('[data-use="notification-update-user"]').html('<span class="error">Error with your update, check your inputs or try another username</span>');
-                } 
-            });
+                var newUsername = $('[data-update="username"]')[0].value;
+                var newPassword = $('[data-update="password"]')[0].value;
+                var newEmail = $('[data-update="email"]')[0].value;
+
+                $.post('http://192.168.33.10:8000/admin/update/' + encodeURI(token) + '/' + encodeURI(newPassword) + '/' + encodeURI(newUsername) + '/' + encodeURI(newEmail) , function(data) {
+
+                    if(data.status == 200) {
+                        //notification to user
+                        $('[data-use="notification-update-user"]').html(data.username + ', your account has been successfully updated !');
+
+                        //refresh name in sidebar
+                         $('[data-use="insidebar"] h1').html(newUsername + '<i class="fa fa-cog"></i>');
+                    } else {
+                        $('[data-use="notification-update-user"]').html('<span class="error">Error with your update, check your inputs or try another username</span>');
+                    } 
+                });
+            } else {
+                //no token
+                $('[data-use="notification-update-user"]').html('<p class="error">Your connection has expired, please reconnect</p>');
+            }
         });
         
         $('[data-submit="update-back" ]').on('click', function(){
@@ -179,7 +188,14 @@ $(document).ready(function(){
             var username = $('[data-delete="username"]')[0].value;
             if(username) {
                 $.post('http://192.168.33.10:8000/admin/remove_user/' + encodeURI(username), function(data) {
-                    $('[data-use="delete-user"]').html('<p>Your account has been successfully removed !</p>');
+                    if(data.status == 200) {
+                        $('[data-use="delete-user"]').html('<p>Your account has been successfully removed !</p>');
+                    
+                        debugger;
+                        localStorage.removeItem('token');
+                    } else {
+                        $('[data-use="delete-user"]').append('<p class="error">An error has occured, please try again</p>');
+                    }
                 });
             } else {
                 $('[data-use="delete-user"]').append('<p class="error">Please, enter your username first</p>');
@@ -198,33 +214,44 @@ $(document).ready(function(){
     /*
     // Read user account
     */
-    
     $('[data-action="readUser"]').on('click', function(){
         var token = localStorage.getItem('token');
         
-        $.post('http://192.168.33.10:8000/admin/read_account/' + token, function(data) {
+        if(token) {
+            $.post('http://192.168.33.10:8000/admin/read_account/' + token, function(data) {
+                $('[data-use="delete-user"]').addClass('hidden');
+                $('[data-use="signin"]').addClass('hidden');
+                $('[data-use="update-user"]').addClass('hidden');
+                $('[data-use="login"]').addClass('hidden');
+                $('[data-use="read-user"]').removeClass('hidden');
+
+                var htmlRender = '<h2>Your profile :</h2>';
+                var htmlRender = htmlRender + '<img src="' + data[0].avatar + '" class="img-avatar">';
+                var htmlRender = htmlRender + '<p>Your username : ' + data[0].username + '</p>';
+                var htmlRender = htmlRender + '<p>Your email : ' + data[0].email + '</p>';
+                var htmlRender = htmlRender + '<input type="submit" value="Back" data-submit="back" class="button">';
+
+                $('[data-use="read-user"]').html(htmlRender);
+            });
+
+            $('body').on('click', '[data-submit="back"]', function(){
+                $('[data-use="delete-user"]').addClass('hidden');
+                $('[data-use="signin"]').addClass('hidden');
+                $('[data-use="update-user"]').addClass('hidden');
+                $('[data-use="login"]').removeClass('hidden');
+                $('[data-use="read-user"]').addClass('hidden');
+            });
+        } else {
             $('[data-use="delete-user"]').addClass('hidden');
+            $('[data-use="read-user"]').removeClass('hidden');
             $('[data-use="signin"]').addClass('hidden');
             $('[data-use="update-user"]').addClass('hidden');
             $('[data-use="login"]').addClass('hidden');
-            $('[data-use="read-user"]').removeClass('hidden');
             
-            var htmlRender = '<h2>Your profile :</h2>';
-            var htmlRender = htmlRender + '<img src="' + data[0].avatar + '" class="img-avatar">';
-            var htmlRender = htmlRender + '<p>Your username : ' + data[0].username + '</p>';
-            var htmlRender = htmlRender + '<p>Your email : ' + data[0].email + '</p>';
-            var htmlRender = htmlRender + '<input type="submit" value="Back" data-submit="back" class="button">';
-            
-            $('[data-use="read-user"]').html(htmlRender);
-        });
+            //notification of the error
+            $('[data-use="read-user"]').html('<p class="error">Your connection has expired, please reconnect</p>')
+        }
         
-        $('body').on('click', '[data-submit="back"]', function(){
-            $('[data-use="delete-user"]').addClass('hidden');
-            $('[data-use="signin"]').addClass('hidden');
-            $('[data-use="update-user"]').addClass('hidden');
-            $('[data-use="login"]').removeClass('hidden');
-            $('[data-use="read-user"]').addClass('hidden');
-        });
     });
 
     /*

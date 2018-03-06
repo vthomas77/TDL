@@ -36,7 +36,7 @@ $router->post('signin/{username}/{email}/{password}','UserController@saveUser');
 $router->post('admin/read_account/{token}','UserController@readUser');
  
 //U
-$router->post('admin/update/{username}/{password}/{newPassword}/{newUsername}/{newEmail}','UserController@updateUser');
+$router->post('admin/update/{token}/{newPassword}/{newUsername}/{newEmail}','UserController@updateUser');
 
 //D
 $router->post('admin/remove_user/{username}','UserController@deleteUser');

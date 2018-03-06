@@ -98,13 +98,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         }
     }
     
-    static public function updateUser($username, $password, $newPassword, $newUsername, $newEmail) {
+    static public function updateUser($token, $newPassword, $newUsername, $newEmail) {
         //
         try {
             DB::table('users')
                 ->where([
-                    ['username', '=', $username],
-                    ['password', '=', $password],
+                    ['token', '=', $token],
                 ])->update(array(
                     'username' => $newUsername,
                     'password' => $newPassword,
@@ -199,7 +198,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         
         try {
             $res = DB::table('users')
-              ->select('username', 'avatar')
+              ->select('username', 'avatar', 'token')
               ->where([
                     ['username', '=', $username],
                     ['password', '=', $password],
