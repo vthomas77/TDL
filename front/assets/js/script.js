@@ -225,7 +225,6 @@ $(document).ready(function(){
     // Get card
     var userToken = localStorage.getItem('token');
     $.post('http://192.168.33.10:8000/getCard/' + userToken,function(data){
-
       // Sort array relative to rank card
       data.sort(function(a,b){
         return b.rank - a.rank;
@@ -250,7 +249,10 @@ $(document).ready(function(){
             cardRender += '</div>';
           cardRender += '</div>';
           cardRender += '<div>';
-            cardRender += '<img data-use="avatar" src="' + data[i].authorAvatar + '" alt="author avatar">';
+            for (var j=0; j <  data[i].collaborators.length; j++){
+              debugger;
+              cardRender += '<img data-use="avatar" src="' + data[i].collaborators[j] + '" alt="author avatar">';
+            }
           cardRender += '</div>';
         cardRender += '</div>';
       }

@@ -7,15 +7,15 @@ use App\User;
 
 class Card {
 
-  public function __construct($id,$title,$priority,$status,$deadline,$category,$authorAvatar,$rank){
+  public function __construct($id,$title,$priority,$status,$deadline,$category,$rank,$collaborators){
     $this->id = $id;
     $this->title = $title;
     $this->priority = $priority;
     $this->status = $status;
     $this->deadline = $deadline;
     $this->category = $category;
-    $this->authorAvatar = $authorAvatar;
     $this->rank = $rank;
+    $this->collaborators = $collaborators;
   }
 
 
@@ -82,44 +82,47 @@ class Card {
 
   }
 
-  // Get cards from user
-  static public function GetCard ($userToken){
-//    try {
+
+// Get cards from user
+static public function GetCard ($userToken){
+    try {
+      $cardsProperties = [];
       $userID = user::GetUserID($userToken);
-      $userAvatar = user::GetUserAvatar($userID);
-      $resGetCards = DB::table('properties')
-        ->select('cards_id_card','rank')
-        ->where('users_id_user','=',$userID)
+      $resGetCardsFromUser = DB::table('properties')
+        ->join('cards', 'cards.id_card', '=', 'properties.cards_id_card')
+        ->select('cards.id_card','cards.title','cards.priority','cards.status','cards.deadline','cards.category','properties.rank')
+        ->where('properties.users_id_user','=',$userID)
         ->get();
-      $cardsCollection = [];
-      foreach($resGetCards as $key => $value){
-        $cardID = $value->cards_id_card;
-        $cardRank = $value->rank;
-        $cardsCollection[] = [$cardID,$cardRank];
-      }
-      $cardsPropertiesCollection = [];
-      foreach($cardsCollection as $cc){
-        $resGetCardsProperties = DB::table('cards')
-          ->select('id_card','title','priority','status','deadline','category')
-          ->where('id_card','=',$cc[0])
+      foreach ($resGetCardsFromUser as $key => $value)
+      {
+        $collaborators = [];
+        $resGetCollabortorsFromCard = DB::table('properties')
+          ->join('users', 'users.id_user', '=', 'properties.users_id_user')
+          ->select('users.id_user','users.avatar')
+          ->where('properties.cards_id_card','=',$value -> id_card)
           ->get();
-          foreach($resGetCardsProperties as $key => $value){
-            $cardsPropertiesCollection[] = new Card(
-              $value -> id_card,
-              $value -> title,
-              $value -> priority,
-              $value -> status,
-              $value -> deadline,
-              $value -> category,
-              $userAvatar,
-              $cc[1]
-            );
-          }
+        foreach ($resGetCollabortorsFromCard as $key => $v)
+        {
+          $collaborators[] = $v->avatar;
+        }
+        $cardsProperties[] = new Card(
+         $value -> id_card,
+         $value -> title,
+         $value -> priority,
+         $value -> status,
+         $value -> deadline,
+         $value -> category,
+         $value -> rank,
+         $collaborators
+        );
       }
-      return $cardsPropertiesCollection;
-//    } catch (\Exception $e) {
-//      return "4";
-//    }
+      return $cardsProperties;
+
+    } catch (\Exception $e) {
+      return "4";
+    }
+
+
   }
 
 }
