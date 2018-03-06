@@ -23,7 +23,7 @@
                 <input type="submit" data-action="readUser" class="button" value="see my account">
             </div>
         </div>
-        
+
         <div data-use="read-user" class="content">
         </div>
 
@@ -32,10 +32,10 @@
                 <h2>Login</h2>
                 <input type="text" data-login="username" placeholder="username">
                 <input type="password" data-login="password" placeholder="password">
-                
+
                 <p data-use="notification-login">
                 </p>
-                
+
                 <input type="submit" data-submit="login" value="OK" class="button big">
                 <br><br>
                 <input type="submit" data-submit="go-to-signin" value="I don't have any account" class="button">
@@ -66,18 +66,18 @@
                 <input type="submit" value="◄ I have an account !" data-submit="back-to-login" class="button">
             </div>
         </div>
-        
+
         <!-- appears when updating user account -->
         <div data-use="update-user" class="hidden content">
             <h2>Update your account</h2>
-            
+
             <div data-update="update">
                 <input type="text" data-update="username" placeholder="update username">
                 <input type="text" data-update="password" placeholder="update password">
                 <input type="text" data-update="repeat-password" placeholder="repeat password">
                 <input type="text" data-update="email" placeholder="update email">
             </div>
-            
+
             <div data-update="submit">
                 <input type="submit" data-submit="update-user" class="button big" value="Update now !">
                 <br>
@@ -85,22 +85,22 @@
             </div>
             <div data-use="notification-update-user"></div>
         </div>
-        
+
         <!-- appears when deleting user account -->
         <div data-use="delete-user" class="hidden content">
             <h2>Delete account</h2>
             <p><span class="warning">WARNING</span> By deleting your account, you're exposing yourself to the risk, not to recover your username. If someone else choose this username, you'll have to find another one to create a new account. The information will be immiedately drop from our database, we don't keep archive of your data.</p>
-            
+
             <p>If you still want to delete your account, please press the confirmation button down here.</p>
-            
+
             <!-- ask user to rewrite username to auth -->
             <input type="text" data-delete="username" placeholder="Enter your username">
-            
+
             <input type="submit" data-submit="delete-user" value="I delete my account now" class="button big">
-            
+
             <input type="submit" data-submit="keep-my-account" value="Finally I keep my account" class="button">
         </div>
-        
+
         <section data-use="create-card" class="content hidden">
           <h2>New Card</h2>
           <label for="new-card-title">Title</label>
@@ -119,7 +119,9 @@
           <input type="submit" data-use="new-card-submit" class="button" value="Create">
           <p data-use="new-card-notification"></p>
         </section>
-        
+        <section data-use="get-card" class="content">
+        </section>
+
         <!-- fontawesome cdn -->
         <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     </body>

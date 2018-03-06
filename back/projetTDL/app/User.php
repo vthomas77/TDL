@@ -45,6 +45,18 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
       }
     }
 
+    // Get user avatar from user_id in database
+    static public function GetUserAvatar ($userID){
+      try {
+        $resGetUserAvatar = DB::table('users')
+          ->select('avatar')
+          ->where('id_user','=',$userID)
+          ->get();
+        return $resGetUserAvatar[0]->avatar;
+      } catch (\Exception $e) {
+        return 'error';
+      }
+    }
 
     //might be unecessary
     public function __construct($username, $email, $avatar, $password) {
@@ -54,9 +66,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         $this->password = $password;
     }
 
-    
+
     static public function createUser($username, $email , $password){
-        
+
         $avatar = "./assets/img/default.png";
         $token = bin2hex(random_bytes(20));
         $token_expiration = date('Y/m/d h:i:s', time() + 7200);
@@ -97,7 +109,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             return $dataTable;
         }
     }
-    
+
     static public function updateUser($token, $newPassword, $newUsername, $newEmail) {
         //
         try {
@@ -109,12 +121,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
                     'password' => $newPassword,
                     'email' => $newEmail
                 ));
-            
+
             $dataTable = [
                 'username' => $newUsername,
                 'status' => 200
             ];
-            
+
             return $dataTable;
         }
         catch(\Illuminate\Database\QueryException $e) {
@@ -132,23 +144,23 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             return $dataTable;
         }
     }
-    
+
     static public function deleteUser($username) {
-        
+
         try {
-            
+
             DB::table('users')
                 ->where([
                     ['username', '=', $username],
                 ])->delete();
-            
+
             //$deletedUsers = User::find($username);
             //$deletedUsers->delete();
-            
+
             $dataTable = [
                 'status' => 200
             ];
-            
+
             return $dataTable;
         }
         catch(\Illuminate\Database\QueryException $e) {
@@ -166,15 +178,15 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             return $dataTable;
         }
     }
-    
+
     static public function readUser($token) {
-        
+
         try {
             $res = DB::table('users')
               ->select('username', 'email', 'avatar')
               ->where('token','=',$token)
               ->get();
-            
+
             return $res;
         }
         catch(\Illuminate\Database\QueryException $e) {
@@ -191,11 +203,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
             return $dataTable;
         }
-        
+
     }
-    
+
     static public function authUser($username, $password) {
-        
+
         try {
             $res = DB::table('users')
               ->select('username', 'avatar', 'token')
@@ -204,7 +216,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
                     ['password', '=', $password],
                 ])
               ->get();
-                        
+
             $dataTable = [
                 'res' => $res,
                 'status' => 200

@@ -347,5 +347,76 @@ $(document).ready(function(){
       }
     })
 
+    /*
+    // Show card
+    */
+
+    // Change image menu when mouse over it
+    $('body').on('mouseenter','[data-action="card-menu"]',function(event){
+      $(event.target).attr('src','./assets/img/cardMenuGold.svg');
+    })
+
+    $('body').on('mouseleave','[data-action="card-menu"]',function(event){
+      $(event.target).attr('src','./assets/img/cardMenu.svg');
+    })
+
+    // Show card menu when click on hamburger menu
+    $('body').on('click','[data-action="card-menu"]',function(event){
+      $(event.target).next().toggleClass('hidden');
+    })
+
+    // Get card
+    var userToken = localStorage.getItem('token');
+    $.post('http://192.168.33.10:8000/getCard/' + userToken,function(data){
+      // Sort array relative to rank card
+      data.sort(function(a,b){
+        return b.rank - a.rank;
+      });
+
+      // Cards creation
+      var cardRender = '';
+      for (var i=0; i < data.length; i++){
+        cardRender += '<div>';
+          cardRender += '<div>';
+            cardRender += '<h3>' + data[i].title + '</h3>';
+            cardRender += '<div>';
+              cardRender += '<img data-action="card-menu" src="./assets/img/cardMenu.svg" alt="card menu">';
+              cardRender += '<nav data-use="card-menu" class="hidden">';
+              cardRender += '<ul>';
+              cardRender += '<li>Add Task</li>';
+              cardRender += '<li>Edit Card</li>';
+              cardRender += '<li>Share Card</li>';
+              cardRender += '<li>Delete Card</li>';
+              cardRender += '</ul>';
+              cardRender += '</nav>';
+            cardRender += '</div>';
+          cardRender += '</div>';
+          cardRender += '<div>';
+            for (var j=0; j <  data[i].collaborators.length; j++){
+              cardRender += '<img data-use="avatar" src="' + data[i].collaborators[j] + '" alt="author avatar">';
+            }
+          cardRender += '</div>';
+          cardRender += '<div>';
+          if (data[i].priority == 2) {
+            cardRender += '<img src="./assets/img/warning-sign.svg" alt="high priority">';
+          }
+          if (data[i].status == 0) {
+            cardRender += '<img src="./assets/img/smiling.svg" alt="status OK">';
+          }
+          else if (data[i].status == 1)
+          {
+            cardRender += '<img src="./assets/img/sad.svg" alt="status NOK">';
+          }
+          cardRender += '<img src="./assets/img/flag.svg" alt="category">';
+          cardRender += '</div>';
+          cardRender += '<div>';
+          cardRender += '<p>Empty Task</p>';
+          cardRender += '</div>';
+        cardRender += '</div>';
+      }
+      $('[data-use="get-card"]').html(cardRender);
+
+    })
+
 
 });

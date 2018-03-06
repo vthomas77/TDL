@@ -3,8 +3,21 @@
 namespace App;
 
 use DB;
+use App\User;
 
 class Card {
+
+  public function __construct($id,$title,$priority,$status,$deadline,$category,$rank,$collaborators){
+    $this->id = $id;
+    $this->title = $title;
+    $this->priority = $priority;
+    $this->status = $status;
+    $this->deadline = $deadline;
+    $this->category = $category;
+    $this->rank = $rank;
+    $this->collaborators = $collaborators;
+  }
+
 
   // Create Card + Properties + Logs
   static public function CreateCard ($userID,$title,$priority,$status,$deadline,$category){
@@ -66,6 +79,49 @@ class Card {
     } catch (\Exception $e) {
       return "4";
     }
+
+  }
+
+
+// Get cards from user
+static public function GetCard ($userToken){
+    try {
+      $cardsProperties = [];
+      $userID = user::GetUserID($userToken);
+      $resGetCardsFromUser = DB::table('properties')
+        ->join('cards', 'cards.id_card', '=', 'properties.cards_id_card')
+        ->select('cards.id_card','cards.title','cards.priority','cards.status','cards.deadline','cards.category','properties.rank')
+        ->where('properties.users_id_user','=',$userID)
+        ->get();
+      foreach ($resGetCardsFromUser as $key => $value)
+      {
+        $collaborators = [];
+        $resGetCollabortorsFromCard = DB::table('properties')
+          ->join('users', 'users.id_user', '=', 'properties.users_id_user')
+          ->select('users.id_user','users.avatar')
+          ->where('properties.cards_id_card','=',$value -> id_card)
+          ->get();
+        foreach ($resGetCollabortorsFromCard as $key => $v)
+        {
+          $collaborators[] = $v->avatar;
+        }
+        $cardsProperties[] = new Card(
+         $value -> id_card,
+         $value -> title,
+         $value -> priority,
+         $value -> status,
+         $value -> deadline,
+         $value -> category,
+         $value -> rank,
+         $collaborators
+        );
+      }
+      return $cardsProperties;
+
+    } catch (\Exception $e) {
+      return "4";
+    }
+
 
   }
 
