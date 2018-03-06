@@ -69,7 +69,16 @@ body [data-use="get-card"] > div > div:first-of-type img:hover {
   cursor: pointer;
   color: yellow;
 }
+body [data-use="get-card"] > div > div:nth-of-type(2) {
+  border-bottom: solid 2px black;
+}
 body [data-use="get-card"] > div > div:nth-of-type(2) img {
+  width: 20px;
+}
+body [data-use="get-card"] > div > div:nth-of-type(3) {
+  border-bottom: solid 2px black;
+}
+body [data-use="get-card"] > div > div:nth-of-type(3) img {
   width: 20px;
 }
 body .content {

@@ -250,9 +250,24 @@ $(document).ready(function(){
           cardRender += '</div>';
           cardRender += '<div>';
             for (var j=0; j <  data[i].collaborators.length; j++){
-              debugger;
               cardRender += '<img data-use="avatar" src="' + data[i].collaborators[j] + '" alt="author avatar">';
             }
+          cardRender += '</div>';
+          cardRender += '<div>';
+          if (data[i].priority == 2) {
+            cardRender += '<img src="./assets/img/warning-sign.svg" alt="high priority">';
+          }
+          if (data[i].status == 0) {
+            cardRender += '<img src="./assets/img/smiling.svg" alt="status OK">';
+          }
+          else if (data[i].status == 1)
+          {
+            cardRender += '<img src="./assets/img/sad.svg" alt="status NOK">';
+          }
+          cardRender += '<img src="./assets/img/flag.svg" alt="category">';
+          cardRender += '</div>';
+          cardRender += '<div>';
+          cardRender += '<p>Empty Task</p>';
           cardRender += '</div>';
         cardRender += '</div>';
       }
