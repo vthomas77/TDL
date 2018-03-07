@@ -405,10 +405,10 @@ $(document).ready(function(){
                 cardRender += '<img data-action="card-menu" src="./assets/img/cardMenu.svg" alt="card menu">';
                 cardRender += '<nav data-use="card-menu" class="hidden">';
                 cardRender += '<ul>';
-                cardRender += '<li>Add Task</li>';
-                cardRender += '<li>Edit Card</li>';
-                cardRender += '<li>Share Card</li>';
-                cardRender += '<li>Delete Card</li>';
+                cardRender += '<li data-action="add-task" data-use="' + data[i].id + '">Add Task</li>';
+                cardRender += '<li data-action="edit-card" data-use="' + data[i].id +'">Edit Card</li>';
+                cardRender += '<li data-action="share-card" data-use="' + data[i].id + '">Share Card</li>';
+                cardRender += '<li data-action="delete-card" data-use="' + data[i].id +'">Delete Card</li>';
                 cardRender += '</ul>';
                 cardRender += '</nav>';
               cardRender += '</div>';
@@ -441,4 +441,14 @@ $(document).ready(function(){
       })
     }
     showCard();
+
+    // Delete Card
+    $('body').on('click','[data-action="delete-card"]', function(){
+      var userToken = localStorage.getItem('token');
+      var cardID = this.dataset.use;
+      $.post('http://192.168.33.10:8000/deleteCard/' + userToken + '/' + cardID,function(data){
+          debugger;
+      })
+    })
+
 });

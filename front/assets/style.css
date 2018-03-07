@@ -98,6 +98,10 @@ body [data-use="get-card"] > div > div:first-of-type div nav ul li {
   list-style-type: none;
   text-align: right;
 }
+body [data-use="get-card"] > div > div:first-of-type div nav ul li:hover {
+  color: red;
+  cursor: pointer;
+}
 body [data-use="get-card"] > div > div:first-of-type img {
   width: 80%;
 }

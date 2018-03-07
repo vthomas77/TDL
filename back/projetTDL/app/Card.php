@@ -122,8 +122,29 @@ static public function GetCard ($userToken){
     } catch (\Exception $e) {
       return "4";
     }
-
-
   }
+
+// Delete card
+static public function DeleteCard ($userToken,$cardID){
+  try {
+    $userID = user::GetUserID($userToken);
+    $resDeleteCard = DB::table('cards')
+    ->where('id_card','=',$cardID)
+    ->delete();
+    $resDeleteCardAssociations = DB::table('properties')
+    ->where('cards_id_card','=',$cardID)
+    ->delete();
+    $resDeleteLog = DB::table('logs')->insert(
+      ['users_id_user' => $userID,
+       'cards_id_card' => $cardID,
+       'type' => 'Deletion',
+       'content' => 'Card',
+       'date' => date('Y-m-d H:i:s')]
+    );
+    return $resDeleteCard;
+  } catch (\Exception $e) {
+    return "4";
+  }
+}
 
 }

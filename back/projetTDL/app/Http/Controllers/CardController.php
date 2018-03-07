@@ -24,4 +24,10 @@ class CardController extends Controller
         return response()->json(card::GetCard($userToken));
     }
 
+    // Delete Card
+    public function DeleteCard($userToken,$cardID)
+    {
+        return response()->json(card::DeleteCard($userToken,$cardID));
+    }
+
 }
