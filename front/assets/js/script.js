@@ -358,6 +358,7 @@ $(document).ready(function(){
             $('[data-use="new-card-notification"]').addClass('success');
             $('[data-use="new-card-notification"]').html("Card created successfully");
             showCard();
+            $('[data-use="create-card"]').addClass('hidden');
 
           } else {
             $('[data-use="new-card-notification"]').removeClass('success');
@@ -379,6 +380,10 @@ $(document).ready(function(){
 
     $('body').on('mouseleave','[data-action="card-menu"]',function(event){
       $(event.target).attr('src','./assets/img/cardMenu.svg');
+    })
+
+    $('body').on('mouseleave','[data-use="card-menu"]',function(event){
+      $('[data-use="card-menu"]').addClass('hidden');
     })
 
     // Show card menu when click on hamburger menu
@@ -440,6 +445,7 @@ $(document).ready(function(){
 
       })
     }
+
     showCard();
 
     // Delete Card
@@ -447,7 +453,9 @@ $(document).ready(function(){
       var userToken = localStorage.getItem('token');
       var cardID = this.dataset.use;
       $.post('http://192.168.33.10:8000/deleteCard/' + userToken + '/' + cardID,function(data){
-          debugger;
+          if (data == 1){
+            showCard();
+          }
       })
     })
 

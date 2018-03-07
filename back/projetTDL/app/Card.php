@@ -128,19 +128,15 @@ static public function GetCard ($userToken){
 static public function DeleteCard ($userToken,$cardID){
   try {
     $userID = user::GetUserID($userToken);
-    $resDeleteCard = DB::table('cards')
-    ->where('id_card','=',$cardID)
+    $resDeleteCardLogs = DB::table('logs')
+    ->where('cards_id_card','=',$cardID)
     ->delete();
     $resDeleteCardAssociations = DB::table('properties')
     ->where('cards_id_card','=',$cardID)
     ->delete();
-    $resDeleteLog = DB::table('logs')->insert(
-      ['users_id_user' => $userID,
-       'cards_id_card' => $cardID,
-       'type' => 'Deletion',
-       'content' => 'Card',
-       'date' => date('Y-m-d H:i:s')]
-    );
+    $resDeleteCard = DB::table('cards')
+    ->where('id_card','=',$cardID)
+    ->delete();
     return $resDeleteCard;
   } catch (\Exception $e) {
     return "4";
