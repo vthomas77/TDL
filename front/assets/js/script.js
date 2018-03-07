@@ -129,7 +129,19 @@ $(document).ready(function(){
     //update user profile
     */
     
-    $('[data-action="updateUser"]').on('click', function(){        
+    $('[data-action="updateUser"]').on('click', function(){    
+        
+        var token = localStorage.getItem('token');
+        
+        //broing data from db in input
+        $.post('http://192.168.33.10:8000/admin/read_account/' + token, function(data) {
+            var username = data[0].username;
+            var email = data[0].email;
+            
+            $('[data-update="username"]')[0].value = username;
+            $('[data-update="email"]')[0].value = email;
+        });
+        
         $('[data-use="delete-user"]').addClass('hidden');
         $('[data-use="signin"]').addClass('hidden');
         $('[data-use="update-user"]').removeClass('hidden');
@@ -137,11 +149,8 @@ $(document).ready(function(){
         $('[data-use="read-user"]').addClass('hidden');
         
         $('body').on('click', '[data-submit="update-user"]', function(){
-            
-            var token = localStorage.getItem('token');
-            
+                        
             if(token) {
-
                 var newUsername = $('[data-update="username"]')[0].value;
                 var newPassword = $('[data-update="password"]')[0].value;
                 var newEmail = $('[data-update="email"]')[0].value;
