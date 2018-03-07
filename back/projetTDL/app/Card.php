@@ -20,8 +20,9 @@ class Card {
 
 
   // Create Card + Properties + Logs
-  static public function CreateCard ($userID,$title,$priority,$status,$deadline,$category){
+  static public function CreateCard ($userToken,$title,$priority,$status,$deadline,$category){
 
+    $userID = user::GetUserID($userToken);
     // Insert card into database
     try {
       $resCreateCard = DB::table('cards')->insertGetId(

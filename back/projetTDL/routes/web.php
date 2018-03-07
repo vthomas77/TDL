@@ -17,7 +17,7 @@ $router->get('/', function () use ($router) {
 });
 
 // Create Card
-$router->post('createCard/{userID}/{title}/{priority}/{category}/{deadline}/{status}', 'CardController@CreateCard');
+$router->post('createCard/{userToken}/{title}/{priority}/{category}/{deadline}/{status}', 'CardController@CreateCard');
 
 // Get Card
 $router->post('getCard/{userToken}', 'CardController@GetCard');
@@ -37,7 +37,7 @@ $router->post('signin/{username}/{email}/{password}','UserController@saveUser');
 
 //R
 $router->post('admin/read_account/{token}','UserController@readUser');
- 
+
 //U
 $router->post('admin/update/{token}/{newPassword}/{newUsername}/{newEmail}','UserController@updateUser');
 
@@ -45,7 +45,7 @@ $router->post('admin/update/{token}/{newPassword}/{newUsername}/{newEmail}','Use
 $router->post('admin/remove_user/{username}','UserController@deleteUser');
 
 /*
-//Auth user     
+//Auth user
 */
 
 $router->get('login/{username}/{password}', 'UserController@authUser');

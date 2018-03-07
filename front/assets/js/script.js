@@ -16,7 +16,7 @@ $(document).ready(function(){
         $('[data-use="login"]').toggleClass('hidden');
         //$.post('192.168.33.10:8000/singin')
     });
-    
+
     //toggle down options when connected ans when clicking on the crossed wheel icon
     $('body').on('click', '[data-use="sidebar"] h1 svg', function(){
         $('[data-use="sidebar-connected"]').toggleClass('hidden');
@@ -25,7 +25,7 @@ $(document).ready(function(){
     /*
     // Login user
     */
-    
+
     $('[data-submit="login"]').on('click', function(){
 
         var username = $('[data-login="username"]')[0].value;
@@ -37,16 +37,18 @@ $(document).ready(function(){
 
                 //set profile in sidebar
                 $('[data-use="insidebar"]').html('<img src="' + data[0].avatar + '" class="img-avatar"><h1>' + data[0].username + '<i class="fa fa-cog"></i></h1>');
-                
+
                 $('[data-use="notification-login"]').addClass('hidden');
-                
+                $('[data-use="login"]').addClass('hidden');
+                $('[data-use="available-actions"]').removeClass('hidden');
+                $('[data-use="get-card"]').removeClass('hidden');
                 localStorage.setItem('token', data[0].token);
             } else {
                 $('[data-use="notification-login"]').html('<p class="error">username and password doesn\'t match... Please try again !</p>');
             }
         });
     });
-    
+
     /*
     //create user profile
     */
@@ -89,7 +91,7 @@ $(document).ready(function(){
 
                                         //put token in localstorage
                                         localStorage.setItem('token', data.token);
-                                        
+
                                     } else if(data.status == 500){
                                         //if username already exist
                                         $('[data-use="notification-signin"]').html('<p>This username or email already exist, please try an other one</p>');
@@ -122,32 +124,32 @@ $(document).ready(function(){
             $('#passwordError').removeClass('hidden');
         }
     });
-    
+
     /*
     //update user profile
     */
-    
-    $('[data-action="updateUser"]').on('click', function(){    
-        
+
+    $('[data-action="updateUser"]').on('click', function(){
+
         var token = localStorage.getItem('token');
-        
+
         //broing data from db in input
         $.post('http://192.168.33.10:8000/admin/read_account/' + token, function(data) {
             var username = data[0].username;
             var email = data[0].email;
-            
+
             $('[data-update="username"]')[0].value = username;
             $('[data-update="email"]')[0].value = email;
         });
-        
+
         $('[data-use="delete-user"]').addClass('hidden');
         $('[data-use="signin"]').addClass('hidden');
         $('[data-use="update-user"]').removeClass('hidden');
         $('[data-use="login"]').addClass('hidden');
         $('[data-use="read-user"]').addClass('hidden');
-        
+
         $('body').on('click', '[data-submit="update-user"]', function(){
-                        
+
             if(token) {
                 var newUsername = $('[data-update="username"]')[0].value;
                 var newPassword = $('[data-update="password"]')[0].value;
@@ -163,19 +165,19 @@ $(document).ready(function(){
                          $('[data-use="insidebar"] h1').html(newUsername + '<i class="fa fa-cog"></i>');
                     } else {
                         $('[data-use="notification-update-user"]').html('<span class="error">Error with your update, check your inputs or try another username</span>');
-                    } 
+                    }
                 });
             } else {
                 //no token
                 $('[data-use="notification-update-user"]').html('<p class="error">Your connection has expired, please reconnect</p>');
             }
         });
-        
+
         $('[data-submit="update-back" ]').on('click', function(){
-            
+
             $('[data-login="username"]')[0].value = 0;
             $('[data-login="password"]')[0].value = 0;
-            
+
             $('[data-use="delete-user"]').addClass('hidden');
             $('[data-use="signin"]').addClass('hidden');
             $('[data-use="update-user"]').addClass('hidden');
@@ -183,25 +185,25 @@ $(document).ready(function(){
             $('[data-use="read-user"]').addClass('hidden');
         });
     });
-    
+
     /*
     // delete user account
     */
-    
+
     $('[data-action="deleteUser"]').on('click', function(){
         $('[data-use="delete-user"]').removeClass('hidden');
         $('[data-use="signin"]').addClass('hidden');
         $('[data-use="update-user"]').addClass('hidden');
         $('[data-use="login"]').addClass('hidden');
         $('[data-use="read-user"]').addClass('hidden');
-        
+
         $('[data-submit="delete-user"]').on('click', function(){
             var username = $('[data-delete="username"]')[0].value;
             if(username) {
                 $.post('http://192.168.33.10:8000/admin/remove_user/' + encodeURI(username), function(data) {
                     if(data.status == 200) {
                         $('[data-use="delete-user"]').html('<p>Your account has been successfully removed !</p>');
-                    
+
                         debugger;
                         localStorage.removeItem('token');
                     } else {
@@ -212,7 +214,7 @@ $(document).ready(function(){
                 $('[data-use="delete-user"]').append('<p class="error">Please, enter your username first</p>');
             }
         });
-        
+
         $('[data-submit="keep-my-account"]').on('click', function(){
             $('[data-use="delete-user"]').addClass('hidden');
             $('[data-use="signin"]').addClass('hidden');
@@ -227,7 +229,7 @@ $(document).ready(function(){
     */
     $('[data-action="readUser"]').on('click', function(){
         var token = localStorage.getItem('token');
-        
+
         if(token) {
             $.post('http://192.168.33.10:8000/admin/read_account/' + token, function(data) {
                 $('[data-use="delete-user"]').addClass('hidden');
@@ -258,16 +260,20 @@ $(document).ready(function(){
             $('[data-use="signin"]').addClass('hidden');
             $('[data-use="update-user"]').addClass('hidden');
             $('[data-use="login"]').addClass('hidden');
-            
+
             //notification of the error
             $('[data-use="read-user"]').html('<p class="error">Your connection has expired, please reconnect</p>')
         }
-        
+
     });
 
     /*
     // Create new card
     */
+
+    $('[data-action="create-card"]').on('click',function(){
+      $('[data-use="create-card"]').removeClass('hidden');
+    })
 
     // Add/Remove asterisk for mandatory fields
     $('[data-use="new-card-title"]').on('input', function(){
@@ -283,8 +289,9 @@ $(document).ready(function(){
     $('[data-use="new-card-submit"]').on('click', function(){
 
       var userID;
-      //Get ID user
       var userToken = localStorage.getItem('token');
+
+      /*
       $.ajax({
         method: "POST",
         url: 'http://192.168.33.10:8000/getIDUser/' + userToken,
@@ -297,6 +304,7 @@ $(document).ready(function(){
               userID = data;
             }
           })
+      */
 
       // Check title field
       var title = $('[data-use="new-card-title"]')[0].value;
@@ -343,12 +351,14 @@ $(document).ready(function(){
         var status = 0;
 
         // Create card
-        $.post('http://192.168.33.10:8000/createCard/' + userID + '/' + title + '/' + priority + '/' + category + '/' + deadline + '/' + status,function(data){
+        $.post('http://192.168.33.10:8000/createCard/' + userToken + '/' + title + '/' + priority + '/' + category + '/' + deadline + '/' + status,function(data){
 
           if (data == 0){
             $('[data-use="new-card-notification"]').removeClass('error');
             $('[data-use="new-card-notification"]').addClass('success');
             $('[data-use="new-card-notification"]').html("Card created successfully");
+            showCard();
+
           } else {
             $('[data-use="new-card-notification"]').removeClass('success');
             $('[data-use="new-card-notification"]').addClass('error');
@@ -377,57 +387,58 @@ $(document).ready(function(){
     })
 
     // Get card
-    var userToken = localStorage.getItem('token');
-    $.post('http://192.168.33.10:8000/getCard/' + userToken,function(data){
-      // Sort array relative to rank card
-      data.sort(function(a,b){
-        return b.rank - a.rank;
-      });
+    function showCard() {
+      var userToken = localStorage.getItem('token');
+      $.post('http://192.168.33.10:8000/getCard/' + userToken,function(data){
+        // Sort array relative to rank card
+        data.sort(function(a,b){
+          return b.rank - a.rank;
+        });
 
-      // Cards creation
-      var cardRender = '';
-      for (var i=0; i < data.length; i++){
-        cardRender += '<div>';
+        // Cards creation
+        var cardRender = '';
+        for (var i=0; i < data.length; i++){
           cardRender += '<div>';
-            cardRender += '<h3>' + data[i].title + '</h3>';
             cardRender += '<div>';
-              cardRender += '<img data-action="card-menu" src="./assets/img/cardMenu.svg" alt="card menu">';
-              cardRender += '<nav data-use="card-menu" class="hidden">';
-              cardRender += '<ul>';
-              cardRender += '<li>Add Task</li>';
-              cardRender += '<li>Edit Card</li>';
-              cardRender += '<li>Share Card</li>';
-              cardRender += '<li>Delete Card</li>';
-              cardRender += '</ul>';
-              cardRender += '</nav>';
+              cardRender += '<h3>' + data[i].title + '</h3>';
+              cardRender += '<div>';
+                cardRender += '<img data-action="card-menu" src="./assets/img/cardMenu.svg" alt="card menu">';
+                cardRender += '<nav data-use="card-menu" class="hidden">';
+                cardRender += '<ul>';
+                cardRender += '<li>Add Task</li>';
+                cardRender += '<li>Edit Card</li>';
+                cardRender += '<li>Share Card</li>';
+                cardRender += '<li>Delete Card</li>';
+                cardRender += '</ul>';
+                cardRender += '</nav>';
+              cardRender += '</div>';
+            cardRender += '</div>';
+            cardRender += '<div>';
+              for (var j=0; j <  data[i].collaborators.length; j++){
+                cardRender += '<img data-use="avatar" src="' + data[i].collaborators[j] + '" alt="author avatar">';
+              }
+            cardRender += '</div>';
+            cardRender += '<div>';
+            if (data[i].priority == 2) {
+              cardRender += '<img src="./assets/img/warning-sign.svg" alt="high priority">';
+            }
+            if (data[i].status == 0) {
+              cardRender += '<img src="./assets/img/smiling.svg" alt="status OK">';
+            }
+            else if (data[i].status == 1)
+            {
+              cardRender += '<img src="./assets/img/sad.svg" alt="status NOK">';
+            }
+            cardRender += '<img src="./assets/img/flag.svg" alt="category">';
+            cardRender += '</div>';
+            cardRender += '<div>';
+            cardRender += '<p>Empty Task</p>';
             cardRender += '</div>';
           cardRender += '</div>';
-          cardRender += '<div>';
-            for (var j=0; j <  data[i].collaborators.length; j++){
-              cardRender += '<img data-use="avatar" src="' + data[i].collaborators[j] + '" alt="author avatar">';
-            }
-          cardRender += '</div>';
-          cardRender += '<div>';
-          if (data[i].priority == 2) {
-            cardRender += '<img src="./assets/img/warning-sign.svg" alt="high priority">';
-          }
-          if (data[i].status == 0) {
-            cardRender += '<img src="./assets/img/smiling.svg" alt="status OK">';
-          }
-          else if (data[i].status == 1)
-          {
-            cardRender += '<img src="./assets/img/sad.svg" alt="status NOK">';
-          }
-          cardRender += '<img src="./assets/img/flag.svg" alt="category">';
-          cardRender += '</div>';
-          cardRender += '<div>';
-          cardRender += '<p>Empty Task</p>';
-          cardRender += '</div>';
-        cardRender += '</div>';
-      }
-      $('[data-use="get-card"]').html(cardRender);
+        }
+        $('[data-use="get-card"]').html(cardRender);
 
-    })
-
-
+      })
+    }
+    showCard();
 });

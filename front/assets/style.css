@@ -49,6 +49,17 @@ body [data-use="notification"] .checked {
   font-weight: bold;
   padding-right: 9px;
 }
+body [data-use="create-card"] label {
+  display: inline-block;
+  width: 5em;
+}
+body [data-use="create-card"] select {
+  height: 25px;
+  margin-bottom: 10px;
+}
+body [data-use="create-card"] [type="date"] {
+  height: 15px;
+}
 body [data-use="get-card"] {
   display: flex;
   flex-direction: row;
