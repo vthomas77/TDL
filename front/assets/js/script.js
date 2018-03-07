@@ -459,4 +459,18 @@ $(document).ready(function(){
       })
     })
 
+    // Show Collaborators
+    $('body').on('click','[data-action="share-card"]', function(){
+      var cardID = this.dataset.use;
+      var collaboratorsList = '<h5>Actual card collaborators</h5>';
+      $.post('http://192.168.33.10:8000/shareCard/' + cardID, function(data){
+        collaboratorsList += '<ul>';
+        for(var i=0; i < data.length; i++){
+          collaboratorsList += '<li>' + data[i].username + '</li><div><img src="./assets/img/down-arrow.svg" alt="Remove Collaborators"></div>';
+        }
+        collaboratorsList += '</ul>';
+        $('[data-use="card-collaborators"]').html(collaboratorsList);
+      })
+    })
+
 });

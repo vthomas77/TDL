@@ -143,4 +143,18 @@ static public function DeleteCard ($userToken,$cardID){
   }
 }
 
+// Share card
+static public function ShareCard ($cardID){
+  try {
+    $resGetCollaborators = DB::table('properties')
+    ->select('username')
+    ->join('users', 'users.id_user', '=', 'properties.users_id_user')
+    ->where('cards_id_card','=',$cardID)
+    ->get();
+    return $resGetCollaborators;
+  } catch (\Exception $e) {
+    return "4";
+  }
+}
+
 }

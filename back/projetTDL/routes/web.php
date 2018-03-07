@@ -20,10 +20,13 @@ $router->get('/', function () use ($router) {
 $router->post('createCard/{userToken}/{title}/{priority}/{category}/{deadline}/{status}', 'CardController@CreateCard');
 
 // Get Card
-$router->post('getCard/{userToken}', 'CardController@GetCard');
+$router->post('getCard/{userToken}', ['middleware'=>'Tok','uses'=>'CardController@GetCard']);
 
 // Delete Card
 $router->post('deleteCard/{userToken}/{cardID}', 'CardController@DeleteCard');
+
+// Share Card
+$router->post('shareCard/{cardID}', 'CardController@ShareCard');
 
 // Get Id users
 $router->post('getIDUser/{userToken}', 'UserController@GetUserID');

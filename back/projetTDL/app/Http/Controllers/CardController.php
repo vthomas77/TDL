@@ -30,4 +30,10 @@ class CardController extends Controller
         return response()->json(card::DeleteCard($userToken,$cardID));
     }
 
+    // Share Card
+    public function ShareCard($cardID)
+    {
+        return response()->json(card::ShareCard($cardID));
+    }
+
 }
