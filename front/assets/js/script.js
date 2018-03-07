@@ -27,13 +27,11 @@ $(document).ready(function(){
     */
     
     $('[data-submit="login"]').on('click', function(){
+
         var username = $('[data-login="username"]')[0].value;
         var password = $('[data-login="password"]')[0].value;
 
-        
-        debugger;
         $.get('http://192.168.33.10:8000/login/' + username + '/' + password, function(data) {
-            debugger;
             if(data.length > 0) {
                 //makes dashboard appears
 
@@ -44,7 +42,7 @@ $(document).ready(function(){
                 
                 localStorage.setItem('token', data[0].token);
             } else {
-                $('[data-use="notification-login"]').html('<p class="error">username and password doesn\'t seems to match... Please try again !</p>');
+                $('[data-use="notification-login"]').html('<p class="error">username and password doesn\'t match... Please try again !</p>');
             }
         });
     });
@@ -174,6 +172,10 @@ $(document).ready(function(){
         });
         
         $('[data-submit="update-back" ]').on('click', function(){
+            
+            $('[data-login="username"]')[0].value = 0;
+            $('[data-login="password"]')[0].value = 0;
+            
             $('[data-use="delete-user"]').addClass('hidden');
             $('[data-use="signin"]').addClass('hidden');
             $('[data-use="update-user"]').addClass('hidden');
