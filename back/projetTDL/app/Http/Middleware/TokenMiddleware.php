@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class ExampleMiddleware
+class TokenMiddleware 
 {
     /**
      * Handle an incoming request.
@@ -17,5 +17,5 @@ class ExampleMiddleware
     {
         return $next($request);
     }
-    
+
 }

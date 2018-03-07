@@ -31,6 +31,35 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+    
+    
+    /*
+    //kind of a middleware
+    */
+    static public function eachAdmin($token)
+    {
+        /*
+        $token_expiration = DB::table('users')
+          ->select('token_expiration')
+          ->where('token','=','6055b28b531643ee01137316477af1a7a41e05ba')
+          ->get();
+
+        $yet = date('Y/m/d h:i:s', time() +1);
+        $diff = $token_expiration->diff($yet);
+        
+        
+        $newDate = date('Y/m/d h:i:s', time() + 18000);
+        */
+        $token_expiration = DB::table('users')
+          ->select('token_expiration')
+          ->where('token','=', $token)
+          ->get();
+        
+        $yet = date('Y/m/d h:i:s', time());
+        
+        return([$token_expiration, $yet]);
+        
+    }
 
     // Get user ID from token in Database
     static public function GetUserID ($userToken){
@@ -71,7 +100,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
         $avatar = "./assets/img/default.png";
         $token = bin2hex(random_bytes(20));
-        $token_expiration = date('Y/m/d h:i:s', time() + 7200);
+        //token lifetime is 5 hours after yet  (considering our 1h less, it's more like 4h for France)
+        $token_expiration = time() + 18000;
 
         try {
             DB::table('users')->insert([

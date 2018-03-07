@@ -23,10 +23,11 @@ class UserController extends Controller {
         return response()->json($newUser);
     }
 
-    public function deleteUser($username) {
+    public function deleteUser($username, $token) {
         $deletedUser = User::deleteUser($username);
+        $checkToken = User::eachAdmin($token);
 
-        return response()->json($deletedUser);
+        return response()->json([$deletedUser, $checkToken]);
     }
     
     public function updateUser($token, $newPassword, $newUsername, $newEmail) {

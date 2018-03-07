@@ -1,5 +1,5 @@
 <?php
-use DB;
+//use DB;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -35,17 +35,22 @@ $router->get('/api/user', function(){
 //C
 $router->post('signin/{username}/{email}/{password}','UserController@saveUser');
 
-//R
-$router->post('admin/read_account/{token}','UserController@readUser');
- 
-//U
-$router->post('admin/update/{token}/{newPassword}/{newUsername}/{newEmail}','UserController@updateUser');
-
-//D
-$router->post('admin/remove_user/{username}','UserController@deleteUser');
-
 /*
 //Auth user     
 */
-
 $router->get('login/{username}/{password}', 'UserController@authUser');
+
+
+$router->group(['prefix' => 'admin', 'middleware' => 'token'], function () use ($router) {
+    //R
+    $router->post('read_account/{token}','UserController@readUser');
+
+    //U
+    $router->post('update/{token}/{newPassword}/{newUsername}/{newEmail}','UserController@updateUser');
+
+    //D
+    $router->post('remove_user/{username}/{token}','UserController@deleteUser');
+});
+
+
+

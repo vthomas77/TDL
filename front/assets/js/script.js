@@ -171,7 +171,7 @@ $(document).ready(function(){
             }
         });
         
-        $('[data-submit="update-back" ]').on('click', function(){
+        $('[data-submit="update-back" ]').on('click', function( ){
             
             $('[data-login="username"]')[0].value = 0;
             $('[data-login="password"]')[0].value = 0;
@@ -197,12 +197,42 @@ $(document).ready(function(){
         
         $('[data-submit="delete-user"]').on('click', function(){
             var username = $('[data-delete="username"]')[0].value;
+            var token = localStorage.getItem('token');
+            
             if(username) {
-                $.post('http://192.168.33.10:8000/admin/remove_user/' + encodeURI(username), function(data) {
-                    if(data.status == 200) {
+                $.post('http://192.168.33.10:8000/admin/remove_user/' + encodeURI(username) + '/' + token, function(data) {
+                    if(data[0].status == 200) {
+                        var token = localStorage.getItem('token');
+                        var tokenExpiration = data[1][0][0].token_expiration;
+                        var yet = data[1][1];
+                        
+                        var res = tokenExpiration.replace("-", "");
+                        var res = res.replace("-", "");
+                        var res = res.replace(" ", "");
+                        var res = res.replace(":", "");
+                        var res = res.replace(":", "");
+                        
+                        var res2 = yet.replace("/", "");
+                        var res2 = res2.replace("/", "");
+                        var res2 = res2.replace(" ", "");
+                        var res2 = res2.replace(":", "");
+                        var res2 = res2.replace(":", "");
+                        
+                        if (res < res2) {
+                            alert("You've been inactive for too long, please reconnect");
+                            $('[data-use="delete-user"]').addClass('hidden');
+                            $('[data-use="signin"]').addClass('hidden');
+                            $('[data-use="update-user"]').addClass('hidden');
+                            $('[data-use="login"]').removeClass('hidden');
+                            $('[data-use="read-user"]').addClass('hidden');
+                        } else {
+                            console.log("token still valid");
+                        }
+                        
+                        debugger;
+                        
                         $('[data-use="delete-user"]').html('<p>Your account has been successfully removed !</p>');
                     
-                        debugger;
                         localStorage.removeItem('token');
                     } else {
                         $('[data-use="delete-user"]').append('<p class="error">An error has occured, please try again</p>');
@@ -428,6 +458,5 @@ $(document).ready(function(){
       $('[data-use="get-card"]').html(cardRender);
 
     })
-
 
 });
