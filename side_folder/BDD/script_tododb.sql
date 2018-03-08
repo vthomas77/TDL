@@ -33,6 +33,17 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `tododb`.`categories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tododb`.`categories` (
+  `id_category` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `color` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_category`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `tododb`.`cards`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tododb`.`cards` (
@@ -41,8 +52,14 @@ CREATE TABLE IF NOT EXISTS `tododb`.`cards` (
   `priority` INT NOT NULL,
   `status` INT NOT NULL,
   `deadline` DATETIME NOT NULL,
-  `category` VARCHAR(255) NULL,
-  PRIMARY KEY (`id_card`))
+  `categories_id_category` INT NOT NULL,
+  PRIMARY KEY (`id_card`),
+  INDEX `fk_cards_categories1_idx` (`categories_id_category` ASC),
+  CONSTRAINT `fk_cards_categories1`
+    FOREIGN KEY (`categories_id_category`)
+    REFERENCES `tododb`.`categories` (`id_category`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
