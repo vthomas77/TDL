@@ -466,7 +466,7 @@ $(document).ready(function(){
       $.post('http://192.168.33.10:8000/shareCard/' + cardID, function(data){
         collaboratorsList += '<ul>';
         for(var i=0; i < data.length; i++){
-          collaboratorsList += '<div><li>' + data[i].username + '</li><div><img src="./assets/img/down-arrow.svg" alt="Remove Collaborators"></div></div>';
+          collaboratorsList += '<div><li data-use="' + data[i].cards_id_card + '">' + data[i].username + '</li><div><img src="./assets/img/down-arrow.svg" alt="Remove Collaborators"></div></div>';
         }
         collaboratorsList += '</ul>';
         $('[data-use="card-collaborators"]').html(collaboratorsList);
@@ -491,7 +491,7 @@ $(document).ready(function(){
         $.post('http://192.168.33.10:8000/searchUsers/' + searchInput, function(data){
           usersList += '<ul>';
           for(var i=0; i < data.length; i++){
-            usersList += '<div><li>' + data[i].username + '</li><div><img src="./assets/img/up-arrow.svg" alt="Remove Collaborators"></div></div>';
+            usersList += '<div><li data-use="' + data[i].cards_id_card + '">' + data[i].username + '</li><div><img src="./assets/img/up-arrow.svg" alt="Remove Collaborators"></div></div>';
           }
           usersList += '</ul>';
           $('[data-use="available-collaborators"]').html(usersList);
@@ -500,16 +500,12 @@ $(document).ready(function(){
     }
 
     $('body').on('click','[data-use="manage-collaborators"]>div img', function(event){
-      //debugger;
       if ($(event.target).attr('src') == "./assets/img/up-arrow.svg"){
-        //event.stopPropagation();
         var upListItem = $(event.target).parent().parent().html();
         var downListItem = '<div>' + upListItem.replace('up-arrow','down-arrow') + '</div>';
         $('[data-use="card-collaborators"] > ul').append(downListItem)
         $(event.target).parent().parent().remove()
       } else {
-        //debugger;
-        //event.stopPropagation();
         if ($('[data-use="available-collaborators"] > ul').html() == undefined){
           var downListItem = $(event.target).parent().parent().html();
           var upListItem = '<ul><div>' + downListItem.replace('down-arrow','up-arrow') + '</div></ul>';
@@ -524,4 +520,16 @@ $(document).ready(function(){
       }
     })
 
+    $('[data-use="select-collaborators"]').on('click',function(){
+      var newCardCollaborators = [];
+      for(var k=0; k < $('[data-use="card-collaborators"] > ul').children().length;k++){
+        var obj = {"idcard" : $('[data-use="card-collaborators"] > ul').children().eq(0).children().eq(0)[0].dataset.use, "username": $('[data-use="card-collaborators"] > ul').children().eq(k).children().eq(0)[0].innerText}
+        newCardCollaborators.push(obj);
+      }
+      var newCardCollaboratorsToStringify = JSON.stringify(newCardCollaborators);
+      debugger;
+      $.post('http://192.168.33.10:8000/updateCollaborators', newCardCollaboratorsToStringify, function(data){
+        debugger;
+      })
+    })
 });
