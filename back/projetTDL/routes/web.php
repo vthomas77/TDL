@@ -13,6 +13,16 @@
 
 
 $router->get('/', function () use ($router) {
+    $token_expiration = date("Y-m-d H:i:s", time() + 18000);
+    
+    DB::table('users')
+        ->where([
+            ['token', '=', 'c1ca62403744b69047754f4e0fed319d82716bd1'],
+        ])->update(array(
+            'token_expiration' => $token_expiration
+    ));
+    var_dump($token_expiration);
+    
     return $router->app->version();
 });
 
@@ -41,7 +51,7 @@ $router->get('/api/user', function(){
 $router->post('signin/{username}/{email}/{password}','UserController@saveUser');
 
 //group concerned by middleware
-$router->group(['prefix' => 'admin', 'middleware' => 'token'], function () use ($router) {
+$router->group(['prefix' => 'admin', 'middleware' => 'App\Http\Middleware\TokenMiddleware'], function () use ($router) {
     //R
     $router->post('read_account/{token}','UserController@readUser');
 

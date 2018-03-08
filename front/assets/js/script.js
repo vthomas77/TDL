@@ -1,4 +1,7 @@
 $(document).ready(function(){
+    
+    var token = localStorage.getItem('token');
+    
     $('[data-submit="go-to-signin"]').on('click', function(){
         $('[data-use="signin"]').toggleClass('hidden');
         $('[data-use="signin"]').toggleClass('flex');
@@ -17,7 +20,7 @@ $(document).ready(function(){
         //$.post('192.168.33.10:8000/singin')
     });
     
-    //toggle down options when connected ans when clicking on the crossed wheel icon
+    //toggle down options when connected and when clicking on the crossed wheel icon
     $('body').on('click', '[data-use="sidebar"] h1 svg', function(){
         $('[data-use="sidebar-connected"]').toggleClass('hidden');
     });
@@ -305,7 +308,7 @@ $(document).ready(function(){
             $('[data-use="login"]').addClass('hidden');
             
             //notification of the error
-            $('[data-use="read-user"]').html('<p class="error">Your connection has expired, please reconnect</p>')
+            $('[data-use="read-user"]').html('<p class="error">Ykour connection has expired, please reconnect</p>')
         }
         
     });

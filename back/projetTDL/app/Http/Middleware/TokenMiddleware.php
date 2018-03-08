@@ -17,10 +17,11 @@ class TokenMiddleware
      */
     public function handle($request, Closure $next)
     {
+        $token = $request->route()[2]['token'];
         
         $token_expiration = DB::table('users')
           ->select('token_expiration')
-          ->where('token','=', 'c1ca62403744b69047754f4e0fed319d82716bd1')
+          ->where('token','=', $token)
           ->get();
         
         $yet = date('Y/m/d h:i:s', time() +3600);
@@ -28,25 +29,14 @@ class TokenMiddleware
         $token_expiration = str_replace("-", "", $token_expiration);
         $token_expiration = str_replace(":", "", $token_expiration);
         $token_expiration = str_replace(" ", "", $token_expiration);
+        $token_expiration = intval($token_expiration);
         
         $yet = str_replace("/", "", $yet);
         $yet = str_replace(":", "", $yet);
         $yet = str_replace(" ", "", $yet);
+        $yet = intval($yet);
         
-        $token_expiration =1;
-        
-        if($token_expiration <= $yet) {
-            
-            $username = DB::table('users')
-                ->select('username')
-                ->where('token', '=', 'c1ca62403744b69047754f4e0fed319d82716bd1')
-                ->get();
-            
-            $password = DB::table('users')
-                ->select('password')
-                ->where('token', '=', 'c1ca62403744b69047754f4e0fed319d82716bd1')
-                ->get();
-            
+        if($token_expiration <= $yet) {            
             return redirect()->to("/");
         } else {
             return $next($request);
