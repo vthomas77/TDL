@@ -14,6 +14,7 @@ Structure pour la Vagrant :
         - scriptdb.sql
         - ports.conf
         - 000-default.conf
+        - apache2.conf
     - front
     - Vagrantfile
 

@@ -71,7 +71,7 @@ $(document).ready(function(){
 
                                         //replace by next button
                                         $('[data-use="signin"] div').append('<input type="submit" data-action="lets-go" value="Let\'s go ! ►" class="button big">')
- 
+
                                         //makes admin tools appear
                                         $('[data-use="sidebar-connected"]').removeClass('hidden');
 
@@ -109,29 +109,47 @@ $(document).ready(function(){
             $('#passwordError').removeClass('hidden');
         }
     });
-    
+
     //update user profile
     $('[data-action="updateUser"]').on('click', function(){
         $('[data-use="signin"]').addClass('hidden');
         $('[data-use="update-user"]').removeClass('hidden');
-        
+
         $('body').on('click', '[data-submit="update-user"]', function(){
-            
+
             var username = $('[data-auth="username"]')[0].value;
             var password = $('[data-auth="password"]')[0].value;
-            
+
             var newUsername = $('[data-update="username"]')[0].value;
             var newPassword = $('[data-update="password"]')[0].value;
             var newEmail = $('[data-update="email"]')[0].value;
-            
+
             $.post('http://192.168.33.10:8000/admin/update/' + encodeURI(username) + '/' + encodeURI(password) + '/' + encodeURI(newPassword) + '/' + encodeURI(newUsername) + '/' + encodeURI(newEmail) , function(data) {
                 debugger;
-                
+
                 //notification to user
                 $('[data-use="notification-update-user"]').html(data.username + ', your account has been successfully updated !');
             });
         });
     });
+
+    //Categories
+    $('[data-action="categories-editor"]').on('click', function(){
+        $('[data-use="categories-editor"]').toggleClass('hidden');
+        $('body').on('click', '[data-action="create-category"]', function(){
+            $('[data-use="creating-category"]').toggleClass('hidden');
+            $('[data-action="done-category"]').on('click', function(){
+              var categoryname = $('[data-signin="created-category"]')[0].value;
+              var categorycolor = $('[data-signin="color-category"]')[0].value;
+              $.post('http://192.168.33.10:8000/createCategory/' + categoryname + '/' + categorycolor) , function(data) {
+                debugger;
+                //notification to user
+                $('[data-use="notification-create-category"]').html('Your new category has been successfully created !');
+              }
+            });
+        });
+    });
+
 
     /*
     // Create new card

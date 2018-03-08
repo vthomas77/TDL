@@ -19,6 +19,9 @@ $router->get('/', function () use ($router) {
 // Create Card
 $router->post('createCard/{userID}/{title}/{priority}/{category}/{deadline}/{status}', 'CardController@CreateCard');
 
+// Create Category
+$router->post('createCategory/{categoryname}/{categorycolor}', 'CategoryController@CreateCategory');
+
 // Get Id users
 $router->post('getIDUser/{userToken}', 'UserController@GetUserID');
 
@@ -36,8 +39,7 @@ $router->get('/api/user', function(){
 $router->get('api/user/{id}','UserController@getuser');
 
 $router->post('signin/{username}/{email}/{password}','UserController@saveUser');
- 
-$router->post('admin/update/{username}/{password}/{newPassword}/{newUsername}/{newEmail}','UserController@updateUser');
- 
-$router->delete('api/user/{id}','UserController@deleteUser');
 
+$router->post('admin/update/{username}/{password}/{newPassword}/{newUsername}/{newEmail}','UserController@updateUser');
+
+$router->delete('api/user/{id}','UserController@deleteUser');
