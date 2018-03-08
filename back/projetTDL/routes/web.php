@@ -26,6 +26,11 @@ $router->post('getCard/{userToken}', 'CardController@GetCard');
 $router->post('getIDUser/{userToken}', 'UserController@GetUserID');
 
 /*
+//Auth user     
+*/
+$router->get('login/{username}/{password}', 'UserController@authUser');
+
+/*
 //CRUD USERS
 */
 $router->get('/api/user', function(){
@@ -35,12 +40,7 @@ $router->get('/api/user', function(){
 //C
 $router->post('signin/{username}/{email}/{password}','UserController@saveUser');
 
-/*
-//Auth user     
-*/
-$router->get('login/{username}/{password}', 'UserController@authUser');
-
-
+//group concerned by middleware
 $router->group(['prefix' => 'admin', 'middleware' => 'token'], function () use ($router) {
     //R
     $router->post('read_account/{token}','UserController@readUser');

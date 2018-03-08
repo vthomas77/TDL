@@ -257,22 +257,37 @@ $(document).ready(function(){
     */
     $('[data-action="readUser"]').on('click', function(){
         var token = localStorage.getItem('token');
-        
+        debugger;
         if(token) {
             $.post('http://192.168.33.10:8000/admin/read_account/' + token, function(data) {
-                $('[data-use="delete-user"]').addClass('hidden');
-                $('[data-use="signin"]').addClass('hidden');
-                $('[data-use="update-user"]').addClass('hidden');
-                $('[data-use="login"]').addClass('hidden');
-                $('[data-use="read-user"]').removeClass('hidden');
+                if(data == "Lumen (5.6.1) (Laravel Components 5.6.*)") {
+                    $('[data-use="delete-user"]').addClass('hidden');
+                    $('[data-use="signin"]').addClass('hidden');
+                    $('[data-use="update-user"]').addClass('hidden');
+                    $('[data-use="login"]').removeClass('hidden');
+                    $('[data-use="read-user"]').addClass('hidden');
+                    
+                    $('[data-use="notification-login"]').removeClass('hidden');
+                    $('[data-use="notification-login"]').html('<p class="error">You\'ve been inactive for too long, please reconnect</p>');
+                    
+                    
+                    localStorage.removeItem('token');
+                    debugger;
+                } else {
+                    $('[data-use="delete-user"]').addClass('hidden');
+                    $('[data-use="signin"]').addClass('hidden');
+                    $('[data-use="update-user"]').addClass('hidden');
+                    $('[data-use="login"]').addClass('hidden');
+                    $('[data-use="read-user"]').removeClass('hidden');
 
-                var htmlRender = '<h2>Your profile :</h2>';
-                var htmlRender = htmlRender + '<img src="' + data[0].avatar + '" class="img-avatar">';
-                var htmlRender = htmlRender + '<p>Your username : ' + data[0].username + '</p>';
-                var htmlRender = htmlRender + '<p>Your email : ' + data[0].email + '</p>';
-                var htmlRender = htmlRender + '<input type="submit" value="Back" data-submit="back" class="button">';
+                    var htmlRender = '<h2>Your profile :</h2>';
+                    var htmlRender = htmlRender + '<img src="' + data[0].avatar + '" class="img-avatar">';
+                    var htmlRender = htmlRender + '<p>Your username : ' + data[0].username + '</p>';
+                    var htmlRender = htmlRender + '<p>Your email : ' + data[0].email + '</p>';
+                    var htmlRender = htmlRender + '<input type="submit" value="Back" data-submit="back" class="button">';
 
-                $('[data-use="read-user"]').html(htmlRender);
+                    $('[data-use="read-user"]').html(htmlRender);
+                }
             });
 
             $('body').on('click', '[data-submit="back"]', function(){

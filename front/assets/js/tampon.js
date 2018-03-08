@@ -24,3 +24,17 @@ var token = localStorage.getItem('token');
                         } else {
                             console.log("token still valid");
                         }
+
+
+
+
+$router->group(['prefix' => 'admin', 'middleware' => 'token'], function () use ($router) {
+    //R
+    $router->post('read_account/{token}','UserController@readUser');
+
+    //U
+    $router->post('update/{token}/{newPassword}/{newUsername}/{newEmail}','UserController@updateUser');
+
+    //D
+    $router->post('remove_user/{username}/{token}','UserController@deleteUser');
+});
