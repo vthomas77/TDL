@@ -466,11 +466,62 @@ $(document).ready(function(){
       $.post('http://192.168.33.10:8000/shareCard/' + cardID, function(data){
         collaboratorsList += '<ul>';
         for(var i=0; i < data.length; i++){
-          collaboratorsList += '<li>' + data[i].username + '</li><div><img src="./assets/img/down-arrow.svg" alt="Remove Collaborators"></div>';
+          collaboratorsList += '<div><li>' + data[i].username + '</li><div><img src="./assets/img/down-arrow.svg" alt="Remove Collaborators"></div></div>';
         }
         collaboratorsList += '</ul>';
         $('[data-use="card-collaborators"]').html(collaboratorsList);
       })
+    })
+
+    // Search users
+    $('[data-action="search-collaborators"]').on('click',function(){
+      searchUsers();
+    })
+
+    $('[data-use="search-collaborators"]').on('keydown',function(event){
+      if (event.keyCode == 13){
+        searchUsers();
+      }
+    })
+
+    function searchUsers(){
+      var searchInput = $('[data-use="search-collaborators"]')[0].value;
+      var usersList = '<h5>Available users</h5>';
+      if (searchInput != ''){
+        $.post('http://192.168.33.10:8000/searchUsers/' + searchInput, function(data){
+          usersList += '<ul>';
+          for(var i=0; i < data.length; i++){
+            usersList += '<div><li>' + data[i].username + '</li><div><img src="./assets/img/up-arrow.svg" alt="Remove Collaborators"></div></div>';
+          }
+          usersList += '</ul>';
+          $('[data-use="available-collaborators"]').html(usersList);
+        })
+      }
+    }
+
+    $('body').on('click','[data-use="manage-collaborators"]>div img', function(event){
+      //debugger;
+      if ($(event.target).attr('src') == "./assets/img/up-arrow.svg"){
+        //event.stopPropagation();
+        var upListItem = $(event.target).parent().parent().html();
+        var downListItem = '<div>' + upListItem.replace('up-arrow','down-arrow') + '</div>';
+        $('[data-use="card-collaborators"] > ul').append(downListItem)
+        $(event.target).parent().parent().remove()
+      } else {
+        //debugger;
+        //event.stopPropagation();
+        if ($('[data-use="available-collaborators"] > ul').html() == undefined){
+          var downListItem = $(event.target).parent().parent().html();
+          var upListItem = '<ul><div>' + downListItem.replace('down-arrow','up-arrow') + '</div></ul>';
+          $('[data-use="available-collaborators"]').append(upListItem)
+          $(event.target).parent().parent().remove()
+        } else {
+          var downListItem = $(event.target).parent().parent().html();
+          var upListItem = '<div>' + downListItem.replace('down-arrow','up-arrow') + '</div>';
+          $('[data-use="available-collaborators"] > ul').append(upListItem)
+          $(event.target).parent().parent().remove()
+        }
+      }
     })
 
 });

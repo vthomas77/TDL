@@ -58,6 +58,20 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
       }
     }
 
+    // Search users
+    static public function SearchUsers ($searchInput){
+      try {
+        $searchUsername = $searchInput . '%';
+        $resSearchUsers = DB::table('users')
+          ->select('username')
+          ->where('username','like',$searchUsername)
+          ->get();
+        return $resSearchUsers;
+      } catch (\Exception $e) {
+        return 'error';
+      }
+    }
+
     //might be unecessary
     public function __construct($username, $email, $avatar, $password) {
         $this->username = $username;

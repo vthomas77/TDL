@@ -20,7 +20,8 @@ $router->get('/', function () use ($router) {
 $router->post('createCard/{userToken}/{title}/{priority}/{category}/{deadline}/{status}', 'CardController@CreateCard');
 
 // Get Card
-$router->post('getCard/{userToken}', ['middleware'=>'Tok','uses'=>'CardController@GetCard']);
+//$router->post('getCard/{userToken}', ['middleware'=>'Tok','uses'=>'CardController@GetCard']);
+$router->post('getCard/{userToken}', 'CardController@GetCard');
 
 // Delete Card
 $router->post('deleteCard/{userToken}/{cardID}', 'CardController@DeleteCard');
@@ -28,15 +29,18 @@ $router->post('deleteCard/{userToken}/{cardID}', 'CardController@DeleteCard');
 // Share Card
 $router->post('shareCard/{cardID}', 'CardController@ShareCard');
 
+// Search users
+$router->post('searchUsers/{searchInput}', 'UserController@SearchUsers');
+
 // Get Id users
 $router->post('getIDUser/{userToken}', 'UserController@GetUserID');
 
 /*
 //CRUD USERS
 */
-$router->get('/api/user', function(){
-    return DB::select('SELECT * FROM users');
-});
+//$router->get('/api/user', function(){
+//    return DB::select('SELECT * FROM users');
+//});
 
 //C
 $router->post('signin/{username}/{email}/{password}','UserController@saveUser');
