@@ -11,7 +11,7 @@
 |
 */
 
-
+/*
 $router->get('/', function () use ($router) {
     $token_expiration = date("Y-m-d H:i:s", time() + 18000);
     
@@ -21,10 +21,17 @@ $router->get('/', function () use ($router) {
         ])->update(array(
             'token_expiration' => $token_expiration
     ));
-    var_dump($token_expiration);
+    echo '<pre>';
+    var_dump($router->input());
+    echo '</pre>';
     
     return $router->app->version();
 });
+*/
+
+$router->get('/{token}', ['middleware' => 'App\Http\Middleware\MainMiddleware', function () use ($router) {
+    return $router->app->version();
+}]);
 
 // Create Card
 $router->post('createCard/{userID}/{title}/{priority}/{category}/{deadline}/{status}', 'CardController@CreateCard');

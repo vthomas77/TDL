@@ -37,7 +37,8 @@ class TokenMiddleware
         $yet = intval($yet);
         
         if($token_expiration <= $yet) {            
-            return redirect()->to("/");
+            //return redirect()->to("/" + $token);
+            return $next($request);
         } else {
             return $next($request);
         }
