@@ -21,6 +21,11 @@ $router->post('createCard/{userToken}/{title}/{priority}/{category}/{deadline}/{
 
 // Get Card
 $router->post('getCard/{userToken}', 'CardController@GetCard');
+// Create Category
+$router->post('createCategory/{categoryname}/{categorycolor}', 'CategoryController@CreateCategory');
+
+// Get Id users
+$router->post('getIDUser/{userToken}', 'UserController@GetUserID');
 
 // Delete Card
 $router->post('deleteCard/{userToken}/{cardID}', 'CardController@DeleteCard');

@@ -224,6 +224,24 @@ $(document).ready(function(){
         });
     });
 
+    //Categories
+    $('[data-action="categories-editor"]').on('click', function(){
+        $('[data-use="categories-editor"]').toggleClass('hidden');
+        $('body').on('click', '[data-action="create-category"]', function(){
+            $('[data-use="creating-category"]').toggleClass('hidden');
+            $('[data-action="done-category"]').on('click', function(){
+              var categoryname = $('[data-signin="created-category"]')[0].value;
+              var categorycolor = $('[data-signin="color-category"]')[0].value;
+              $.post('http://192.168.33.10:8000/createCategory/' + categoryname + '/' + categorycolor) , function(data) {
+                debugger;
+                //notification to user
+                $('[data-use="notification-create-category"]').html('Your new category has been successfully created !');
+              }
+            });
+        });
+    });
+
+
     /*
     // Read user account
     */
