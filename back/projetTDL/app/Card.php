@@ -169,8 +169,6 @@ static public function UpdateCollaborators ($cardID,$cardCollaborators){
       foreach($resGetCollabortorsFromCard as $key => $value){
         $GetCollabortorsFromCard[] = $value->username;
       }
-    var_dump($cardCollaborators);
-    var_dump($GetCollabortorsFromCard);
     foreach($cardCollaborators as $v)
     {
       // if user is not already a collaborator

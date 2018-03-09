@@ -441,7 +441,6 @@ $(document).ready(function(){
             cardRender += '</div>';
           cardRender += '</div>';
         }
-        $('[data-use="get-card"]').children().remove();
         $('[data-use="get-card"]').html(cardRender);
 
       })
@@ -464,6 +463,7 @@ $(document).ready(function(){
     $('body').on('click','[data-action="share-card"]', function(){
       var cardID = this.dataset.use;
       $('[data-use="card-collaborators"]').attr('data-card',cardID);
+      $('[data-use="manage-collaborators"]').removeClass('hidden');
       var collaboratorsList = '<h5>Actual card collaborators</h5>';
       $.post('http://192.168.33.10:8000/shareCard/' + cardID, function(data){
         collaboratorsList += '<ul>';
@@ -525,7 +525,6 @@ $(document).ready(function(){
     $('[data-use="select-collaborators"]').on('click',function(){
       var newCardCollaborators = [];
       var collaboratorsCardID = $('[data-use="card-collaborators"]').attr('data-card');
-      debugger;
       var collaboratorsOfCard = {"idcard" : collaboratorsCardID, "usernames" : newCardCollaborators};
       for(var k=0; k < $('[data-use="card-collaborators"] > ul').children().length;k++){
         collaboratorsOfCard.usernames.push($('[data-use="card-collaborators"] > ul').children().eq(k).children().eq(0)[0].innerText);
@@ -533,9 +532,10 @@ $(document).ready(function(){
       var newCardCollaboratorsToStringify = JSON.stringify(collaboratorsOfCard);
       $.post('http://192.168.33.10:8000/updateCollaborators', newCardCollaboratorsToStringify, function(data){
         if (data != 4){
-          $('[data-use="get-card"]').addClass('hidden');
+          $('[data-use="manage-collaborators"]').addClass('hidden');
           showCard();
-
+        } else {
+          console.log('error');
         }
       })
     })
