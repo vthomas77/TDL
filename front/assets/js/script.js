@@ -31,8 +31,11 @@ $(document).ready(function(){
     
     $('[data-submit="login"]').on('click', function(){
 
+        var token = localStorage.getItem('token');
         var username = $('[data-login="username"]')[0].value;
         var password = $('[data-login="password"]')[0].value;
+        
+        
 
         $.get('http://192.168.33.10:8000/login/' + username + '/' + password, function(data) {
             if(data.length > 0) {
@@ -260,7 +263,6 @@ $(document).ready(function(){
     */
     $('[data-action="readUser"]').on('click', function(){
         var token = localStorage.getItem('token');
-        debugger;
         if(token) {
             $.post('http://192.168.33.10:8000/admin/read_account/' + token, function(data) {
                 if(data == "Lumen (5.6.1) (Laravel Components 5.6.*)") {
@@ -275,7 +277,6 @@ $(document).ready(function(){
                     
                     
                     localStorage.removeItem('token');
-                    debugger;
                 } else {
                     $('[data-use="delete-user"]').addClass('hidden');
                     $('[data-use="signin"]').addClass('hidden');

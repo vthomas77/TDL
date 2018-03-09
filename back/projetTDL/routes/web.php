@@ -11,27 +11,10 @@
 |
 */
 
-/*
-$router->get('/', function () use ($router) {
-    $token_expiration = date("Y-m-d H:i:s", time() + 18000);
-    
-    DB::table('users')
-        ->where([
-            ['token', '=', 'c1ca62403744b69047754f4e0fed319d82716bd1'],
-        ])->update(array(
-            'token_expiration' => $token_expiration
-    ));
-    echo '<pre>';
-    var_dump($router->input());
-    echo '</pre>';
-    
+
+$router->get('/', function () use ($router) {    
     return $router->app->version();
 });
-*/
-
-$router->get('/{token}', ['middleware' => 'App\Http\Middleware\MainMiddleware', function () use ($router) {
-    return $router->app->version();
-}]);
 
 // Create Card
 $router->post('createCard/{userID}/{title}/{priority}/{category}/{deadline}/{status}', 'CardController@CreateCard');
@@ -57,8 +40,8 @@ $router->get('/api/user', function(){
 //C
 $router->post('signin/{username}/{email}/{password}','UserController@saveUser');
 
-//group concerned by middleware
-$router->group(['prefix' => 'admin', 'middleware' => 'App\Http\Middleware\TokenMiddleware'], function () use ($router) {
+//group concerned by middleware : TokenMiddleware AND MainMiddleware
+$router->group(['prefix' => 'admin', 'middleware' => ['App\Http\Middleware\TokenMiddleware', 'App\Http\Middleware\MainMiddleware']], function () use ($router) {
     //R
     $router->post('read_account/{token}','UserController@readUser');
 
