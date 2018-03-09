@@ -1,7 +1,7 @@
 $(document).ready(function(){
-    
+
     var token = localStorage.getItem('token');
-    
+
     $('[data-submit="go-to-signin"]').on('click', function(){
         $('[data-use="signin"]').toggleClass('hidden');
         $('[data-use="signin"]').toggleClass('flex');
@@ -34,8 +34,8 @@ $(document).ready(function(){
         var token = localStorage.getItem('token');
         var username = $('[data-login="username"]')[0].value;
         var password = $('[data-login="password"]')[0].value;
-        
-        
+
+
 
         $.get('http://192.168.33.10:8000/login/' + username + '/' + password, function(data) {
             if(data.length > 0) {
@@ -49,6 +49,7 @@ $(document).ready(function(){
                 $('[data-use="available-actions"]').removeClass('hidden');
                 $('[data-use="get-card"]').removeClass('hidden');
                 localStorage.setItem('token', data[0].token);
+                showCard();
             } else {
                 $('[data-use="notification-login"]').html('<p class="error">username and password doesn\'t match... Please try again !</p>');
             }
@@ -95,8 +96,16 @@ $(document).ready(function(){
                                         $('[data-submit="signin"]').addClass('hidden');
                                         $('[data-submit="back-to-login"]').addClass('hidden');
 
+                                        //hide signin
+                                        $('[data-use="signin"]').addClass('hidden');
+
                                         //put token in localstorage
                                         localStorage.setItem('token', data.token);
+
+                                        //show cards
+                                        $('[data-use="available-actions"]').removeClass('hidden');
+                                        $('[data-use="get-card"]').removeClass('hidden');
+                                        showCard();
 
                                     } else if(data.status == 500){
                                         //if username already exist
@@ -179,9 +188,9 @@ $(document).ready(function(){
             }
         });
 
-        
+
         $('[data-submit="update-back" ]').on('click', function(){
-            
+
             $('[data-login="username"]')[0].value = 0;
             $('[data-login="password"]')[0].value = 0;
 
@@ -207,26 +216,26 @@ $(document).ready(function(){
         $('[data-submit="delete-user"]').on('click', function(){
             var username = $('[data-delete="username"]')[0].value;
             var token = localStorage.getItem('token');
-            
+
             if(username) {
                 $.post('http://192.168.33.10:8000/admin/remove_user/' + encodeURI(username) + '/' + token, function(data) {
                     if(data[0].status == 200) {
                         var token = localStorage.getItem('token');
                         var tokenExpiration = data[1][0][0].token_expiration;
                         var yet = data[1][1];
-                        
+
                         var res = tokenExpiration.replace("-", "");
                         var res = res.replace("-", "");
                         var res = res.replace(" ", "");
                         var res = res.replace(":", "");
                         var res = res.replace(":", "");
-                        
+
                         var res2 = yet.replace("/", "");
                         var res2 = res2.replace("/", "");
                         var res2 = res2.replace(" ", "");
                         var res2 = res2.replace(":", "");
                         var res2 = res2.replace(":", "");
-                        
+
                         if (res < res2) {
                             alert("You've been inactive for too long, please reconnect");
                             $('[data-use="delete-user"]').addClass('hidden');
@@ -237,7 +246,7 @@ $(document).ready(function(){
                         } else {
                             console.log("token still valid");
                         }
-                        
+
                         $('[data-use="delete-user"]').html('<p>Your account has been successfully removed !</p>');
 
                         localStorage.removeItem('token');
@@ -291,11 +300,11 @@ $(document).ready(function(){
                     $('[data-use="update-user"]').addClass('hidden');
                     $('[data-use="login"]').removeClass('hidden');
                     $('[data-use="read-user"]').addClass('hidden');
-                    
+
                     $('[data-use="notification-login"]').removeClass('hidden');
                     $('[data-use="notification-login"]').html('<p class="error">You\'ve been inactive for too long, please reconnect</p>');
-                    
-                    
+
+
                     localStorage.removeItem('token');
                 } else {
                     $('[data-use="delete-user"]').addClass('hidden');
@@ -513,7 +522,7 @@ $(document).ready(function(){
       })
     }
 
-    showCard();
+
 
     // Delete Card
     $('body').on('click','[data-action="delete-card"]', function(){
