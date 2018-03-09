@@ -31,6 +31,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+    
+    public function hasToken($token)
+    {
+        return DB::table('users')
+              ->select('token')
+              ->where('token','=',$token)
+              ->get();
+    }
 
     // Get user ID from token in Database
     static public function GetUserID ($userToken){
@@ -71,7 +79,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
         $avatar = "./assets/img/default.png";
         $token = bin2hex(random_bytes(20));
-        $token_expiration = date('Y/m/d h:i:s', time() + 7200);
+        //token lifetime is 5 hours after yet  (considering our 1h less thing, it's more like 4h for France)
+        $token_expiration = time() + 18000;
 
         try {
             DB::table('users')->insert([

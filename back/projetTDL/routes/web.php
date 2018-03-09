@@ -1,5 +1,5 @@
 <?php
-use DB;
+//use DB;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -12,7 +12,7 @@ use DB;
 */
 
 
-$router->get('/', function () use ($router) {
+$router->get('/', function () use ($router) {    
     return $router->app->version();
 });
 
@@ -34,6 +34,11 @@ $router->post('deleteCard/{userToken}/{cardID}', 'CardController@DeleteCard');
 $router->post('getIDUser/{userToken}', 'UserController@GetUserID');
 
 /*
+//Auth user     
+*/
+$router->get('login/{username}/{password}', 'UserController@authUser');
+
+/*
 //CRUD USERS
 */
 $router->get('/api/user', function(){
@@ -43,17 +48,18 @@ $router->get('/api/user', function(){
 //C
 $router->post('signin/{username}/{email}/{password}','UserController@saveUser');
 
-//R
-$router->post('admin/read_account/{token}','UserController@readUser');
 
-//U
-$router->post('admin/update/{token}/{newPassword}/{newUsername}/{newEmail}','UserController@updateUser');
+//group concerned by middleware : TokenMiddleware AND MainMiddleware
+$router->group(['prefix' => 'admin', 'middleware' => ['App\Http\Middleware\TokenMiddleware', 'App\Http\Middleware\MainMiddleware']], function () use ($router) {
+    //R
+    $router->post('read_account/{token}','UserController@readUser');
 
-//D
-$router->post('admin/remove_user/{username}','UserController@deleteUser');
+    //U
+    $router->post('update/{token}/{newPassword}/{newUsername}/{newEmail}','UserController@updateUser');
 
-/*
-//Auth user
-*/
+    //D
+    $router->post('remove_user/{username}/{token}','UserController@deleteUser');
+});
 
-$router->get('login/{username}/{password}', 'UserController@authUser');
+
+

@@ -1,4 +1,7 @@
 $(document).ready(function(){
+    
+    var token = localStorage.getItem('token');
+    
     $('[data-submit="go-to-signin"]').on('click', function(){
         $('[data-use="signin"]').toggleClass('hidden');
         $('[data-use="signin"]').toggleClass('flex');
@@ -17,7 +20,7 @@ $(document).ready(function(){
         //$.post('192.168.33.10:8000/singin')
     });
 
-    //toggle down options when connected ans when clicking on the crossed wheel icon
+    //toggle down options when connected and when clicking on the crossed wheel icon
     $('body').on('click', '[data-use="sidebar"] h1 svg', function(){
         $('[data-use="sidebar-connected"]').toggleClass('hidden');
     });
@@ -28,8 +31,11 @@ $(document).ready(function(){
 
     $('[data-submit="login"]').on('click', function(){
 
+        var token = localStorage.getItem('token');
         var username = $('[data-login="username"]')[0].value;
         var password = $('[data-login="password"]')[0].value;
+        
+        
 
         $.get('http://192.168.33.10:8000/login/' + username + '/' + password, function(data) {
             if(data.length > 0) {
@@ -173,8 +179,9 @@ $(document).ready(function(){
             }
         });
 
+        
         $('[data-submit="update-back" ]').on('click', function(){
-
+            
             $('[data-login="username"]')[0].value = 0;
             $('[data-login="password"]')[0].value = 0;
 
@@ -199,12 +206,40 @@ $(document).ready(function(){
 
         $('[data-submit="delete-user"]').on('click', function(){
             var username = $('[data-delete="username"]')[0].value;
+            var token = localStorage.getItem('token');
+            
             if(username) {
-                $.post('http://192.168.33.10:8000/admin/remove_user/' + encodeURI(username), function(data) {
-                    if(data.status == 200) {
+                $.post('http://192.168.33.10:8000/admin/remove_user/' + encodeURI(username) + '/' + token, function(data) {
+                    if(data[0].status == 200) {
+                        var token = localStorage.getItem('token');
+                        var tokenExpiration = data[1][0][0].token_expiration;
+                        var yet = data[1][1];
+                        
+                        var res = tokenExpiration.replace("-", "");
+                        var res = res.replace("-", "");
+                        var res = res.replace(" ", "");
+                        var res = res.replace(":", "");
+                        var res = res.replace(":", "");
+                        
+                        var res2 = yet.replace("/", "");
+                        var res2 = res2.replace("/", "");
+                        var res2 = res2.replace(" ", "");
+                        var res2 = res2.replace(":", "");
+                        var res2 = res2.replace(":", "");
+                        
+                        if (res < res2) {
+                            alert("You've been inactive for too long, please reconnect");
+                            $('[data-use="delete-user"]').addClass('hidden');
+                            $('[data-use="signin"]').addClass('hidden');
+                            $('[data-use="update-user"]').addClass('hidden');
+                            $('[data-use="login"]').removeClass('hidden');
+                            $('[data-use="read-user"]').addClass('hidden');
+                        } else {
+                            console.log("token still valid");
+                        }
+                        
                         $('[data-use="delete-user"]').html('<p>Your account has been successfully removed !</p>');
 
-                        debugger;
                         localStorage.removeItem('token');
                     } else {
                         $('[data-use="delete-user"]').append('<p class="error">An error has occured, please try again</p>');
@@ -250,19 +285,33 @@ $(document).ready(function(){
 
         if(token) {
             $.post('http://192.168.33.10:8000/admin/read_account/' + token, function(data) {
-                $('[data-use="delete-user"]').addClass('hidden');
-                $('[data-use="signin"]').addClass('hidden');
-                $('[data-use="update-user"]').addClass('hidden');
-                $('[data-use="login"]').addClass('hidden');
-                $('[data-use="read-user"]').removeClass('hidden');
+                if(data == "Lumen (5.6.1) (Laravel Components 5.6.*)") {
+                    $('[data-use="delete-user"]').addClass('hidden');
+                    $('[data-use="signin"]').addClass('hidden');
+                    $('[data-use="update-user"]').addClass('hidden');
+                    $('[data-use="login"]').removeClass('hidden');
+                    $('[data-use="read-user"]').addClass('hidden');
+                    
+                    $('[data-use="notification-login"]').removeClass('hidden');
+                    $('[data-use="notification-login"]').html('<p class="error">You\'ve been inactive for too long, please reconnect</p>');
+                    
+                    
+                    localStorage.removeItem('token');
+                } else {
+                    $('[data-use="delete-user"]').addClass('hidden');
+                    $('[data-use="signin"]').addClass('hidden');
+                    $('[data-use="update-user"]').addClass('hidden');
+                    $('[data-use="login"]').addClass('hidden');
+                    $('[data-use="read-user"]').removeClass('hidden');
 
-                var htmlRender = '<h2>Your profile :</h2>';
-                var htmlRender = htmlRender + '<img src="' + data[0].avatar + '" class="img-avatar">';
-                var htmlRender = htmlRender + '<p>Your username : ' + data[0].username + '</p>';
-                var htmlRender = htmlRender + '<p>Your email : ' + data[0].email + '</p>';
-                var htmlRender = htmlRender + '<input type="submit" value="Back" data-submit="back" class="button">';
+                    var htmlRender = '<h2>Your profile :</h2>';
+                    var htmlRender = htmlRender + '<img src="' + data[0].avatar + '" class="img-avatar">';
+                    var htmlRender = htmlRender + '<p>Your username : ' + data[0].username + '</p>';
+                    var htmlRender = htmlRender + '<p>Your email : ' + data[0].email + '</p>';
+                    var htmlRender = htmlRender + '<input type="submit" value="Back" data-submit="back" class="button">';
 
-                $('[data-use="read-user"]').html(htmlRender);
+                    $('[data-use="read-user"]').html(htmlRender);
+                }
             });
 
             $('body').on('click', '[data-submit="back"]', function(){
@@ -280,7 +329,7 @@ $(document).ready(function(){
             $('[data-use="login"]').addClass('hidden');
 
             //notification of the error
-            $('[data-use="read-user"]').html('<p class="error">Your connection has expired, please reconnect</p>')
+            $('[data-use="read-user"]').html('<p class="error">Ykour connection has expired, please reconnect</p>')
         }
 
     });
