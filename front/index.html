@@ -56,10 +56,14 @@
                 <input type="password" placeholder="password" name="password" data-signin="password">
                 <input type="text" placeholder="repeat password" name="repeat-password" data-signin="repeat-password">
 
-                <!--
-                <input type="file" name="avatar" data-signin="avatar" placeholder="copy your avatar url here" >
-                -->
 
+                <input type="file" id="avatar" data-signin="avatar" class="hidden" accept=".png, .jpg, .jpeg, .svg">
+                <label for="avatar" class="button">Select an image</label>
+                <div data-use="preview">
+                  <p>No files selected!</p>
+                </div>
+                <input type="submit" class="button" value="Upload">
+                
                 <!-- if password doesn't match -->
                 <p id="passwordError" class="hidden">Password doesn't match ! try again</p>
 

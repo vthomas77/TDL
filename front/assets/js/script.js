@@ -615,4 +615,20 @@ $(document).ready(function(){
         }
       })
     })
+
+    $('[data-signin="avatar"]').on('change', function(){
+      var selectedFile = $('[data-signin="avatar"]')[0].files;
+      if (!selectedFile.length) {
+        $('[data-use="preview"]').html("<p>No files selected!</p>");
+      } else {
+        var img = document.createElement("img");
+        img.src = window.URL.createObjectURL(selectedFile[0]);
+        img.height = 60;
+        img.onload = function() {
+          window.URL.revokeObjectURL(this.src);
+        }
+        $('[data-use="preview"]').html(img);
+      }
+    })
+
 });
