@@ -441,6 +441,7 @@ $(document).ready(function(){
             cardRender += '</div>';
           cardRender += '</div>';
         }
+        $('[data-use="get-card"]').children().remove();
         $('[data-use="get-card"]').html(cardRender);
 
       })
@@ -462,11 +463,12 @@ $(document).ready(function(){
     // Show Collaborators
     $('body').on('click','[data-action="share-card"]', function(){
       var cardID = this.dataset.use;
+      $('[data-use="card-collaborators"]').attr('data-card',cardID);
       var collaboratorsList = '<h5>Actual card collaborators</h5>';
       $.post('http://192.168.33.10:8000/shareCard/' + cardID, function(data){
         collaboratorsList += '<ul>';
         for(var i=0; i < data.length; i++){
-          collaboratorsList += '<div><li data-use="' + data[i].cards_id_card + '">' + data[i].username + '</li><div><img src="./assets/img/down-arrow.svg" alt="Remove Collaborators"></div></div>';
+          collaboratorsList += '<div><li>' + data[i].username + '</li><div><img src="./assets/img/down-arrow.svg" alt="Remove Collaborators"></div></div>';
         }
         collaboratorsList += '</ul>';
         $('[data-use="card-collaborators"]').html(collaboratorsList);
@@ -491,7 +493,7 @@ $(document).ready(function(){
         $.post('http://192.168.33.10:8000/searchUsers/' + searchInput, function(data){
           usersList += '<ul>';
           for(var i=0; i < data.length; i++){
-            usersList += '<div><li data-use="' + data[i].cards_id_card + '">' + data[i].username + '</li><div><img src="./assets/img/up-arrow.svg" alt="Remove Collaborators"></div></div>';
+            usersList += '<div><li>' + data[i].username + '</li><div><img src="./assets/img/up-arrow.svg" alt="Remove Collaborators"></div></div>';
           }
           usersList += '</ul>';
           $('[data-use="available-collaborators"]').html(usersList);
@@ -522,14 +524,19 @@ $(document).ready(function(){
 
     $('[data-use="select-collaborators"]').on('click',function(){
       var newCardCollaborators = [];
-      for(var k=0; k < $('[data-use="card-collaborators"] > ul').children().length;k++){
-        var obj = {"idcard" : $('[data-use="card-collaborators"] > ul').children().eq(0).children().eq(0)[0].dataset.use, "username": $('[data-use="card-collaborators"] > ul').children().eq(k).children().eq(0)[0].innerText}
-        newCardCollaborators.push(obj);
-      }
-      var newCardCollaboratorsToStringify = JSON.stringify(newCardCollaborators);
+      var collaboratorsCardID = $('[data-use="card-collaborators"]').attr('data-card');
       debugger;
+      var collaboratorsOfCard = {"idcard" : collaboratorsCardID, "usernames" : newCardCollaborators};
+      for(var k=0; k < $('[data-use="card-collaborators"] > ul').children().length;k++){
+        collaboratorsOfCard.usernames.push($('[data-use="card-collaborators"] > ul').children().eq(k).children().eq(0)[0].innerText);
+      }
+      var newCardCollaboratorsToStringify = JSON.stringify(collaboratorsOfCard);
       $.post('http://192.168.33.10:8000/updateCollaborators', newCardCollaboratorsToStringify, function(data){
-        debugger;
+        if (data != 4){
+          $('[data-use="get-card"]').addClass('hidden');
+          showCard();
+
+        }
       })
     })
 });

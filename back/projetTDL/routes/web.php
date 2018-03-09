@@ -1,6 +1,5 @@
 <?php
 use DB;
-use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -37,10 +36,8 @@ $router->post('searchUsers/{searchInput}', 'UserController@SearchUsers');
 $router->post('getIDUser/{userToken}', 'UserController@GetUserID');
 
 // Update collaborators
-//$router->post('updateCollaborators/{newCardCollaborators}', 'CardController@UpdateCollaborators');
-$router->post('updateCollaborators', function (Request $request){
-  return $request->json()->all();
-});
+$router->post('updateCollaborators', 'CardController@UpdateCollaborators');
+
 
 /*
 //CRUD USERS

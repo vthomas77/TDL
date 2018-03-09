@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Card;
+use Illuminate\Http\Request;
 
 class CardController extends Controller
 {
@@ -37,10 +38,12 @@ class CardController extends Controller
     }
 
     // Update Collaborators
-    public function UpdateCollaborators($newCardCollaborators)
+    public function UpdateCollaborators(Request $request)
     {
-        //return response()->json(card::ShareCard($cardID));
-        return $newCardCollaborators;
+        $newCardCollaborators = $request->json()->all();
+        $cardID = $newCardCollaborators['idcard'];
+        $cardCollaborators = $newCardCollaborators['usernames'];
+        return response()->json(card::UpdateCollaborators($cardID,$cardCollaborators));
     }
 
 }
