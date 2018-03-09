@@ -470,7 +470,7 @@ $(document).ready(function(){
         // Cards creation
         var cardRender = '';
         for (var i=0; i < data.length; i++){
-          cardRender += '<div>';
+          cardRender += '<div data-idCard="' + data[i].id + '">';
             cardRender += '<div>';
               cardRender += '<h3>' + data[i].title + '</h3>';
               cardRender += '<div>';
@@ -503,9 +503,11 @@ $(document).ready(function(){
             }
             cardRender += '<img src="./assets/img/flag.svg" alt="category">';
             cardRender += '</div>';
-            cardRender += '<div>';
-            cardRender += '<p>Empty Task</p>';
+            cardRender += '<div data-use="task-list">';
+            cardRender += '<ul data-task="inul" class="no-style">';			
+            cardRender += '</ul>';
             cardRender += '</div>';
+            cardRender += '<div data-use="add-input-task" class="flex hidden"><input data-task="taskName" type="text" placeholder="Task name here"><input type="submit" value="OK" class="button" data-task="add-task"></div>';
           cardRender += '</div>';
         }
         $('[data-use="get-card"]').html(cardRender);
@@ -513,7 +515,27 @@ $(document).ready(function(){
       })
     }
 
+	function displayTasks() {
+		/*
+		// Read task in card
+		*/
+		debugger;
+		var token = localStorage.getItem('token');
+		//var idCard = $(this).closest('[data-idcard]').attr('data-idcard');
+		var idCard = 1;
+		$.post('http://192.168.33.10:8000/admin/readTask/' + token + '/' + idCard, function(data) {
+			debugger;			
+			var taskRender = "<li>";
+			//etc
+			taskRender += 'hihihih';
+			taskRender += '</li>';
+			$('[data-idCard="' + data[1].cards_id_card + '"] [data-task="inul"]').append(taskRender);
+		});
+	}
+	
     showCard();
+	displayTasks();
+	
 
     // Delete Card
     $('body').on('click','[data-action="delete-card"]', function(){
@@ -525,5 +547,49 @@ $(document).ready(function(){
           }
       })
     })
+    
+    
+    /*
+    // Create task
+    */
+    $('body').on('click', '[data-action="add-task"]', function(){
+		
+		var idCard = $(this).attr('data-use');
+		
+        $('[data-idCard="' + idCard + '"] [data-use="add-input-task"]').toggleClass('hidden');
+
+    });
+	$('body').on('click', '[data-task="add-task"]', function(){
+		var token = localStorage.getItem('token');
+		//still need to be dynamic
+		var rank = 1;
+		var taskName = $('[data-task="taskName"]')[0].value;
+		var idCard = $(this).closest('[data-idcard]').attr('data-idcard');
+		
+		$.post('http://192.168.33.10:8000/admin/createTask/' + token + '/' + taskName + '/' + rank + '/' + idCard, function(data){
+			
+			var newTask = decodeURI(data.title);
+			var idTask = data.idTask[0].id_task;
+			
+			$('[data-idCard="' + data.idCard + '"] [data-task="inul"]').append('<div class="flex-left"><i class="fas fa-trash" data-dropTask="' + idTask + '"></i><li>' + newTask + '</li></div>');
+			
+			$('[data-idCard="' + data.idCard + '"] [data-use="add-input-task"]').toggleClass('hidden');
+
+		});
+	
+	});
+	
+	/*
+	// Drop task
+	*/
+	$('body').on('click', '[data-droptask]', function() {
+		
+		var idTask = $(this).attr('data-droptask');
+		
+		$.post('http://192.168.33.10:8000/admin/dropTask/' + token + '/' + idTask, function(data) {			
+			$('[data-dropTask="' + data + '"]').parent('div').hide("drop", 100);
+			
+		});
+	});
 
 });

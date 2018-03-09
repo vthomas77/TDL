@@ -137,29 +137,30 @@ body {
             border: none;
             padding: 5px;
         }
-        .button {
-            color: @main;
-            background-color: white;
-            font-weight: bold;
-            border-radius: 3px;
-            &:hover {
-                background-color: @grey;
-                color: white;
-            }
-        }
-        .big {
-            padding: 15px;
-            font-size: 1.2rem;
-            background-color: #26282a;
-            color: white;
-            &:hover {
-                background-color: white;
-                color: @grey;
-            }
-        }
         #passwordError {
             color: @grey;
             font-weight: bold;
+        }
+    }
+    .button {
+        color: @main;
+        background-color: white;
+        font-weight: bold;
+        border-radius: 3px;
+        border : none;
+        &:hover {
+            background-color: @grey;
+            color: white;
+        }
+    }
+    .big {
+        padding: 15px;
+        font-size: 1.2rem;
+        background-color: #26282a;
+        color: white;
+        &:hover {
+            background-color: white;
+            color: @grey;
         }
     }
     .flex {
@@ -167,6 +168,11 @@ body {
         align-items: flex-end;
         justify-content: center;
     }
+	.flex-left {
+		display: flex;
+        align-items: flex-end;
+        justify-content: left;
+	}
     .hidden {
         display: none;
     }
@@ -196,4 +202,19 @@ body {
         color: @grey;
         font-weight: bold;
     }
+	.no-style {
+		text-decoration: none;
+		list-style: none;
+		padding: 8px;
+		li {
+			padding-top: 8px;
+		}
+		svg {
+			padding-right: 8px;
+			&:hover {
+				cursor: pointer;
+				color: @grey;
+			}
+		}
+	}
 }
