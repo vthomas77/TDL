@@ -14,7 +14,7 @@ class UserController extends Controller {
 
     public function readUser($token) {
         $getUsers = User::readUser($token);
-        
+
         return response()->json($getUsers);
     }
 
@@ -29,10 +29,10 @@ class UserController extends Controller {
 
         return response()->json([$deletedUser, $checkToken]);
     }
-    
+
     public function updateUser($token, $newPassword, $newUsername, $newEmail) {
         $users = User::updateUser($token, $newPassword, $newUsername, $newEmail);
-        
+
         return response()->json($users);
     }
 
@@ -40,11 +40,16 @@ class UserController extends Controller {
     public function GetUserID($userToken){
       return response()->json(User::GetUserID($userToken));
     }
-    
+
+    // Search users
+    public function SearchUsers($searchInput){
+      return response()->json(User::SearchUsers($searchInput));
+    }
+
     //auth user
     public function authUser($username, $password) {
         $auth = User::authUser($username, $password);
-        
+
         return response()->json($auth);
     }
 

@@ -128,6 +128,35 @@ body {
         }
       }
     }
+    [data-use="manage-collaborators"] {
+      img {
+        width: 20px;
+      }
+    }
+    [data-use="card-collaborators"] {
+      border-bottom: solid 2px black;
+      ul {
+        display: flex;
+        flex-direction: column;
+        > div {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+      }
+    }
+    [data-use="available-collaborators"] {
+      ul {
+        display: flex;
+        flex-direction: column;
+        > div {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+      }
+
+    }
 
     .content {
         margin-left: 30vw;

@@ -164,6 +164,18 @@
           <input type="submit" data-use="new-card-submit" class="button" value="Create">
           <p data-use="new-card-notification"></p>
         </section>
+        <section data-use="manage-collaborators" class="content hidden">
+          <h2>Collaborators</h2>
+          <input data-use="search-collaborators" type="text" placeholder="Search person">
+          <img data-action="search-collaborators" src="./assets/img/search.svg" alt="Search person">
+          <div data-use="card-collaborators">
+          </div>
+          <div data-use="available-collaborators">
+          </div>
+          <div>
+            <input type="submit" data-use="select-collaborators" class="button" value="Validate">
+          </div>
+        </section>
         <section data-use="get-card" class="content hidden">
         </section>
 

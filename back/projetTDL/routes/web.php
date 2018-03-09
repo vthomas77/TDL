@@ -20,6 +20,7 @@ $router->get('/', function () use ($router) {
 $router->post('createCard/{userToken}/{title}/{priority}/{category}/{deadline}/{status}', 'CardController@CreateCard');
 
 // Get Card
+//$router->post('getCard/{userToken}', ['middleware'=>'Tok','uses'=>'CardController@GetCard']);
 $router->post('getCard/{userToken}', 'CardController@GetCard');
 // Create Category
 $router->post('createCategory/{categoryname}/{categorycolor}', 'CategoryController@CreateCategory');
@@ -30,8 +31,18 @@ $router->post('getIDUser/{userToken}', 'UserController@GetUserID');
 // Delete Card
 $router->post('deleteCard/{userToken}/{cardID}', 'CardController@DeleteCard');
 
+// Share Card
+$router->post('shareCard/{cardID}', 'CardController@ShareCard');
+
+// Search users
+$router->post('searchUsers/{searchInput}', 'UserController@SearchUsers');
+
 // Get Id users
 $router->post('getIDUser/{userToken}', 'UserController@GetUserID');
+
+// Update collaborators
+$router->post('updateCollaborators', 'CardController@UpdateCollaborators');
+
 
 /*
 //Auth user     
@@ -41,9 +52,9 @@ $router->get('login/{username}/{password}', 'UserController@authUser');
 /*
 //CRUD USERS
 */
-$router->get('/api/user', function(){
-    return DB::select('SELECT * FROM users');
-});
+//$router->get('/api/user', function(){
+//    return DB::select('SELECT * FROM users');
+//});
 
 //C
 $router->post('signin/{username}/{email}/{password}','UserController@saveUser');

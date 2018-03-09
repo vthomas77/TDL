@@ -526,4 +526,84 @@ $(document).ready(function(){
       })
     })
 
+    // Show Collaborators
+    $('body').on('click','[data-action="share-card"]', function(){
+      var cardID = this.dataset.use;
+      $('[data-use="card-collaborators"]').attr('data-card',cardID);
+      $('[data-use="manage-collaborators"]').removeClass('hidden');
+      var collaboratorsList = '<h5>Actual card collaborators</h5>';
+      $.post('http://192.168.33.10:8000/shareCard/' + cardID, function(data){
+        collaboratorsList += '<ul>';
+        for(var i=0; i < data.length; i++){
+          collaboratorsList += '<div><li>' + data[i].username + '</li><div><img src="./assets/img/down-arrow.svg" alt="Remove Collaborators"></div></div>';
+        }
+        collaboratorsList += '</ul>';
+        $('[data-use="card-collaborators"]').html(collaboratorsList);
+      })
+    })
+
+    // Search users
+    $('[data-action="search-collaborators"]').on('click',function(){
+      searchUsers();
+    })
+
+    $('[data-use="search-collaborators"]').on('keydown',function(event){
+      if (event.keyCode == 13){
+        searchUsers();
+      }
+    })
+
+    function searchUsers(){
+      var searchInput = $('[data-use="search-collaborators"]')[0].value;
+      var usersList = '<h5>Available users</h5>';
+      if (searchInput != ''){
+        $.post('http://192.168.33.10:8000/searchUsers/' + searchInput, function(data){
+          usersList += '<ul>';
+          for(var i=0; i < data.length; i++){
+            usersList += '<div><li>' + data[i].username + '</li><div><img src="./assets/img/up-arrow.svg" alt="Remove Collaborators"></div></div>';
+          }
+          usersList += '</ul>';
+          $('[data-use="available-collaborators"]').html(usersList);
+        })
+      }
+    }
+
+    $('body').on('click','[data-use="manage-collaborators"]>div img', function(event){
+      if ($(event.target).attr('src') == "./assets/img/up-arrow.svg"){
+        var upListItem = $(event.target).parent().parent().html();
+        var downListItem = '<div>' + upListItem.replace('up-arrow','down-arrow') + '</div>';
+        $('[data-use="card-collaborators"] > ul').append(downListItem)
+        $(event.target).parent().parent().remove()
+      } else {
+        if ($('[data-use="available-collaborators"] > ul').html() == undefined){
+          var downListItem = $(event.target).parent().parent().html();
+          var upListItem = '<ul><div>' + downListItem.replace('down-arrow','up-arrow') + '</div></ul>';
+          $('[data-use="available-collaborators"]').append(upListItem)
+          $(event.target).parent().parent().remove()
+        } else {
+          var downListItem = $(event.target).parent().parent().html();
+          var upListItem = '<div>' + downListItem.replace('down-arrow','up-arrow') + '</div>';
+          $('[data-use="available-collaborators"] > ul').append(upListItem)
+          $(event.target).parent().parent().remove()
+        }
+      }
+    })
+
+    $('[data-use="select-collaborators"]').on('click',function(){
+      var newCardCollaborators = [];
+      var collaboratorsCardID = $('[data-use="card-collaborators"]').attr('data-card');
+      var collaboratorsOfCard = {"idcard" : collaboratorsCardID, "usernames" : newCardCollaborators};
+      for(var k=0; k < $('[data-use="card-collaborators"] > ul').children().length;k++){
+        collaboratorsOfCard.usernames.push($('[data-use="card-collaborators"] > ul').children().eq(k).children().eq(0)[0].innerText);
+      }
+      var newCardCollaboratorsToStringify = JSON.stringify(collaboratorsOfCard);
+      $.post('http://192.168.33.10:8000/updateCollaborators', newCardCollaboratorsToStringify, function(data){
+        if (data != 4){
+          $('[data-use="manage-collaborators"]').addClass('hidden');
+          showCard();
+        } else {
+          console.log('error');
+        }
+      })
+    })
 });

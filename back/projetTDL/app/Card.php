@@ -143,4 +143,92 @@ static public function DeleteCard ($userToken,$cardID){
   }
 }
 
+// Share card
+static public function ShareCard ($cardID){
+  try {
+    $resGetCollaborators = DB::table('properties')
+    ->join('users', 'users.id_user', '=', 'properties.users_id_user')
+    ->select('users.username','properties.cards_id_card')
+    ->where('cards_id_card','=',$cardID)
+    ->get();
+    return $resGetCollaborators;
+  } catch (\Exception $e) {
+    return "4";
+  }
+}
+
+// Update collaborators
+static public function UpdateCollaborators ($cardID,$cardCollaborators){
+  try {
+    $GetCollabortorsFromCard = [];
+    $resGetCollabortorsFromCard = DB::table('properties')
+      ->join('users', 'users.id_user', '=', 'properties.users_id_user')
+      ->select('username')
+      ->where('properties.cards_id_card','=',$cardID)
+      ->get();
+      foreach($resGetCollabortorsFromCard as $key => $value){
+        $GetCollabortorsFromCard[] = $value->username;
+      }
+    foreach($cardCollaborators as $v)
+    {
+      // if user is not already a collaborator
+      // Add it
+      if (!(in_array($v,$GetCollabortorsFromCard)))
+      {
+        $userID = user::GetUserIDFromUsername($v);
+        $rank = card::GetUserCardRank($userID);
+
+        try {
+          $resCreatePreference = DB::table('properties')->insert(
+              ['users_id_user' => $userID,
+               'cards_id_card' => $cardID,
+               'rank' => $rank,
+               'rights' => '',
+               'filter_perso' => '',
+               'filter_general' => '']
+            );
+        } catch (\Exception $e) {
+          return "4";
+        }
+      }
+    }
+    foreach($GetCollabortorsFromCard as $v) {
+      // if user was a collaborator but is not list
+      // Remove it
+      if (!(in_array($v,$cardCollaborators))) {
+      $userID = user::GetUserIDFromUsername($v);
+        try {
+          $resDeleteCardAssociations = DB::table('properties')
+          ->where('cards_id_card','=',$cardID)
+          ->where('users_id_user','=',$userID)
+          ->delete();
+        } catch (\Exception $e) {
+          return "4";
+        }
+      }
+    }
+  } catch (\Exception $e) {
+    return "4";
+  }
+}
+
+// Get max rank from user's card
+static public function GetUserCardRank ($userID){
+  try {
+    $resGetUserCardRank = DB::table('properties')
+      ->select('rank')
+      ->where('users_id_user','=',$userID)
+      ->max('rank');
+
+      if ($resGetUserCardRank == NULL){
+        $rank = 1;
+      } else {
+        $rank = $resGetUserCardRank + 1;
+      }
+      return $rank;
+  } catch (\Exception $e) {
+    return "2";
+  }
+}
+
 }

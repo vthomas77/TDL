@@ -53,6 +53,19 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
       }
     }
 
+    // Get user ID from username in Database
+    static public function GetUserIDFromUsername ($username){
+      try {
+        $resGetUserIDFromUsername = DB::table('users')
+          ->select('id_user')
+          ->where('username','=',$username)
+          ->get();
+        return $resGetUserIDFromUsername[0]->id_user;
+      } catch (\Exception $e) {
+        return 'error';
+      }
+    }
+
     // Get user avatar from user_id in database
     static public function GetUserAvatar ($userID){
       try {
@@ -61,6 +74,20 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
           ->where('id_user','=',$userID)
           ->get();
         return $resGetUserAvatar[0]->avatar;
+      } catch (\Exception $e) {
+        return 'error';
+      }
+    }
+
+    // Search users
+    static public function SearchUsers ($searchInput){
+      try {
+        $searchUsername = $searchInput . '%';
+        $resSearchUsers = DB::table('users')
+          ->select('username')
+          ->where('username','like',$searchUsername)
+          ->get();
+        return $resSearchUsers;
       } catch (\Exception $e) {
         return 'error';
       }

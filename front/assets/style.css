@@ -121,6 +121,30 @@ body [data-use="get-card"] > div > div:nth-of-type(3) {
 body [data-use="get-card"] > div > div:nth-of-type(3) img {
   width: 20px;
 }
+body [data-use="manage-collaborators"] img {
+  width: 20px;
+}
+body [data-use="card-collaborators"] {
+  border-bottom: solid 2px black;
+}
+body [data-use="card-collaborators"] ul {
+  display: flex;
+  flex-direction: column;
+}
+body [data-use="card-collaborators"] ul > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+body [data-use="available-collaborators"] ul {
+  display: flex;
+  flex-direction: column;
+}
+body [data-use="available-collaborators"] ul > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 body .content {
   margin-left: 30vw;
   padding: 10%;
