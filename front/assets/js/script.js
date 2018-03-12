@@ -502,19 +502,27 @@ $(document).ready(function(){
             cardRender += '</div>';
             cardRender += '<div>';
               for (var j=0; j <  data[i].collaborators.length; j++){
-                cardRender += '<img data-use="avatar" src="' + data[i].collaborators[j] + '" alt="author avatar">';
+                cardRender += '<img data-use="avatar" src="http://192.168.33.10:8000/' + data[i].collaborators[j] + '" alt="avatar">';
               }
             cardRender += '</div>';
             cardRender += '<div>';
             if (data[i].priority == 2) {
               cardRender += '<img src="./assets/img/warning-sign.svg" alt="high priority">';
             }
-            if (data[i].status == 0) {
-              cardRender += '<img src="./assets/img/smiling.svg" alt="status OK">';
-            }
-            else if (data[i].status == 1)
+            var today = new Date();
+            var deadline = new Date(data[i].deadline);
+            if (!(data[i].deadline == "0000-00-00 00:00:00"))
             {
-              cardRender += '<img src="./assets/img/sad.svg" alt="status NOK">';
+              var msPerDay = 24 * 60 * 60 * 1000;
+              var daysLeft = (today - deadline) / msPerDay;
+              daysLeft = Math.round(daysLeft);
+              if (today > deadline) {
+                cardRender += '<img src="./assets/img/alarm-clock-yellow.svg" alt="status NOK" title="' + daysLeft + ' day(s) late">';
+              }
+              else
+              {
+                cardRender += '<img src="./assets/img/alarm-clock-green.svg" alt="status OK" title="' + daysLeft + ' day(s) late">';
+              }
             }
             cardRender += '<img src="./assets/img/flag.svg" alt="category">';
             cardRender += '</div>';
