@@ -283,7 +283,7 @@ $(document).ready(function(){
               var categoryname = $('[data-signin="created-category"]')[0].value;
               var categorycolor = $('[data-signin="color-category"]')[0].value;
               $.post('http://192.168.33.10:8000/createCategory/' + categoryname + '/' + categorycolor) , function(data) {
-                debugger;
+
                 //notification to user
                 $('[data-use="notification-create-category"]').html('Your new category has been successfully created !');
               }
@@ -476,10 +476,10 @@ $(document).ready(function(){
     // Get card
     function showCard() {
         var userToken = localStorage.getItem('token');
-		
+
         $.post('http://192.168.33.10:8000/getCard/' + userToken,function(data){
-			
-		debugger;
+
+
         // Sort array relative to rank card
         data.sort(function(a,b){
           return b.rank - a.rank;
@@ -531,7 +531,7 @@ $(document).ready(function(){
             cardRender += '</div>';
             cardRender += '<div data-use="task-list">';
             cardRender += '<ul data-task="inul" class="no-style">';
-			
+
 			//list the tasks per card
 			for(var index = 0; index < data[i].tasks.length; index++) {
 				cardRender += '<div class="flex-left">';
@@ -541,17 +541,22 @@ $(document).ready(function(){
 				cardRender += '</li>';
 				cardRender += '</div>';
 			}
-			
+
             cardRender += '</ul>';
             cardRender += '</div>';
             cardRender += '<div data-use="add-input-task" class="flex hidden"><input data-task="taskName" type="text" placeholder="Task name here"><input type="submit" value="OK" class="button" data-task="add-task"></div>';
+            var numberOfTasks = $('[data-use="task-list"] li').length;
+            var numberOfTasksWithLineTrough = $('li.line-through').length;
+            var pourcent = Math.round(numberOfTasksWithLineTrough/numberOfTasks*100);
+            cardRender += '<div id="avancement"><p><progress value="' + pourcent + '" max="100"></progress></p></div>'
           cardRender += '</div>';
         }
         $('[data-use="get-card"]').html(cardRender);
 
       })
+
     }
-	
+
     showCard();
 
 
@@ -565,17 +570,17 @@ $(document).ready(function(){
           }
       })
     })
-    
-    
+
+
     /*
     // Create task
     */
     $('body').on('click', '[data-action="add-task"]', function(){
-		
+
 		var idCard = $(this).attr('data-use');
-		
+
         $('[data-idCard="' + idCard + '"] [data-use="add-input-task"]').toggleClass('hidden');
-		
+
 		$('[data-idCard="' + idCard + '"] [data-task="inul"]').append("");
 
     });
@@ -585,29 +590,29 @@ $(document).ready(function(){
 		var rank = 1;
 		var idCard = $(this).closest('[data-idcard]').attr('data-idcard');
 		var taskName = $('[data-idCard="' + idCard + '"] [data-task="taskName"]')[0].value;
-		
+
 		$.post('http://192.168.33.10:8000/admin/createTask/' + token + '/' + taskName + '/' + rank + '/' + idCard, function(data){
-			
+
 			var newTask = decodeURI(data.title);
 			var idTask = data.idTask[0].id_task;
-			
+
 			$('[data-idCard="' + data.idCard + '"] [data-task="inul"]').append('<div class="flex-left"><i class="fas fa-trash" data-dropTask="' + idTask + '"></i><li>' + newTask + '</li></div>');
-			
+
 			$('[data-idCard="' + data.idCard + '"] [data-use="add-input-task"]').toggleClass('hidden');
 
-			debugger;
+
 		});
 	});
-	
+
 	/*
 	// Drop task
 	*/
 	$('body').on('click', '[data-droptask]', function() {
-		
+
 		var token = localStorage.getItem('token');
 		var idTask = $(this).attr('data-droptask');
 		$.post('http://192.168.33.10:8000/admin/dropTask/' + token + '/' + idTask, function(data) {
-			debugger;
+
 			$('[data-dropTask="' + data + '"]').closest('div').hide("drop");
 		});
 	});
@@ -747,6 +752,16 @@ $(document).ready(function(){
         }
         });
       }
+    })
+
+    $('body').on('click','[data-use="task-list"] li',function(event){
+      $(event.target).toggleClass('line-through');
+      var numberOfTasks = $('[data-use="task-list"] li').length;
+      var numberOfTasksWithLineTrough = $('li.line-through').length;
+      var pourcent = Math.round(numberOfTasksWithLineTrough/numberOfTasks*100);
+      var displayProgress = '<p><progress value="' + pourcent + '" max="100"></progress></p>'
+      $('#avancement').html(displayProgress);
+
     })
 
 });
