@@ -318,7 +318,7 @@ $(document).ready(function(){
                 $('[data-use="delete-user"]').addClass('hidden');
                 $('[data-use="signin"]').addClass('hidden');
                 $('[data-use="update-user"]').addClass('hidden');
-                $('[data-use="login"]').removeClass('hidden');
+                $('[data-use="login"]').addClass('hidden');
                 $('[data-use="read-user"]').addClass('hidden');
             });
         } else {
@@ -514,27 +514,45 @@ $(document).ready(function(){
 
       })
     }
-
-	function displayTasks() {
+	
+	function displayTasks(idCard) {
 		/*
 		// Read task in card
 		*/
-		debugger;
 		var token = localStorage.getItem('token');
 		//var idCard = $(this).closest('[data-idcard]').attr('data-idcard');
-		var idCard = 1;
-		$.post('http://192.168.33.10:8000/admin/readTask/' + token + '/' + idCard, function(data) {
-			debugger;			
-			var taskRender = "<li>";
-			//etc
-			taskRender += 'hihihih';
-			taskRender += '</li>';
-			$('[data-idCard="' + data[1].cards_id_card + '"] [data-task="inul"]').append(taskRender);
+
+		$.post('http://192.168.33.10:8000/admin/readTask/' + token + '/' + idCard, function(data) {			
+			var taskRender = "";
+			for(var i = 0; i < data.length; i++) {
+				if(data[i].id_task){
+					taskRender += '<div class="flex-left">';
+					taskRender += '<li>';
+					taskRender += '<i class="fas fa-trash" data-dropTask="' + data[i].id_task + '"></i>';
+					taskRender += decodeURI(data[i].title);
+					taskRender += '</li>';
+					taskRender += '</div>';
+
+					$('[data-idCard="' + data[i].cards_id_card + '"] [data-task="inul"]').html(taskRender);
+				}
+			}
+			
 		});
 	}
 	
     showCard();
-	displayTasks();
+	//var idCard = $('[data-idcard]').attr('data-idcard');
+	
+	//displayTasks(2);
+	//setTimeout(displayTasks(1), 1000)
+	//setTimeout(displayTasks(2), 1000)
+	/*
+	for(var i = 0; i <= $('[data-idcard]').length; i++) {
+		displayTasks(i);
+	}
+	*/
+
+
 	
 
     // Delete Card
@@ -557,14 +575,16 @@ $(document).ready(function(){
 		var idCard = $(this).attr('data-use');
 		
         $('[data-idCard="' + idCard + '"] [data-use="add-input-task"]').toggleClass('hidden');
+		
+		$('[data-idCard="' + idCard + '"] [data-task="inul"]').append("");
 
     });
 	$('body').on('click', '[data-task="add-task"]', function(){
 		var token = localStorage.getItem('token');
 		//still need to be dynamic
 		var rank = 1;
-		var taskName = $('[data-task="taskName"]')[0].value;
 		var idCard = $(this).closest('[data-idcard]').attr('data-idcard');
+		var taskName = $('[data-idCard="' + idCard + '"] [data-task="taskName"]')[0].value;
 		
 		$.post('http://192.168.33.10:8000/admin/createTask/' + token + '/' + taskName + '/' + rank + '/' + idCard, function(data){
 			
@@ -575,8 +595,8 @@ $(document).ready(function(){
 			
 			$('[data-idCard="' + data.idCard + '"] [data-use="add-input-task"]').toggleClass('hidden');
 
+			debugger;
 		});
-	
 	});
 	
 	/*
@@ -584,11 +604,11 @@ $(document).ready(function(){
 	*/
 	$('body').on('click', '[data-droptask]', function() {
 		
+		var token = localStorage.getItem('token');
 		var idTask = $(this).attr('data-droptask');
-		
-		$.post('http://192.168.33.10:8000/admin/dropTask/' + token + '/' + idTask, function(data) {			
-			$('[data-dropTask="' + data + '"]').parent('div').hide("drop", 100);
-			
+		$.post('http://192.168.33.10:8000/admin/dropTask/' + token + '/' + idTask, function(data) {
+			debugger;
+			$('[data-dropTask="' + data + '"]').closest('div').hide("drop");
 		});
 	});
 
