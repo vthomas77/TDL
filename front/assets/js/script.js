@@ -333,7 +333,7 @@ $(document).ready(function(){
                 $('[data-use="delete-user"]').addClass('hidden');
                 $('[data-use="signin"]').addClass('hidden');
                 $('[data-use="update-user"]').addClass('hidden');
-                $('[data-use="login"]').removeClass('hidden');
+                $('[data-use="login"]').addClass('hidden');
                 $('[data-use="read-user"]').addClass('hidden');
             });
         } else {
@@ -475,8 +475,11 @@ $(document).ready(function(){
 
     // Get card
     function showCard() {
-      var userToken = localStorage.getItem('token');
-      $.post('http://192.168.33.10:8000/getCard/' + userToken,function(data){
+        var userToken = localStorage.getItem('token');
+		
+        $.post('http://192.168.33.10:8000/getCard/' + userToken,function(data){
+			
+		debugger;
         // Sort array relative to rank card
         data.sort(function(a,b){
           return b.rank - a.rank;
@@ -485,7 +488,7 @@ $(document).ready(function(){
         // Cards creation
         var cardRender = '';
         for (var i=0; i < data.length; i++){
-          cardRender += '<div>';
+          cardRender += '<div data-idCard="' + data[i].id + '">';
             cardRender += '<div>';
               cardRender += '<h3>' + data[i].title + '</h3>';
               cardRender += '<div>';
@@ -518,16 +521,30 @@ $(document).ready(function(){
             }
             cardRender += '<img src="./assets/img/flag.svg" alt="category">';
             cardRender += '</div>';
-            cardRender += '<div>';
-            cardRender += '<p>Empty Task</p>';
+            cardRender += '<div data-use="task-list">';
+            cardRender += '<ul data-task="inul" class="no-style">';
+			
+			//list the tasks per card
+			for(var index = 0; index < data[i].tasks.length; index++) {
+				cardRender += '<div class="flex-left">';
+				cardRender += '<li>';
+				cardRender += '<i class="fas fa-trash" data-dropTask="' + data[i].tasks[index][1] + '"></i>';
+				cardRender += decodeURI(data[i].tasks[index][0]);
+				cardRender += '</li>';
+				cardRender += '</div>';
+			}
+			
+            cardRender += '</ul>';
             cardRender += '</div>';
+            cardRender += '<div data-use="add-input-task" class="flex hidden"><input data-task="taskName" type="text" placeholder="Task name here"><input type="submit" value="OK" class="button" data-task="add-task"></div>';
           cardRender += '</div>';
         }
         $('[data-use="get-card"]').html(cardRender);
 
       })
     }
-
+	
+    showCard();
 
 
     // Delete Card
@@ -540,6 +557,52 @@ $(document).ready(function(){
           }
       })
     })
+    
+    
+    /*
+    // Create task
+    */
+    $('body').on('click', '[data-action="add-task"]', function(){
+		
+		var idCard = $(this).attr('data-use');
+		
+        $('[data-idCard="' + idCard + '"] [data-use="add-input-task"]').toggleClass('hidden');
+		
+		$('[data-idCard="' + idCard + '"] [data-task="inul"]').append("");
+
+    });
+	$('body').on('click', '[data-task="add-task"]', function(){
+		var token = localStorage.getItem('token');
+		//still need to be dynamic
+		var rank = 1;
+		var idCard = $(this).closest('[data-idcard]').attr('data-idcard');
+		var taskName = $('[data-idCard="' + idCard + '"] [data-task="taskName"]')[0].value;
+		
+		$.post('http://192.168.33.10:8000/admin/createTask/' + token + '/' + taskName + '/' + rank + '/' + idCard, function(data){
+			
+			var newTask = decodeURI(data.title);
+			var idTask = data.idTask[0].id_task;
+			
+			$('[data-idCard="' + data.idCard + '"] [data-task="inul"]').append('<div class="flex-left"><i class="fas fa-trash" data-dropTask="' + idTask + '"></i><li>' + newTask + '</li></div>');
+			
+			$('[data-idCard="' + data.idCard + '"] [data-use="add-input-task"]').toggleClass('hidden');
+
+			debugger;
+		});
+	});
+	
+	/*
+	// Drop task
+	*/
+	$('body').on('click', '[data-droptask]', function() {
+		
+		var token = localStorage.getItem('token');
+		var idTask = $(this).attr('data-droptask');
+		$.post('http://192.168.33.10:8000/admin/dropTask/' + token + '/' + idTask, function(data) {
+			debugger;
+			$('[data-dropTask="' + data + '"]').closest('div').hide("drop");
+		});
+	});
 
     // Show Collaborators
     $('body').on('click','[data-action="share-card"]', function(){

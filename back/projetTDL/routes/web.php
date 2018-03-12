@@ -73,12 +73,21 @@ $router->post('signin/{username}/{email}/{password}/{avatar}','UserController@sa
 
 //group concerned by middleware : TokenMiddleware AND MainMiddleware
 $router->group(['prefix' => 'admin', 'middleware' => ['App\Http\Middleware\TokenMiddleware', 'App\Http\Middleware\MainMiddleware']], function () use ($router) {
-    //R
+    //R user
     $router->post('read_account/{token}','UserController@readUser');
 
-    //U
+    //U user
     $router->post('update/{token}/{newPassword}/{newUsername}/{newEmail}','UserController@updateUser');
 
-    //D
+    //D user
     $router->post('remove_user/{username}/{token}','UserController@deleteUser');
+    
+    //C task
+    $router->post('createTask/{token}/{taskName}/{rank}/{idCard}', 'TaskController@createTask');
+    
+    //R task
+    $router->post('readTask/{token}/{idCard}', 'TaskController@readTask');
+    
+    //D task
+    $router->post('dropTask/{token}/{idTask}', 'TaskController@dropTask');
 });
