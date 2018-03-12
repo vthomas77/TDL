@@ -18,8 +18,8 @@ class UserController extends Controller {
         return response()->json($getUsers);
     }
 
-    public function saveUser($username, $email , $password) {
-        $newUser = User::createUser($username, $email, $password);
+    public function saveUser($username, $email , $password, $avatar) {
+        $newUser = User::createUser($username, $email, $password, $avatar);
         return response()->json($newUser);
     }
 
@@ -50,8 +50,8 @@ class UserController extends Controller {
     public function UploadImg(Request $request){
       $sourcePath = $_FILES['myFile']['tmp_name'];
       $targetPath = "./".$_FILES['myFile']['name'];
-      $UserToken = $_POST['myToken'];
-      return response()->json(User::UploadImg($sourcePath,$targetPath,$UserToken));
+      move_uploaded_file($sourcePath,$targetPath) ;
+      return $targetPath;
     }
 
     //auth user

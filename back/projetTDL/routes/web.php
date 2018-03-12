@@ -68,7 +68,7 @@ $router->get('login/{username}/{password}', 'UserController@authUser');
 //});
 
 //C
-$router->post('signin/{username}/{email}/{password}','UserController@saveUser');
+$router->post('signin/{username}/{email}/{password}/{avatar}','UserController@saveUser');
 
 
 //group concerned by middleware : TokenMiddleware AND MainMiddleware

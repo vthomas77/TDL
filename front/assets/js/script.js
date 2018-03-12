@@ -42,7 +42,7 @@ $(document).ready(function(){
                 //makes dashboard appears
 
                 //set profile in sidebar
-                $('[data-use="insidebar"]').html('<img src="' + data[0].avatar + '" class="img-avatar"><h1>' + data[0].username + '<i class="fa fa-cog"></i></h1>');
+                $('[data-use="insidebar"]').html('<img src="http://192.168.33.10:8000/' + data[0].avatar + '" class="img-avatar"><h1>' + data[0].username + '<i class="fa fa-cog"></i></h1>');
 
                 $('[data-use="notification-login"]').addClass('hidden');
                 $('[data-use="login"]').addClass('hidden');
@@ -59,13 +59,18 @@ $(document).ready(function(){
     /*
     //create user profile
     */
+    var avatar;
     $('[data-submit="signin"]').on('click', function(){
         var username = $('[data-signin="username"]')[0].value;
         var password = $('[data-signin="password"]')[0].value;
         var repeatPassword = $('[data-signin="repeat-password"]')[0].value;
         var email = $('[data-signin="email"]')[0].value;
         //still need to be personalized
-        var avatar = "./assets/img/default.png";
+        //var avatar = "./assets/img/default.png";
+        if(avatar == ""){
+            avatar = "./default.png";
+        }
+        debugger;
 
 
         if(password === repeatPassword) {
@@ -77,7 +82,7 @@ $(document).ready(function(){
                         for(var i = 0; i < email.length; i++ ) {
                             if(email.charAt(i) == ".") {
                                 //everything is ok, go into the ajax request
-                                $.post('http://192.168.33.10:8000/signin/' + encodeURI(username) + '/' + encodeURI(email) + '/' + encodeURI(password), function(data) {
+                                $.post('http://192.168.33.10:8000/signin/' + encodeURI(username) + '/' + encodeURI(email) + '/' + encodeURI(password) + '/' + avatar, function(data) {
                                     if(data.status == 200) {
 
                                         /*
@@ -90,7 +95,7 @@ $(document).ready(function(){
                                         $('[data-use="notification-signin"]').html('<span class="checked" style="padding-right:12px;font-weight:bold;">√</span>' +  data.username + "'s account has been successfully created !");
 
                                         //set profile in sidebar
-                                        $('[data-use="insidebar"]').html('<img src="' + avatar + '" class="img-avatar"><h1>' + username + '<i class="fa fa-cog"></i></h1>');
+                                        $('[data-use="insidebar"]').html('<img src="http://192.168.33.10:8000/' + avatar + '" class="img-avatar"><h1>' + username + '<i class="fa fa-cog"></i></h1>');
 
                                         //hide the submit
                                         $('[data-submit="signin"]').addClass('hidden');
@@ -101,6 +106,9 @@ $(document).ready(function(){
 
                                         //put token in localstorage
                                         localStorage.setItem('token', data.token);
+
+                                        //hide upload notification
+                                        $('[data-use="notification-upload"]').addClass('hidden');
 
                                         //show cards
                                         $('[data-use="available-actions"]').removeClass('hidden');
@@ -314,7 +322,7 @@ $(document).ready(function(){
                     $('[data-use="read-user"]').removeClass('hidden');
 
                     var htmlRender = '<h2>Your profile :</h2>';
-                    var htmlRender = htmlRender + '<img src="' + data[0].avatar + '" class="img-avatar">';
+                    var htmlRender = htmlRender + '<img src="http://192.168.33.10:8000/' + data[0].avatar + '" class="img-avatar">';
                     var htmlRender = htmlRender + '<p>Your username : ' + data[0].username + '</p>';
                     var htmlRender = htmlRender + '<p>Your email : ' + data[0].email + '</p>';
                     var htmlRender = htmlRender + '<input type="submit" value="Back" data-submit="back" class="button">';
@@ -637,9 +645,9 @@ $(document).ready(function(){
     $('[data-use="send-avatar"]').on('click',function(){
       var img = document.querySelectorAll(".avatar")
       var fd = new FormData();
-      var userToken = localStorage.getItem('token');
+//      var userToken = localStorage.getItem('token');
       fd.append('myFile', img[0].file);
-      fd.append('myToken', userToken);
+//      fd.append('myToken', userToken);
       $.ajax({
       url: "http://192.168.33.10:8000/uploadImg",
       type: "POST",
@@ -649,7 +657,8 @@ $(document).ready(function(){
       processData:false,
       success: function(data)
       {
-        debugger;
+        $('[data-use="notification-upload"]').removeClass('hidden');
+        avatar=data;
       }
       });
 

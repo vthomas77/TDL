@@ -93,15 +93,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
       }
     }
 
-    // Set avatar
-    static public function UploadImg ($sourcePath,$targetPath,$UserToken){
-      try {
-        return $targetPath;
-      } catch (\Exception $e) {
-        return 'error';
-      }
-    }
-
     //might be unecessary
     public function __construct($username, $email, $avatar, $password) {
         $this->username = $username;
@@ -111,9 +102,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
 
-    static public function createUser($username, $email , $password){
+    static public function createUser($username, $email , $password, $avatar){
 
-        $avatar = "./assets/img/default.png";
+        //$avatar = "./assets/img/default.png";
         $token = bin2hex(random_bytes(20));
         //token lifetime is 5 hours after yet  (considering our 1h less thing, it's more like 4h for France)
         $token_expiration = time() + 18000;
