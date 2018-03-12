@@ -155,7 +155,25 @@ body {
           justify-content: space-between;
         }
       }
-
+    }
+    [data-use="upload-avatar"] {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      label {
+        display: inline-block;
+        padding: 5px;
+        margin-bottom: 10px;
+        margin-right: 1em;
+        font: 400 13.3333px Arial;
+      }
+      [data-use="preview"] {
+        margin-bottom: 10px;
+        margin-right: 1em;
+        img {
+          height: 21px;
+        }
+      }
     }
 
     .content {

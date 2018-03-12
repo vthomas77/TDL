@@ -70,8 +70,6 @@ $(document).ready(function(){
         if(avatar == ""){
             avatar = "./default.png";
         }
-        debugger;
-
 
         if(password === repeatPassword) {
             //test the input existance
@@ -628,11 +626,11 @@ $(document).ready(function(){
     $('[data-signin="avatar"]').on('change', function(){
       var selectedFile = $('[data-signin="avatar"]')[0].files;
       if (!selectedFile.length) {
-        $('[data-use="preview"]').html("<p>No files selected!</p>");
+        $('[data-use="preview"]').html("<span>No files selected!</span>");
       } else {
         var img = document.createElement("img");
         img.src = window.URL.createObjectURL(selectedFile[0]);
-        img.height = 20;
+        //img.height = 17;
         img.file = selectedFile[0];
         img.classList.add("avatar");
         img.onload = function() {
@@ -644,24 +642,26 @@ $(document).ready(function(){
 
     $('[data-use="send-avatar"]').on('click',function(){
       var img = document.querySelectorAll(".avatar")
-      var fd = new FormData();
-//      var userToken = localStorage.getItem('token');
-      fd.append('myFile', img[0].file);
-//      fd.append('myToken', userToken);
-      $.ajax({
-      url: "http://192.168.33.10:8000/uploadImg",
-      type: "POST",
-      data: fd,
-      contentType: false,
-      cache: false,
-      processData:false,
-      success: function(data)
+      if (img.length != 0)
       {
-        $('[data-use="notification-upload"]').removeClass('hidden');
-        avatar=data;
+        var fd = new FormData();
+  //      var userToken = localStorage.getItem('token');
+        fd.append('myFile', img[0].file);
+  //      fd.append('myToken', userToken);
+        $.ajax({
+        url: "http://192.168.33.10:8000/uploadImg",
+        type: "POST",
+        data: fd,
+        contentType: false,
+        cache: false,
+        processData:false,
+        success: function(data)
+        {
+          $('[data-use="notification-upload"]').removeClass('hidden');
+          avatar=data;
+        }
+        });
       }
-      });
-
     })
 
 });

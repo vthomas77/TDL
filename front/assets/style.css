@@ -145,6 +145,25 @@ body [data-use="available-collaborators"] ul > div {
   flex-direction: row;
   justify-content: space-between;
 }
+body [data-use="upload-avatar"] {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+body [data-use="upload-avatar"] label {
+  display: inline-block;
+  padding: 5px;
+  margin-bottom: 10px;
+  margin-right: 1em;
+  font: 400 13.3333px Arial;
+}
+body [data-use="upload-avatar"] [data-use="preview"] {
+  margin-bottom: 10px;
+  margin-right: 1em;
+}
+body [data-use="upload-avatar"] [data-use="preview"] img {
+  height: 21px;
+}
 body .content {
   margin-left: 30vw;
   padding: 10%;
