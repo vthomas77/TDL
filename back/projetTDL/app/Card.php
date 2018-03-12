@@ -7,7 +7,7 @@ use App\User;
 
 class Card {
 
-  public function __construct($id,$title,$priority,$status,$deadline,$category,$rank,$collaborators){
+  public function __construct($id,$title,$priority,$status,$deadline,$category,$rank,$collaborators, $tasks){
     $this->id = $id;
     $this->title = $title;
     $this->priority = $priority;
@@ -16,6 +16,7 @@ class Card {
     $this->category = $category;
     $this->rank = $rank;
     $this->collaborators = $collaborators;
+    $this->tasks = $tasks;
   }
 
 
@@ -86,7 +87,8 @@ class Card {
 
 // Get cards from user
 static public function GetCard ($userToken){
-    try {
+    try {        
+        
       $cardsProperties = [];
       $userID = user::GetUserID($userToken);
       $resGetCardsFromUser = DB::table('properties')
@@ -106,6 +108,27 @@ static public function GetCard ($userToken){
         {
           $collaborators[] = $v->avatar;
         }
+          
+        /*
+        $tasks = [];
+        $resTasks = DB::table('tasks')
+            ->join('cards', 'cards.id_card', '=', 'tasks.cards_id_card')
+            ->select('tasks.id_task', 'tasks.title', 'tasks.rank')
+            ->where('tasks.cards_id_card', '=', $value => id_card)
+            ->get();
+        */
+          
+        $tasks = [];
+        $resTasks = DB::table('cards')
+            ->join('tasks', 'tasks.cards_id_card', '=', 'cards.id_card')
+            ->select('tasks.id_task', 'tasks.title')
+            ->where('tasks.cards_id_card', '=', $value -> id_card)
+            ->get();
+        
+        foreach($resTasks as $key => $val) {
+            $tasks[] = [$val->title, $val->id_task];
+        }
+            
         $cardsProperties[] = new Card(
          $value -> id_card,
          $value -> title,
@@ -114,9 +137,11 @@ static public function GetCard ($userToken){
          $value -> deadline,
          $value -> category,
          $value -> rank,
-         $collaborators
+         $collaborators,
+         $tasks
         );
       }
+    
       return $cardsProperties;
 
     } catch (\Exception $e) {

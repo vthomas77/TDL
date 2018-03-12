@@ -460,8 +460,11 @@ $(document).ready(function(){
 
     // Get card
     function showCard() {
-      var userToken = localStorage.getItem('token');
-      $.post('http://192.168.33.10:8000/getCard/' + userToken,function(data){
+        var userToken = localStorage.getItem('token');
+		
+        $.post('http://192.168.33.10:8000/getCard/' + userToken,function(data){
+			
+		debugger;
         // Sort array relative to rank card
         data.sort(function(a,b){
           return b.rank - a.rank;
@@ -504,7 +507,18 @@ $(document).ready(function(){
             cardRender += '<img src="./assets/img/flag.svg" alt="category">';
             cardRender += '</div>';
             cardRender += '<div data-use="task-list">';
-            cardRender += '<ul data-task="inul" class="no-style">';			
+            cardRender += '<ul data-task="inul" class="no-style">';
+			
+			//list the tasks per card
+			for(var index = 0; index < data[i].tasks.length; index++) {
+				cardRender += '<div class="flex-left">';
+				cardRender += '<li>';
+				cardRender += '<i class="fas fa-trash" data-dropTask="' + data[i].tasks[index][1] + '"></i>';
+				cardRender += decodeURI(data[i].tasks[index][0]);
+				cardRender += '</li>';
+				cardRender += '</div>';
+			}
+			
             cardRender += '</ul>';
             cardRender += '</div>';
             cardRender += '<div data-use="add-input-task" class="flex hidden"><input data-task="taskName" type="text" placeholder="Task name here"><input type="submit" value="OK" class="button" data-task="add-task"></div>';
@@ -515,45 +529,7 @@ $(document).ready(function(){
       })
     }
 	
-	function displayTasks(idCard) {
-		/*
-		// Read task in card
-		*/
-		var token = localStorage.getItem('token');
-		//var idCard = $(this).closest('[data-idcard]').attr('data-idcard');
-
-		$.post('http://192.168.33.10:8000/admin/readTask/' + token + '/' + idCard, function(data) {			
-			var taskRender = "";
-			for(var i = 0; i < data.length; i++) {
-				if(data[i].id_task){
-					taskRender += '<div class="flex-left">';
-					taskRender += '<li>';
-					taskRender += '<i class="fas fa-trash" data-dropTask="' + data[i].id_task + '"></i>';
-					taskRender += decodeURI(data[i].title);
-					taskRender += '</li>';
-					taskRender += '</div>';
-
-					$('[data-idCard="' + data[i].cards_id_card + '"] [data-task="inul"]').html(taskRender);
-				}
-			}
-			
-		});
-	}
-	
     showCard();
-	//var idCard = $('[data-idcard]').attr('data-idcard');
-	
-	//displayTasks(2);
-	//setTimeout(displayTasks(1), 1000)
-	//setTimeout(displayTasks(2), 1000)
-	/*
-	for(var i = 0; i <= $('[data-idcard]').length; i++) {
-		displayTasks(i);
-	}
-	*/
-
-
-	
 
     // Delete Card
     $('body').on('click','[data-action="delete-card"]', function(){
