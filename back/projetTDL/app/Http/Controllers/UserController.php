@@ -46,6 +46,14 @@ class UserController extends Controller {
       return response()->json(User::SearchUsers($searchInput));
     }
 
+    // Upload avatar
+    public function UploadImg(Request $request){
+      $sourcePath = $_FILES['myFile']['tmp_name'];
+      $targetPath = "./".$_FILES['myFile']['name'];
+      $UserToken = $_POST['myToken'];
+      return response()->json(User::UploadImg($sourcePath,$targetPath,$UserToken));
+    }
+
     //auth user
     public function authUser($username, $password) {
         $auth = User::authUser($username, $password);

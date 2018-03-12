@@ -616,6 +616,7 @@ $(document).ready(function(){
       })
     })
 
+    // Upload avatar to server
     $('[data-signin="avatar"]').on('change', function(){
       var selectedFile = $('[data-signin="avatar"]')[0].files;
       if (!selectedFile.length) {
@@ -623,12 +624,35 @@ $(document).ready(function(){
       } else {
         var img = document.createElement("img");
         img.src = window.URL.createObjectURL(selectedFile[0]);
-        img.height = 60;
+        img.height = 20;
+        img.file = selectedFile[0];
+        img.classList.add("avatar");
         img.onload = function() {
           window.URL.revokeObjectURL(this.src);
         }
         $('[data-use="preview"]').html(img);
       }
+    })
+
+    $('[data-use="send-avatar"]').on('click',function(){
+      var img = document.querySelectorAll(".avatar")
+      var fd = new FormData();
+      var userToken = localStorage.getItem('token');
+      fd.append('myFile', img[0].file);
+      fd.append('myToken', userToken);
+      $.ajax({
+      url: "http://192.168.33.10:8000/uploadImg",
+      type: "POST",
+      data: fd,
+      contentType: false,
+      cache: false,
+      processData:false,
+      success: function(data)
+      {
+        debugger;
+      }
+      });
+
     })
 
 });

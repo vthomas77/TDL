@@ -12,7 +12,7 @@
 */
 
 
-$router->get('/', function () use ($router) {    
+$router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
@@ -43,9 +43,20 @@ $router->post('getIDUser/{userToken}', 'UserController@GetUserID');
 // Update collaborators
 $router->post('updateCollaborators', 'CardController@UpdateCollaborators');
 
+// Upload image
+$router->post('uploadImg', 'UserController@UploadImg');
 
 /*
-//Auth user     
+$router->post('uploadImg', function(){
+  $sourcePath = $_FILES['myFile']['tmp_name'];
+  $targetPath = "./".$_FILES['myFile']['name'];
+  $UserToken = $_POST['myToken'];
+  //return $UserToken;
+  //move_uploaded_file($sourcePath,$targetPath) ;
+});*/
+
+/*
+//Auth user
 */
 $router->get('login/{username}/{password}', 'UserController@authUser');
 
@@ -71,6 +82,3 @@ $router->group(['prefix' => 'admin', 'middleware' => ['App\Http\Middleware\Token
     //D
     $router->post('remove_user/{username}/{token}','UserController@deleteUser');
 });
-
-
-

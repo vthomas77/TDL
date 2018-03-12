@@ -31,7 +31,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
-    
+
     public function hasToken($token)
     {
         return DB::table('users')
@@ -88,6 +88,15 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
           ->where('username','like',$searchUsername)
           ->get();
         return $resSearchUsers;
+      } catch (\Exception $e) {
+        return 'error';
+      }
+    }
+
+    // Set avatar
+    static public function UploadImg ($sourcePath,$targetPath,$UserToken){
+      try {
+        return $targetPath;
       } catch (\Exception $e) {
         return 'error';
       }
