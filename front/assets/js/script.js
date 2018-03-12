@@ -568,16 +568,30 @@ $(document).ready(function(){
       }
     })
 
+    $('[data-use="search-collaborators"]').on('input',function(event){
+        searchUsers();
+    })
+
     function searchUsers(){
       var searchInput = $('[data-use="search-collaborators"]')[0].value;
       var usersList = '<h5>Available users</h5>';
       if (searchInput != ''){
         $.post('http://192.168.33.10:8000/searchUsers/' + searchInput, function(data){
+          var limit = 5;
+          if (data.length > limit){
+            var total = limit-1;
+          }
+          else {
+            var total = data.length;
+          }
           usersList += '<ul>';
-          for(var i=0; i < data.length; i++){
+          for(var i=0; i < total; i++){
             usersList += '<div><li>' + data[i].username + '</li><div><img src="./assets/img/up-arrow.svg" alt="Remove Collaborators"></div></div>';
           }
           usersList += '</ul>';
+          if (data.length > 5){
+            usersList += '<p class="error">Too many results. Only the ' + limit + ' first results are displayed</p>';
+          }
           $('[data-use="available-collaborators"]').html(usersList);
         })
       }
