@@ -13,7 +13,7 @@ body [data-use="sidebar"] {
   position: absolute;
   top: 0;
   padding: 5%;
-  box-shadow: -2px 0px 10px black inset;
+  box-shadow: -2px -6px 10px black inset;
   z-index: 10;
   position: fixed;
   overflow: overlay;
@@ -246,6 +246,12 @@ body [data-use="get-card"] > div > div:nth-of-type(3) svg {
 }
 body [data-use="get-card"] > div > div:nth-of-type(4) {
   padding: 10%;
+}
+body [data-use="get-card"] > div > div:nth-of-type(6) {
+  padding: 10%;
+}
+body [data-use="get-card"] > div > div:nth-of-type(6) progress {
+  width: 100%;
 }
 body [data-use="manage-collaborators"] img {
   width: 20px;

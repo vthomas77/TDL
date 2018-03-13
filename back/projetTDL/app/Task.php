@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
-class Task extends Model 
+class Task extends Model
 {
 
     static public function createTask($token, $taskName, $rank, $idCard){
@@ -22,17 +22,17 @@ class Task extends Model
                 'rank' => $rank,
                 'cards_id_card' => $idCard
             ]);
-            
+
             //get idTask
             $idTask = DB::select('SELECT id_task FROM tasks WHERE title="' . $taskName . '" AND cards_id_card=' . $idCard);
 
             $dataTable = [
                 'idTask' => $idTask,
                 'title' => $taskName,
-                'rank' => $rank, 
+                'rank' => $rank,
                 'idCard' => $idCard
             ];
-            
+
             return $dataTable;
         }
         //return status 500 if input username or email already exist in db
@@ -45,19 +45,19 @@ class Task extends Model
             return $dataTable;
         }
     }
-    
+
     static public function dropTask($token, $idTask) {
-        
+
         DB::select('DELETE FROM tasks WHERE id_task=' . $idTask . ' LIMIT 1');
-        
+
         return $idTask;
-        
+
     }
-    
+
     static public function readTask($token, $idCard) {
-                
+
         return DB::select('SELECT id_task, title, cards_id_card FROM tasks WHERE cards_id_card=' . $idCard);
-        
+
     }
 
     static public function readUser($token) {
@@ -120,4 +120,18 @@ class Task extends Model
             return $dataTable;
         }
     }
+
+    // update Task Completion
+    static public function UpdateTaskCompletion ($taskID,$taskStatus){
+      try {
+        $resUpdateTaskCompletion = DB::table('tasks')
+          ->where('id_task', $taskID)
+          ->update(['rank' => $taskStatus]);
+
+          return 0;
+      } catch (\Exception $e) {
+        return "2";
+      }
+    }
+
 }

@@ -68,6 +68,7 @@ Vagrant.configure("2") do |config|
     sudo apt-get update
     sudo apt-get install apache2 -y
     sudo cp ports.conf /etc/apache2/
+    sudo cp envvars /etc/apache2/
     sudo cp 000-default.conf /etc/apache2/sites-enabled/
     sudo ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load
     sudo service apache2 restart

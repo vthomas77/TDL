@@ -15,6 +15,7 @@ Structure pour la Vagrant :
         - ports.conf
         - 000-default.conf
         - apache2.conf
+        - envvars
     - front
     - Vagrantfile
 
