@@ -6,7 +6,7 @@ let win
   
 function createWindow () {
     // Créer le browser window.
-    win = new BrowserWindow({width: 1200, height: 800, frame: false})
+    win = new BrowserWindow({width: 1200, height: 800, frame: true})
   
     // et charge le index.html de l'application.
     win.loadURL(url.format({

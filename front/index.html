@@ -21,19 +21,25 @@
                 <input type="submit" data-action="updateUser" class="button" value="update account">
                 <input type="submit" data-action="deleteUser" class="button" value="delete account">
                 <input type="submit" data-action="readUser" class="button" value="see my account">
+                <input type="submit" data-action="unlogUser" ata-toggle="modal" data-target="#myModal" class="button" value="DISCONNECT">
             </div>
             <div data-use="available-actions" class="hidden">
-              <input type="submit" data-action="create-card" class="button" value="Add a new card">
-                <div>
-                  <h2>Categories</h2>
-                  <input type="submit" data-action="categories-editor" class="button" value="Editor">
-                </div>
+              <input type="submit" data-action="create-card" value="Add a new card">
+				
+			  <input type="submit" data-action="categories-editor" value="Editor">
             </div>
         </div>
 
         <div data-use="read-user" class="content">
         </div>
 
+		<!-- Modal -->
+		<div data-use="modal" class="hidden">
+			<div class="modal-header">
+				<h4>See you soon !</h4>
+			</div>
+		</div>
+		
         <div data-use="login" class="flex content">
             <div>
                 <h2>Login</h2>
@@ -42,9 +48,8 @@
 
                 <p data-use="notification-login">
                 </p>
-
-                <input type="submit" data-submit="login" value="OK" class="button big">
-                <br><br>
+				<input type="submit" data-submit="login" value="OK" class="button big">
+				
                 <input type="submit" data-submit="go-to-signin" value="I don't have any account" class="button">
             </div>
         </div>
