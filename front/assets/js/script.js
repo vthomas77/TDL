@@ -348,11 +348,22 @@ $(document).ready(function(){
         }
 
     });
+	
+	/*
+	// Disconnect user
+	*/
+	$('[data-action="unlogUser"]').on('click', function(){		
+		localStorage.removeItem('token');
+		$('[data-use="modal"]').removeClass('hidden').fadeIn("slow");
+		$('[data-use="modal"]').fadeOut(3000);
+		setTimeout(function(){
+			location.reload();
+		},2000);
+	});
 
     /*
     // Create new card
     */
-
     $('[data-action="create-card"]').on('click',function(){
       $('[data-use="create-card"]').removeClass('hidden');
     })
@@ -479,7 +490,6 @@ $(document).ready(function(){
 
         $.post('http://192.168.33.10:8000/getCard/' + userToken,function(data){
 
-
         // Sort array relative to rank card
         data.sort(function(a,b){
           return b.rank - a.rank;
@@ -489,7 +499,7 @@ $(document).ready(function(){
         var cardRender = '';
         for (var i=0; i < data.length; i++){
           cardRender += '<div data-idCard="' + data[i].id + '">';
-            cardRender += '<div>';
+            cardRender += '<div class="gradient-head">';
               cardRender += '<h3>' + data[i].title + '</h3>';
               cardRender += '<div>';
                 cardRender += '<img data-action="card-menu" src="./assets/img/cardMenu.svg" alt="card menu">';
@@ -510,7 +520,7 @@ $(document).ready(function(){
             cardRender += '</div>';
             cardRender += '<div>';
             if (data[i].priority == 2) {
-              cardRender += '<img src="./assets/img/warning-sign.svg" alt="high priority">';
+              cardRender += '<i class="fa fa-exclamation-triangle"></i>';
             }
             var today = new Date();
             var deadline = new Date(data[i].deadline);
@@ -526,8 +536,14 @@ $(document).ready(function(){
               {
                 cardRender += '<img src="./assets/img/alarm-clock-green.svg" alt="status OK" title="' + daysLeft + ' day(s) late">';
               }
+            if (data[i].status == 0) {
+              cardRender += '<i class="fa fa-check-circle"></i>';
             }
-            cardRender += '<img src="./assets/img/flag.svg" alt="category">';
+            else if (data[i].status == 1)
+            {
+              cardRender += '<i class="fa fa-frown"></i>';
+            }
+            cardRender += '<i class="fa fa-flag"></i>';
             cardRender += '</div>';
             cardRender += '<div data-use="task-list">';
             cardRender += '<ul data-task="inul" class="no-style">';
