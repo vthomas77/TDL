@@ -15,6 +15,8 @@ body [data-use="sidebar"] {
   padding: 5%;
   box-shadow: -2px 0px 10px black inset;
   z-index: 10;
+  position: fixed;
+  overflow: overlay;
 }
 body [data-use="sidebar"] h1 {
   color: white;
@@ -96,6 +98,9 @@ body [data-use="login"] [data-submit="login"] {
   padding: 6%;
   border-radius: 50%;
 }
+body [data-use="login"] [data-submit="login"]:hover {
+  box-shadow: 5px 5px 23px #aaa;
+}
 body [data-use="login"] [data-submit="go-to-signin"] {
   position: fixed;
   bottom: 0;
@@ -104,6 +109,7 @@ body [data-use="login"] [data-submit="go-to-signin"] {
   background-color: #db46b1;
   padding-top: 20px;
   padding-bottom: 20px;
+  min-width: 10%;
 }
 body [data-use="notification"] {
   color: #515157;
@@ -128,12 +134,14 @@ body [data-use="create-card"] [type="date"] {
 }
 body [data-use="get-card"] {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
 }
 body [data-use="get-card"] > div {
   width: 250px;
   border-radius: 5px;
   margin-right: 1em;
+  margin-bottom: 1em;
   box-shadow: 5px 5px 23px #aaa;
 }
 body [data-use="get-card"] > div > div:first-of-type {

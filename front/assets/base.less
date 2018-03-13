@@ -16,6 +16,8 @@ body {
         padding: 5%;
         box-shadow: -2px 0px 10px black inset;
 		z-index: 10;
+		position: fixed;
+    	overflow: overlay;
         h1 {
             color: white;
             text-transform: uppercase;
@@ -98,6 +100,9 @@ body {
 			bottom: 10%;
 			padding: 6%;
 			border-radius: 50%;
+			&:hover {
+				box-shadow: 5px 5px 23px #aaa;
+			}
 		}
 		[data-submit="go-to-signin"] {
 			position: fixed;
@@ -107,6 +112,7 @@ body {
 			background-color: #db46b1;
 			padding-top: 20px;
 			padding-bottom: 20px;
+			min-width: 10%;
 		}
 	}
     [data-use="notification"] {
@@ -136,12 +142,14 @@ body {
 	
     [data-use="get-card"] {
     display: flex;
+	flex-wrap: wrap;
     flex-direction : row;
       > div {
         width: 250px;
         border-radius: 5px;
         margin-right: 1em;
-		  box-shadow: 5px 5px 23px #aaa;
+		margin-bottom: 1em;
+		box-shadow: 5px 5px 23px #aaa;
         > div:first-of-type {
           display: flex;
           flex-direction: row;
