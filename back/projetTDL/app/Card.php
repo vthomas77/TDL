@@ -87,8 +87,8 @@ class Card {
 
 // Get cards from user
 static public function GetCard ($userToken){
-    try {        
-        
+    try {
+
       $cardsProperties = [];
       $userID = user::GetUserID($userToken);
       $resGetCardsFromUser = DB::table('properties')
@@ -108,7 +108,7 @@ static public function GetCard ($userToken){
         {
           $collaborators[] = $v->avatar;
         }
-          
+
         /*
         $tasks = [];
         $resTasks = DB::table('tasks')
@@ -117,18 +117,18 @@ static public function GetCard ($userToken){
             ->where('tasks.cards_id_card', '=', $value => id_card)
             ->get();
         */
-          
+
         $tasks = [];
         $resTasks = DB::table('cards')
             ->join('tasks', 'tasks.cards_id_card', '=', 'cards.id_card')
-            ->select('tasks.id_task', 'tasks.title')
+            ->select('tasks.id_task', 'tasks.title','tasks.rank')
             ->where('tasks.cards_id_card', '=', $value -> id_card)
             ->get();
-        
+
         foreach($resTasks as $key => $val) {
-            $tasks[] = [$val->title, $val->id_task];
+            $tasks[] = [$val->title, $val->id_task, $val->rank];
         }
-            
+
         $cardsProperties[] = new Card(
          $value -> id_card,
          $value -> title,
@@ -141,7 +141,7 @@ static public function GetCard ($userToken){
          $tasks
         );
       }
-    
+
       return $cardsProperties;
 
     } catch (\Exception $e) {

@@ -46,14 +46,8 @@ $router->post('updateCollaborators', 'CardController@UpdateCollaborators');
 // Upload image
 $router->post('uploadImg', 'UserController@UploadImg');
 
-/*
-$router->post('uploadImg', function(){
-  $sourcePath = $_FILES['myFile']['tmp_name'];
-  $targetPath = "./".$_FILES['myFile']['name'];
-  $UserToken = $_POST['myToken'];
-  //return $UserToken;
-  //move_uploaded_file($sourcePath,$targetPath) ;
-});*/
+// Task completion
+$router->post('taskCompletion/{taskID}/{taskStatus}', 'TaskController@UpdateTaskCompletion');
 
 /*
 //Auth user
@@ -81,13 +75,13 @@ $router->group(['prefix' => 'admin', 'middleware' => ['App\Http\Middleware\Token
 
     //D user
     $router->post('remove_user/{username}/{token}','UserController@deleteUser');
-    
+
     //C task
     $router->post('createTask/{token}/{taskName}/{rank}/{idCard}', 'TaskController@createTask');
-    
+
     //R task
     $router->post('readTask/{token}/{idCard}', 'TaskController@readTask');
-    
+
     //D task
     $router->post('dropTask/{token}/{idTask}', 'TaskController@dropTask');
 });
