@@ -348,11 +348,11 @@ $(document).ready(function(){
         }
 
     });
-	
+
 	/*
 	// Disconnect user
 	*/
-	$('[data-action="unlogUser"]').on('click', function(){		
+	$('[data-action="unlogUser"]').on('click', function(){
 		localStorage.removeItem('token');
 		$('[data-use="modal"]').removeClass('hidden').fadeIn("slow");
 		$('[data-use="modal"]').fadeOut(3000);
@@ -506,7 +506,7 @@ $(document).ready(function(){
                 cardRender += '<nav data-use="card-menu" class="hidden">';
                 cardRender += '<ul>';
                 cardRender += '<li data-action="add-task" data-use="' + data[i].id + '">Add Task</li>';
-                cardRender += '<li data-action="edit-card" data-use="' + data[i].id +'">Edit Card</li>';
+                //cardRender += '<li data-action="edit-card" data-use="' + data[i].id +'">Edit Card</li>';
                 cardRender += '<li data-action="share-card" data-use="' + data[i].id + '">Share Card</li>';
                 cardRender += '<li data-action="delete-card" data-use="' + data[i].id +'">Delete Card</li>';
                 cardRender += '</ul>';
@@ -536,6 +536,7 @@ $(document).ready(function(){
               {
                 cardRender += '<img src="./assets/img/alarm-clock-green.svg" alt="status OK" title="' + daysLeft + ' day(s) late">';
               }
+            }
             if (data[i].status == 0) {
               cardRender += '<i class="fa fa-check-circle"></i>';
             }
@@ -551,7 +552,7 @@ $(document).ready(function(){
 			//list the tasks per card
 			for(var index = 0; index < data[i].tasks.length; index++) {
 				cardRender += '<div class="flex-left">';
-				cardRender += '<li>';
+				cardRender += '<li data-task="' + data[i].id + '">';
 				cardRender += '<i class="fas fa-trash" data-dropTask="' + data[i].tasks[index][1] + '"></i>';
 				cardRender += decodeURI(data[i].tasks[index][0]);
 				cardRender += '</li>';
@@ -561,17 +562,20 @@ $(document).ready(function(){
             cardRender += '</ul>';
             cardRender += '</div>';
             cardRender += '<div data-use="add-input-task" class="flex hidden"><input data-task="taskName" type="text" placeholder="Task name here"><input type="submit" value="OK" class="button" data-task="add-task"></div>';
-            var numberOfTasks = $('[data-use="task-list"] li').length;
+            var taskSelection = '[data-task="' + data[i].id + '"]';
+            var numberOfTasks = $(taskSelection).length;
+            var taskWithLineTroughSelection = '[data-task="' + data[i].id + '"].line-through';
             var numberOfTasksWithLineTrough = $('li.line-through').length;
             var pourcent = Math.round(numberOfTasksWithLineTrough/numberOfTasks*100);
-            cardRender += '<div id="avancement"><p><progress value="' + pourcent + '" max="100"></progress></p></div>'
+            cardRender += '<div data-progress="' + data[i].id + '"><p><progress value="' + pourcent + '" max="100"></progress></p></div>'
           cardRender += '</div>';
-        }
-        $('[data-use="get-card"]').html(cardRender);
 
+        $('[data-use="get-card"]').html(cardRender);
+      }
       })
 
     }
+
 
     showCard();
 
@@ -600,6 +604,7 @@ $(document).ready(function(){
 		$('[data-idCard="' + idCard + '"] [data-task="inul"]').append("");
 
     });
+
 	$('body').on('click', '[data-task="add-task"]', function(){
 		var token = localStorage.getItem('token');
 		//still need to be dynamic
@@ -770,13 +775,19 @@ $(document).ready(function(){
       }
     })
 
+    // Task completion
     $('body').on('click','[data-use="task-list"] li',function(event){
+      
+      taskCardID = $(event.target).attr('data-task');
       $(event.target).toggleClass('line-through');
-      var numberOfTasks = $('[data-use="task-list"] li').length;
-      var numberOfTasksWithLineTrough = $('li.line-through').length;
+      var taskSelection = '[data-task="' + taskCardID + '"]';
+      var numberOfTasks = $(taskSelection).length;
+      var taskWithLineTroughSelection = '[data-task="' + taskCardID + '"].line-through';
+      var numberOfTasksWithLineTrough = $(taskWithLineTroughSelection).length;
       var pourcent = Math.round(numberOfTasksWithLineTrough/numberOfTasks*100);
       var displayProgress = '<p><progress value="' + pourcent + '" max="100"></progress></p>'
-      $('#avancement').html(displayProgress);
+      var progressBarSelection = '[data-progress="' + taskCardID + '"]'
+      $(progressBarSelection).html(displayProgress);
 
     })
 
