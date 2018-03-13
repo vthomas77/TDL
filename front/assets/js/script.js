@@ -40,7 +40,8 @@ $(document).ready(function(){
         $.get('http://192.168.33.10:8000/login/' + username + '/' + password, function(data) {
             if(data.length > 0) {
                 //makes dashboard appears
-
+				$('[data-use="sidebar"]').removeClass('hidden').show("drop");
+				
                 //set profile in sidebar
                 $('[data-use="insidebar"]').html('<img src="http://192.168.33.10:8000/' + data[0].avatar + '" class="img-avatar"><h1>' + data[0].username + '<i class="fa fa-cog"></i></h1>');
 
@@ -98,6 +99,9 @@ $(document).ready(function(){
                                         //hide the submit
                                         $('[data-submit="signin"]').addClass('hidden');
                                         $('[data-submit="back-to-login"]').addClass('hidden');
+										
+										//display sidebar
+										$('[data-use="sidebar"]').removeClass('hidden');
 
                                         //hide signin
                                         $('[data-use="signin"]').addClass('hidden');
@@ -354,6 +358,8 @@ $(document).ready(function(){
 	*/
 	$('[data-action="unlogUser"]').on('click', function(){		
 		localStorage.removeItem('token');
+		//display sidebar
+		$('[data-use="sidebar"]').addClass('hidden');
 		$('[data-use="modal"]').removeClass('hidden').fadeIn("slow");
 		$('[data-use="modal"]').fadeOut(3000);
 		setTimeout(function(){
@@ -365,7 +371,7 @@ $(document).ready(function(){
     // Create new card
     */
     $('[data-action="create-card"]').on('click',function(){
-      $('[data-use="create-card"]').removeClass('hidden');
+      $('[data-use="create-card"]').toggleClass('hidden');
     })
 
     // Add/Remove asterisk for mandatory fields
@@ -536,6 +542,7 @@ $(document).ready(function(){
               {
                 cardRender += '<img src="./assets/img/alarm-clock-green.svg" alt="status OK" title="' + daysLeft + ' day(s) late">';
               }
+			}
             if (data[i].status == 0) {
               cardRender += '<i class="fa fa-check-circle"></i>';
             }
@@ -565,13 +572,13 @@ $(document).ready(function(){
             var numberOfTasksWithLineTrough = $('li.line-through').length;
             var pourcent = Math.round(numberOfTasksWithLineTrough/numberOfTasks*100);
             cardRender += '<div id="avancement"><p><progress value="' + pourcent + '" max="100"></progress></p></div>'
-          cardRender += '</div>';
-        }
-        $('[data-use="get-card"]').html(cardRender);
-
-      })
-
-    }
+          	cardRender += '</div>';
+        	
+        	$('[data-use="get-card"]').html(cardRender);
+      	}
+	})
+	}
+    
 
     showCard();
 
@@ -637,7 +644,7 @@ $(document).ready(function(){
     $('body').on('click','[data-action="share-card"]', function(){
       var cardID = this.dataset.use;
       $('[data-use="card-collaborators"]').attr('data-card',cardID);
-      $('[data-use="manage-collaborators"]').removeClass('hidden');
+      $('[data-content="collaborators"]').removeClass('hidden');
       var collaboratorsList = '<h5>Actual card collaborators</h5>';
       $.post('http://192.168.33.10:8000/shareCard/' + cardID, function(data){
         collaboratorsList += '<ul>';
@@ -720,13 +727,13 @@ $(document).ready(function(){
       var newCardCollaboratorsToStringify = JSON.stringify(collaboratorsOfCard);
       $.post('http://192.168.33.10:8000/updateCollaborators', newCardCollaboratorsToStringify, function(data){
         if (data != 4){
-          $('[data-use="manage-collaborators"]').addClass('hidden');
+          $('[data-content="collaborators"]').addClass('hidden');
           showCard();
         } else {
           console.log('error');
         }
       })
-    })
+    });
 
     // Upload avatar to server
     $('[data-signin="avatar"]').on('change', function(){
@@ -768,7 +775,7 @@ $(document).ready(function(){
         }
         });
       }
-    })
+    });
 
     $('body').on('click','[data-use="task-list"] li',function(event){
       $(event.target).toggleClass('line-through');
@@ -778,6 +785,6 @@ $(document).ready(function(){
       var displayProgress = '<p><progress value="' + pourcent + '" max="100"></progress></p>'
       $('#avancement').html(displayProgress);
 
-    })
+    });
 
 });
