@@ -281,6 +281,7 @@ $(document).ready(function(){
     //Categories
     $('[data-action="categories-editor"]').on('click', function(){
         $('[data-use="categories-editor"]').toggleClass('hidden');
+        $('[data-action="categories-editor"]').toggleClass('activ-btn');
         $('body').on('click', '[data-action="create-category"]', function(){
             $('[data-use="creating-category"]').toggleClass('hidden');
             $('[data-action="done-category"]').on('click', function(){
@@ -372,6 +373,8 @@ $(document).ready(function(){
     */
     $('[data-action="create-card"]').on('click',function(){
       $('[data-use="create-card"]').toggleClass('hidden');
+      $('[data-action="create-card"]').toggleClass('activ-btn');
+	  
     })
 
     // Add/Remove asterisk for mandatory fields
@@ -548,13 +551,6 @@ $(document).ready(function(){
               }
 			}
 
-            if (data[i].status == 0) {
-              cardRender += '<i class="fa fa-check-circle"></i>';
-            }
-            else if (data[i].status == 1)
-            {
-              cardRender += '<i class="fa fa-frown"></i>';
-            }
             cardRender += '<i class="fa fa-flag"></i>';
             cardRender += '</div>';
             cardRender += '<div data-use="task-list">';

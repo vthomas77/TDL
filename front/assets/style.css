@@ -59,12 +59,9 @@ body [data-use="sidebar-connected"] input[type=submit]:hover {
 }
 body [data-use="available-actions"] {
   position: static;
-  background-color: white;
-  padding: 2%;
-  width: 119%;
+  width: 150%;
   margin-top: 40%;
-  margin-left: -12%;
-  box-shadow: 5px 5px 23px black;
+  margin-left: -25%;
 }
 body [data-use="available-actions"] div [data-use="categories-editor"] [data-use="categories-editor-menu"] input[type=submit] {
   background: rgba(0, 0, 0, 0);
@@ -91,25 +88,31 @@ body [data-use="available-actions"] section [data-use="create-card"] select {
 body [data-use="available-actions"] section [data-use="create-card"] [type="date"] {
   height: 15px;
 }
+body [data-use="available-actions"] div[data-action="create-card"] {
+  width: 100%;
+  padding: 2%;
+  color: white;
+  t-weight: bold;
+  border: none;
+  font-size: 120%;
+  margin: 0;
+  background-color: #515157;
+  box-shadow: -23px 0 8px -6px #000000 inset;
+}
+body [data-use="available-actions"] div[data-action="create-card"]:hover {
+  background-color: #39393d;
+  border-left: 6px solid #5e9ef3;
+  box-shadow: 0px 0px 25px -6px black inset;
+}
 body [data-use="available-actions"] input[type=submit]:not([data-use="new-card-submit"]) {
   width: 100%;
-  padding: 10%;
+  padding: 2%;
   color: white;
-  border-radius: 3px;
-  font-weight: bold;
+  t-weight: bold;
   border: none;
-  /* gradient */
-  background: #d1a73d;
-  background: -webkit-gradient(left top, right top, color-stop(0%, #d1a73d), color-stop(3%, #d1a73d), color-stop(85%, #d9559f), color-stop(100%, #db46b1));
-  background: -webkit-linear-gradient(left, #d1a73d 0%, #d1a73d 3%, #d9559f 85%, #db46b1 100%);
-  background: linear-gradient(to right, #d1a73d 0%, #d1a73d 3%, #d9559f 85%, #db46b1 100%);
-}
-body [data-use="available-actions"] input[type=submit]:not([data-use="new-card-submit"]):hover {
-  /* gradient 2 */
-  background: #a53dd1;
-  background: -webkit-gradient(left top, right top, color-stop(0%, #a53dd1), color-stop(100%, #92d2e8));
-  background: -webkit-linear-gradient(left, #a53dd1 0%, #92d2e8 100%);
-  background: linear-gradient(to right, #a53dd1 0%, #92d2e8 100%);
+  font-size: 120%;
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0);
 }
 body [data-use="available-actions"] [data-use="new-card-submit"] {
   width: 100%;
@@ -125,6 +128,12 @@ body [data-use="available-actions"] input[type=text] {
 }
 body [data-use="available-actions"] input[type=date] {
   width: 170px;
+}
+body .activ-btn {
+  background-color: #39393d !important;
+  border: none !important;
+  border-left: 6px solid #5e9ef3 !important;
+  box-shadow: 0px 0px 25px -6px black inset !important;
 }
 body [data-use="login"] {
   background-color: white;
@@ -307,9 +316,10 @@ body [data-use="get-card"] > div > div:nth-of-type(2) img {
   left: -25%;
 }
 body [data-use="get-card"] > div > div:nth-of-type(3) {
-  background-color: #9f9fab;
   margin: 5%;
   padding: 10%;
+  border: 1px solid lightgrey;
+  background-color: white;
 }
 body [data-use="get-card"] > div > div:nth-of-type(3) svg {
   color: white;

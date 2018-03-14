@@ -24,7 +24,11 @@
                 <input type="submit" data-action="unlogUser" ata-toggle="modal" data-target="#myModal" class="button" value="DISCONNECT">
             </div>
             <div data-use="available-actions" class="hidden">
-              <input type="submit" data-action="create-card" value="Add a new card">
+				
+				<div class="flex-left" data-action="create-card">
+					<i class="fa fa-plus-square"></i>
+              		<input type="submit" value="Add card">
+				</div>
 				
 				<!-- 
 				admin card 
@@ -56,7 +60,11 @@
 				  <p data-use="new-card-notification"></p>
 				</section>
 				
-			  <input type="submit" data-action="categories-editor" value="Editor">
+				
+				<div class="flex-left" data-action="categories-editor">
+					<i class="fa fa-plus-square"></i>
+              		<input type="submit" value="Filter">
+				</div>
 				
 				<!--
 				admin category
