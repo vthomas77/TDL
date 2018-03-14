@@ -649,9 +649,10 @@ $(document).ready(function(){
       var userToken = localStorage.getItem('token');
       var cardID = this.dataset.use;
       $.post('http://192.168.33.10:8000/deleteCard/' + userToken + '/' + cardID,function(data){
-          if (data == 1){
+          //if (data == 1){
+          debugger;
             showCard();
-          }
+          //}
       })
     })
 
@@ -870,7 +871,6 @@ $(document).ready(function(){
       var displayProgress = '<p><progress value="' + pourcent + '" max="100"></progress></p>'
       var progressBarSelection = '[data-progress="' + taskCardID + '"]'
       $(progressBarSelection).html(displayProgress);
-      debugger;
     }
 
     // Change filter

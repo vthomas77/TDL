@@ -224,6 +224,9 @@ static public function DeleteCard ($userToken,$cardID){
     $resDeleteCardAssociations = DB::table('properties')
     ->where('cards_id_card','=',$cardID)
     ->delete();
+    $resDeleteCardTasks = DB::table('tasks')
+    ->where('cards_id_card','=',$cardID)
+    ->delete();
     $resDeleteCard = DB::table('cards')
     ->where('id_card','=',$cardID)
     ->delete();
