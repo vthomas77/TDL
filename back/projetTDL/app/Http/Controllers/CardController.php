@@ -20,9 +20,9 @@ class CardController extends Controller
     }
 
     // Get Card
-    public function GetCard($userToken)
+    public function GetCard($userToken,$cardFilter)
     {
-        return response()->json(card::GetCard($userToken));
+        return response()->json(card::GetCard($userToken,$cardFilter));
     }
 
     // Delete Card
