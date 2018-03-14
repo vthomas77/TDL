@@ -172,6 +172,7 @@ $(document).ready(function(){
         $('[data-use="update-user"]').removeClass('hidden');
         $('[data-use="login"]').addClass('hidden');
         $('[data-use="read-user"]').addClass('hidden');
+		$('[data-use="get-card"]').addClass('hidden');
 
         $('body').on('click', '[data-submit="update-user"]', function(){
 
@@ -201,15 +202,17 @@ $(document).ready(function(){
 
         $('[data-submit="update-back" ]').on('click', function(){
 
-            $('[data-login="username"]')[0].value = 0;
-            $('[data-login="password"]')[0].value = 0;
+            $('[data-login="username"]')[0].value = "";
+            $('[data-login="password"]')[0].value = "";
 
             $('[data-use="delete-user"]').addClass('hidden');
             $('[data-use="signin"]').addClass('hidden');
             $('[data-use="update-user"]').addClass('hidden');
-            $('[data-use="login"]').removeClass('hidden');
+            $('[data-use="login"]').addClass('hidden');
             $('[data-use="read-user"]').addClass('hidden');
+			$('[data-use="get-card"]').removeClass('hidden');
         });
+		
     });
 
     /*
@@ -222,6 +225,7 @@ $(document).ready(function(){
         $('[data-use="update-user"]').addClass('hidden');
         $('[data-use="login"]').addClass('hidden');
         $('[data-use="read-user"]').addClass('hidden');
+		$('[data-use="get-card"]').addClass('hidden');
 
         $('[data-submit="delete-user"]').on('click', function(){
             var username = $('[data-delete="username"]')[0].value;
@@ -257,9 +261,12 @@ $(document).ready(function(){
                             console.log("token still valid");
                         }
 
-                        $('[data-use="delete-user"]').html('<p>Your account has been successfully removed !</p>');
+                        $('[data-use="delete-user"]').html('<p class="success">Your account has been successfully removed !</p>');
 
                         localStorage.removeItem('token');
+						setTimeout(function(){
+							location.reload();
+						},3000);
                     } else {
                         $('[data-use="delete-user"]').append('<p class="error">An error has occured, please try again</p>');
                     }
@@ -273,14 +280,15 @@ $(document).ready(function(){
             $('[data-use="delete-user"]').addClass('hidden');
             $('[data-use="signin"]').addClass('hidden');
             $('[data-use="update-user"]').addClass('hidden');
-            $('[data-use="login"]').removeClass('hidden');
+            $('[data-use="login"]').addClass('hidden');
             $('[data-use="read-user"]').addClass('hidden');
+			$('[data-use="get-card"]').removeClass('hidden');
         });
     });
 
     //Categories
     $('[data-action="categories-editor"]').on('click', function(){
-        $('[data-use="categories-editor"]').toggleClass('hidden');
+        $('[data-use="filter"]').toggleClass('hidden');
         $('[data-action="categories-editor"]').toggleClass('activ-btn');
         $('body').on('click', '[data-action="create-category"]', function(){
             $('[data-use="creating-category"]').toggleClass('hidden');
@@ -306,22 +314,17 @@ $(document).ready(function(){
         if(token) {
             $.post('http://192.168.33.10:8000/admin/read_account/' + token, function(data) {
                 if(data == "Lumen (5.6.1) (Laravel Components 5.6.*)") {
-                    $('[data-use="delete-user"]').addClass('hidden');
-                    $('[data-use="signin"]').addClass('hidden');
-                    $('[data-use="update-user"]').addClass('hidden');
-                    $('[data-use="login"]').removeClass('hidden');
-                    $('[data-use="read-user"]').addClass('hidden');
-
-                    $('[data-use="notification-login"]').removeClass('hidden');
-                    $('[data-use="notification-login"]').html('<p class="error">You\'ve been inactive for too long, please reconnect</p>');
-
-
+                    
                     localStorage.removeItem('token');
+					setTimeout(function(){
+						location.reload();
+					},2000);
                 } else {
                     $('[data-use="delete-user"]').addClass('hidden');
                     $('[data-use="signin"]').addClass('hidden');
                     $('[data-use="update-user"]').addClass('hidden');
                     $('[data-use="login"]').addClass('hidden');
+					$('[data-use="get-card"]').addClass('hidden');
                     $('[data-use="read-user"]').removeClass('hidden');
 
                     var htmlRender = '<h2>Your profile :</h2>';
@@ -340,13 +343,12 @@ $(document).ready(function(){
                 $('[data-use="update-user"]').addClass('hidden');
                 $('[data-use="login"]').addClass('hidden');
                 $('[data-use="read-user"]').addClass('hidden');
+				$('[data-use="get-card"]').removeClass('hidden');
             });
         } else {
-            $('[data-use="delete-user"]').addClass('hidden');
-            $('[data-use="read-user"]').removeClass('hidden');
-            $('[data-use="signin"]').addClass('hidden');
-            $('[data-use="update-user"]').addClass('hidden');
-            $('[data-use="login"]').addClass('hidden');
+            setTimeout(function(){
+				location.reload();
+			},2000);
 
             //notification of the error
             $('[data-use="read-user"]').html('<p class="error">Ykour connection has expired, please reconnect</p>')
