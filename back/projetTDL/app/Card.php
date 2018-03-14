@@ -31,7 +31,7 @@ class Card {
          'priority' => $priority,
          'status' => $status,
          'deadline' => $deadline,
-         'category' => $category]
+         'categories_id_category' => $category]
       );
     } catch (\Exception $e) {
       return "1";
@@ -94,7 +94,7 @@ static public function GetCard ($userToken,$cardFilter){
       if ($cardFilter == 1){
         $resGetCardsFromUser = DB::table('properties')
           ->join('cards', 'cards.id_card', '=', 'properties.cards_id_card')
-          ->select('cards.id_card','cards.title','cards.priority','cards.status','cards.deadline','cards.category','properties.rank')
+          ->select('cards.id_card','cards.title','cards.priority','cards.status','cards.deadline','cards.categories_id_category','properties.rank')
           ->where('properties.users_id_user','=',$userID)
           ->where('cards.priority','=',2)
           ->get();
@@ -102,7 +102,7 @@ static public function GetCard ($userToken,$cardFilter){
         $today = date("Y-m-d H:i:s");
         $resGetCardsFromUser = DB::table('properties')
           ->join('cards', 'cards.id_card', '=', 'properties.cards_id_card')
-          ->select('cards.id_card','cards.title','cards.priority','cards.status','cards.deadline','cards.category','properties.rank')
+          ->select('cards.id_card','cards.title','cards.priority','cards.status','cards.deadline','cards.categories_id_category','properties.rank')
           ->where('properties.users_id_user','=',$userID)
           ->where('cards.deadline','<',$today)
           ->where('cards.deadline','<>','0000-00-00 00:00:00')
@@ -110,7 +110,7 @@ static public function GetCard ($userToken,$cardFilter){
       } else {
         $resGetCardsFromUser = DB::table('properties')
           ->join('cards', 'cards.id_card', '=', 'properties.cards_id_card')
-          ->select('cards.id_card','cards.title','cards.priority','cards.status','cards.deadline','cards.category','properties.rank')
+          ->select('cards.id_card','cards.title','cards.priority','cards.status','cards.deadline','cards.categories_id_category','properties.rank')
           ->where('properties.users_id_user','=',$userID)
           ->get();
       }
@@ -154,7 +154,7 @@ static public function GetCard ($userToken,$cardFilter){
          $value -> priority,
          $value -> status,
          $value -> deadline,
-         $value -> category,
+         $value -> categories_id_category,
          $value -> rank,
          $collaborators,
          $tasks

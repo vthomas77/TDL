@@ -432,9 +432,17 @@ $(document).ready(function(){
 
         // Check category field
         // Assign global by default
-        var category = $('[data-use="new-card-category"]')[0].value;
-        if (category == ""){
-          category = 'Global';
+        var selectedCategory = $('[data-use="new-card-category"] option:selected')[0].value;
+        switch (selectedCategory) {
+          case 'Red':
+          category = 1;
+          break;
+          case 'Green':
+          category = 2;
+          break;
+          case 'Blue':
+          category = 3;
+          break;
         }
 
         // Check deadline field
@@ -562,7 +570,19 @@ $(document).ready(function(){
             {
               cardRender += '<i class="fa fa-frown"></i>';
             }
-            cardRender += '<i class="fa fa-flag"></i>';
+
+            switch (data[i].category) {
+              case 1:
+              cardRender += '<i class="fa fa-flag" style="color:red"></i>';
+              break;
+              case 2:
+              cardRender += '<i class="fa fa-flag" style="color:green"></i>';
+              break;
+              case 3:
+              cardRender += '<i class="fa fa-flag" style="color:blue"></i>';
+              break;
+            }
+
             cardRender += '</div>';
             cardRender += '<div data-use="task-list">';
             cardRender += '<ul data-task="inul" class="no-style">';
@@ -828,4 +848,6 @@ $(document).ready(function(){
     $('[data-use="filter"] select').on('change',function(){
       showCard();
     })
+
+
 });
