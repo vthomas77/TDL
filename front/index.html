@@ -102,11 +102,27 @@
 				filter category
 				-->
         <section data-use="filter">
+          <div>
+            <input type="checkbox" id="high-priority-cards">
+            <label for="high-priority-cards">High priority</label>
+          </div>
+          <div>
+            <input type="checkbox" id="late-cards">
+            <label for="late-cards">Late</label>
+          </div>
+          <div>
+            <input type="checkbox" id="by-category-cards">
+            <label for="by-category-cards">By category</label>
+          </div>
+        </section>
+        <section data-use="filter-category" class="hidden">
           <select>
-            <option>All</option>
-            <option>High priority</option>
-            <option>Late</option>
+            <option>Red</option>
+            <option>Green</option>
+            <option>Blue</option>
           </select>
+        </section>
+        <section data-use="filter-collaborator">
         </section>
 
             </div>

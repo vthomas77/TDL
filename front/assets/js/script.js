@@ -501,19 +501,32 @@ $(document).ready(function(){
     // Get card
     function showCard() {
         var userToken = localStorage.getItem('token');
-        var filterSelection = $('[data-use="filter"] select option:selected')[0].value;
-        var cardFilter;
-        if (filterSelection == 'High priority')
-        {
-          cardFilter = 1;
+        var cardFilter = 0;
+        var extraFilter;
+
+        if ($('#high-priority-cards')[0].checked){
+          cardFilter += 1;
         }
-        else if (filterSelection == 'Late') {
-          cardFilter = 2;
+        if ($('#late-cards')[0].checked) {
+          cardFilter += 2;
         }
-        else {
-          cardFilter = 0;
+        if ($('#by-category-cards')[0].checked){
+          cardFilter += 4;
+          var selectedCategoryFilter = $('[data-use="filter-category"] select option:selected')[0].value;
+          switch (selectedCategoryFilter) {
+            case 'Red':
+            extraFilter = 1;
+            break;
+            case 'Green':
+            extraFilter = 2;
+            break;
+            case 'Blue':
+            extraFilter = 3;
+            break;
+          }
         }
-        $.post('http://192.168.33.10:8000/getCard/' + userToken + '/' + cardFilter,function(data){
+
+        $.post('http://192.168.33.10:8000/getCard/' + userToken + '/' + cardFilter + '/' + extraFilter,function(data){
 
         // Sort array relative to rank card
         data.sort(function(a,b){
@@ -613,8 +626,9 @@ $(document).ready(function(){
             cardRender += '<div data-progress="' + data[i].id + '"><p><progress value="' + pourcent + '" max="100"></progress></p></div>'
           cardRender += '</div>';
 
-        $('[data-use="get-card"]').html(cardRender);
+
       }
+      $('[data-use="get-card"]').html(cardRender);
       })
 
     }
@@ -845,9 +859,21 @@ $(document).ready(function(){
     });
 
     // Change filter
-    $('[data-use="filter"] select').on('change',function(){
-      showCard();
+    $('#by-category-cards:checkbox').on('click',function(){
+        $('[data-use="filter-category"]').toggleClass('hidden');
+        showCard();
     })
 
+    $('#late-cards:checkbox').on('click',function(){
+        showCard();
+    })
+
+    $('#high-priority-cards:checkbox').on('change',function(){
+        showCard();
+    })
+
+    $('[data-use="filter-category"] select').on('change',function(){
+        showCard();
+    })
 
 });

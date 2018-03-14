@@ -21,7 +21,7 @@ $router->post('createCard/{userToken}/{title}/{priority}/{category}/{deadline}/{
 
 // Get Card
 //$router->post('getCard/{userToken}', ['middleware'=>'Tok','uses'=>'CardController@GetCard']);
-$router->post('getCard/{userToken}/{cardFilter}', 'CardController@GetCard');
+$router->post('getCard/{userToken}/{cardFilter}/{extraFilter}', 'CardController@GetCard');
 // Create Category
 $router->post('createCategory/{categoryname}/{categorycolor}', 'CategoryController@CreateCategory');
 

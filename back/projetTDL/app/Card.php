@@ -86,7 +86,7 @@ class Card {
 
 
 // Get cards from user
-static public function GetCard ($userToken,$cardFilter){
+static public function GetCard ($userToken,$cardFilter,$extraFilter){
     try {
 
       $cardsProperties = [];
@@ -106,6 +106,52 @@ static public function GetCard ($userToken,$cardFilter){
           ->where('properties.users_id_user','=',$userID)
           ->where('cards.deadline','<',$today)
           ->where('cards.deadline','<>','0000-00-00 00:00:00')
+          ->get();
+      } elseif ($cardFilter == 3) {
+        $today = date("Y-m-d H:i:s");
+        $resGetCardsFromUser = DB::table('properties')
+          ->join('cards', 'cards.id_card', '=', 'properties.cards_id_card')
+          ->select('cards.id_card','cards.title','cards.priority','cards.status','cards.deadline','cards.categories_id_category','properties.rank')
+          ->where('properties.users_id_user','=',$userID)
+          ->where('cards.priority','=',2)
+          ->where('cards.deadline','<',$today)
+          ->where('cards.deadline','<>','0000-00-00 00:00:00')
+          ->get();
+      } elseif ($cardFilter == 4) {
+        $resGetCardsFromUser = DB::table('properties')
+          ->join('cards', 'cards.id_card', '=', 'properties.cards_id_card')
+          ->select('cards.id_card','cards.title','cards.priority','cards.status','cards.deadline','cards.categories_id_category','properties.rank')
+          ->where('properties.users_id_user','=',$userID)
+          ->where('cards.categories_id_category','=',$extraFilter)
+          ->get();
+      } elseif ($cardFilter == 5) {
+        $resGetCardsFromUser = DB::table('properties')
+          ->join('cards', 'cards.id_card', '=', 'properties.cards_id_card')
+          ->select('cards.id_card','cards.title','cards.priority','cards.status','cards.deadline','cards.categories_id_category','properties.rank')
+          ->where('properties.users_id_user','=',$userID)
+          ->where('cards.priority','=',2)
+          ->where('cards.categories_id_category','=',$extraFilter)
+          ->get();
+      } elseif ($cardFilter == 6) {
+        $today = date("Y-m-d H:i:s");
+        $resGetCardsFromUser = DB::table('properties')
+          ->join('cards', 'cards.id_card', '=', 'properties.cards_id_card')
+          ->select('cards.id_card','cards.title','cards.priority','cards.status','cards.deadline','cards.categories_id_category','properties.rank')
+          ->where('properties.users_id_user','=',$userID)
+          ->where('cards.deadline','<',$today)
+          ->where('cards.deadline','<>','0000-00-00 00:00:00')
+          ->where('cards.categories_id_category','=',$extraFilter)
+          ->get();
+      } elseif ($cardFilter == 7) {
+        $today = date("Y-m-d H:i:s");
+        $resGetCardsFromUser = DB::table('properties')
+          ->join('cards', 'cards.id_card', '=', 'properties.cards_id_card')
+          ->select('cards.id_card','cards.title','cards.priority','cards.status','cards.deadline','cards.categories_id_category','properties.rank')
+          ->where('properties.users_id_user','=',$userID)
+          ->where('cards.priority','=',2)
+          ->where('cards.deadline','<',$today)
+          ->where('cards.deadline','<>','0000-00-00 00:00:00')
+          ->where('cards.categories_id_category','=',$extraFilter)
           ->get();
       } else {
         $resGetCardsFromUser = DB::table('properties')
