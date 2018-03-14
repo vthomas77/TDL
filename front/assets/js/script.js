@@ -473,6 +473,7 @@ $(document).ready(function(){
     */
 
     // Change image menu when mouse over it
+	/*
     $('body').on('mouseenter','[data-action="card-menu"]',function(event){
       $(event.target).attr('src','./assets/img/cardMenuGold.svg');
     })
@@ -480,10 +481,13 @@ $(document).ready(function(){
     $('body').on('mouseleave','[data-action="card-menu"]',function(event){
       $(event.target).attr('src','./assets/img/cardMenu.svg');
     })
+	*/
+	
 
     $('body').on('mouseleave','[data-use="card-menu"]',function(event){
       $('[data-use="card-menu"]').addClass('hidden');
     })
+	
 
     // Show card menu when click on hamburger menu
     $('body').on('click','[data-action="card-menu"]',function(event){
@@ -508,7 +512,7 @@ $(document).ready(function(){
             cardRender += '<div class="gradient-head">';
               cardRender += '<h3>' + data[i].title + '</h3>';
               cardRender += '<div>';
-                cardRender += '<img data-action="card-menu" src="./assets/img/cardMenu.svg" alt="card menu">';
+                cardRender += '<i class="fa fa-bars" data-action="card-menu"></i>';
                 cardRender += '<nav data-use="card-menu" class="hidden">';
                 cardRender += '<ul>';
                 cardRender += '<li data-action="add-task" data-use="' + data[i].id + '">Add Task</li>';
@@ -519,9 +523,9 @@ $(document).ready(function(){
                 cardRender += '</nav>';
               cardRender += '</div>';
             cardRender += '</div>';
-            cardRender += '<div>';
+            cardRender += '<div class="flex">';
               for (var j=0; j <  data[i].collaborators.length; j++){
-                cardRender += '<img data-use="avatar" src="http://192.168.33.10:8000/' + data[i].collaborators[j] + '" alt="avatar">';
+                cardRender += '<div data-use="image-container"><img data-use="avatar" src="http://192.168.33.10:8000/' + data[i].collaborators[j] + '" alt="avatar"></div>';
               }
             cardRender += '</div>';
             cardRender += '<div>';
