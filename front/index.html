@@ -25,9 +25,9 @@
             </div>
             <div data-use="available-actions" class="hidden">
               <input type="submit" data-action="create-card" value="Add a new card">
-				
-				<!-- 
-				admin card 
+
+				<!--
+				admin card
 				-->
 				<section data-use="create-card" class="hidden">
 				  <h2>New Card</h2>
@@ -55,9 +55,9 @@
 				  <input type="submit" data-use="new-card-submit" class="button" value="Create">
 				  <p data-use="new-card-notification"></p>
 				</section>
-				
+
 			  <input type="submit" data-action="categories-editor" value="Editor">
-				
+
 				<!--
 				admin category
 				-->
@@ -92,9 +92,20 @@
 					</fieldset>
 				  </div>
 				</div>
-				
+
+        <!--
+				filter category
+				-->
+        <section data-use="filter">
+          <select>
+            <option>All</option>
+            <option>High priority</option>
+            <option>Late</option>
+          </select>
+        </section>
+
             </div>
-			
+
 			<div data-content="collaborators" class="hidden">
 				<section data-use="manage-collaborators">
 				  <h2>Collaborators</h2>
@@ -120,7 +131,7 @@
 				<h4>See you soon !</h4>
 			</div>
 		</div>
-		
+
         <div data-use="login" class="flex content">
             <div>
                 <h2>Login</h2>
@@ -130,7 +141,7 @@
                 <p data-use="notification-login">
                 </p>
 				<input type="submit" data-submit="login" value="OK" class="button big">
-				
+
                 <input type="submit" data-submit="go-to-signin" value="Sign in" class="button">
             </div>
         </div>
@@ -202,8 +213,8 @@
 
             <input type="submit" data-submit="keep-my-account" value="Finally I keep my account" class="button">
         </div>
-        
-        
+
+
         <section data-use="get-card" class="content hidden">
         </section>
 

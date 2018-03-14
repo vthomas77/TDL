@@ -86,16 +86,35 @@ class Card {
 
 
 // Get cards from user
-static public function GetCard ($userToken){
+static public function GetCard ($userToken,$cardFilter){
     try {
 
       $cardsProperties = [];
       $userID = user::GetUserID($userToken);
-      $resGetCardsFromUser = DB::table('properties')
-        ->join('cards', 'cards.id_card', '=', 'properties.cards_id_card')
-        ->select('cards.id_card','cards.title','cards.priority','cards.status','cards.deadline','cards.category','properties.rank')
-        ->where('properties.users_id_user','=',$userID)
-        ->get();
+      if ($cardFilter == 1){
+        $resGetCardsFromUser = DB::table('properties')
+          ->join('cards', 'cards.id_card', '=', 'properties.cards_id_card')
+          ->select('cards.id_card','cards.title','cards.priority','cards.status','cards.deadline','cards.category','properties.rank')
+          ->where('properties.users_id_user','=',$userID)
+          ->where('cards.priority','=',2)
+          ->get();
+      } elseif ($cardFilter == 2) {
+        $today = date("Y-m-d H:i:s");
+        $resGetCardsFromUser = DB::table('properties')
+          ->join('cards', 'cards.id_card', '=', 'properties.cards_id_card')
+          ->select('cards.id_card','cards.title','cards.priority','cards.status','cards.deadline','cards.category','properties.rank')
+          ->where('properties.users_id_user','=',$userID)
+          ->where('cards.deadline','<',$today)
+          ->where('cards.deadline','<>','0000-00-00 00:00:00')
+          ->get();
+      } else {
+        $resGetCardsFromUser = DB::table('properties')
+          ->join('cards', 'cards.id_card', '=', 'properties.cards_id_card')
+          ->select('cards.id_card','cards.title','cards.priority','cards.status','cards.deadline','cards.category','properties.rank')
+          ->where('properties.users_id_user','=',$userID)
+          ->get();
+      }
+
       foreach ($resGetCardsFromUser as $key => $value)
       {
         $collaborators = [];

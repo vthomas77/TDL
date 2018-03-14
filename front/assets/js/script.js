@@ -41,7 +41,7 @@ $(document).ready(function(){
             if(data.length > 0) {
                 //makes dashboard appears
 				$('[data-use="sidebar"]').removeClass('hidden').show("drop");
-				
+
                 //set profile in sidebar
                 $('[data-use="insidebar"]').html('<img src="http://192.168.33.10:8000/' + data[0].avatar + '" class="img-avatar"><h1>' + data[0].username + '<i class="fa fa-cog"></i></h1>');
 
@@ -99,7 +99,7 @@ $(document).ready(function(){
                                         //hide the submit
                                         $('[data-submit="signin"]').addClass('hidden');
                                         $('[data-submit="back-to-login"]').addClass('hidden');
-										
+
 										//display sidebar
 										$('[data-use="sidebar"]').removeClass('hidden');
 
@@ -493,8 +493,19 @@ $(document).ready(function(){
     // Get card
     function showCard() {
         var userToken = localStorage.getItem('token');
-
-        $.post('http://192.168.33.10:8000/getCard/' + userToken,function(data){
+        var filterSelection = $('[data-use="filter"] select option:selected')[0].value;
+        var cardFilter;
+        if (filterSelection == 'High priority')
+        {
+          cardFilter = 1;
+        }
+        else if (filterSelection == 'Late') {
+          cardFilter = 2;
+        }
+        else {
+          cardFilter = 0;
+        }
+        $.post('http://192.168.33.10:8000/getCard/' + userToken + '/' + cardFilter,function(data){
 
         // Sort array relative to rank card
         data.sort(function(a,b){
@@ -813,4 +824,8 @@ $(document).ready(function(){
 
     });
 
+    // Change filter
+    $('[data-use="filter"] select').on('change',function(){
+      showCard();
+    })
 });
