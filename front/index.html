@@ -71,45 +71,10 @@
               		<input type="submit" value="Filter">
 				</div>
 
-				<!--
-				admin category
-				-->
-				<div data-use="categories-editor" class="hidden">
-				  <h2>Categories Editor</h2>
-				  <div data-use="categories-editor-menu">
-					<input type="submit" data-action="create-category" class="button" value="Create">
-					<input type="submit" data-action="edit-category" class="button" value="Edit">
-					<input type="submit" data-action="delete-category" class="button" value="Delete">
-				  </div>
-				  <div data-use="creating-category" class="hidden">
-					<input type="text" data-signin="created-category" name="created-category" placeholder="NewCategory">
-					<select data-signin="color-category" name="color" size="1">
-					  <option>blue
-					  <option>green
-					  <option>red
-					  <option>yellow
-					</select>
-					<input type="submit" data-action="done-category" class="button" value="Done">
-				  </div>
-				  <div data-use="categories-list">
-					<fieldset>
-					  <legend>Your Categories :</legend>
-					  <div>
-						<input type="checkbox" id="coding" name="interest" value="coding">
-						<label for="coding">Développement</label>
-					  </div>
-					  <div>
-						<input type="checkbox" id="music" name="interest" value="music">
-						<label for="music">Musique</label>
-					  </div>
-					</fieldset>
-				  </div>
-				</div>
-
         <!--
 				filter category
 				-->
-        <section data-use="filter">
+        <section data-use="filter" class="hidden">
           <div>
             <input type="checkbox" id="high-priority-cards">
             <label for="high-priority-cards">High priority</label>
@@ -149,6 +114,8 @@
 				  </div>
 				</section>
 			</div>
+			
+			<div data-encre="null"></div>
         </div>
 
         <div data-use="read-user" class="content hidden">
