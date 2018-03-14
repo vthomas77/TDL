@@ -14,7 +14,7 @@ body {
         position :absolute;
         top: 0;
         padding: 5%;
-            box-shadow: -2px -6px 10px black inset;
+		box-shadow: -2px -6px 10px black inset;
 		z-index: 10;
 		position: fixed;
     	overflow: overlay;
@@ -62,13 +62,10 @@ body {
     }
 	[data-use="available-actions"] {
 		position: static;
-		background-color: white;
-		padding: 2%;
-		width: 119%;
+		width: 150%;
 		margin-top: 40%;
-		margin-left: -12%;
-		box-shadow: 5px 5px 23px black;
-
+		margin-left: -25%;
+		
 		div [data-use="categories-editor"] {
 			[data-use="categories-editor-menu"] {
 				input[type=submit] {
@@ -100,25 +97,34 @@ body {
 			}
 		}
 
+		
+		div[data-action="create-card"] {
+			width: 100%;
+			padding: 2%;
+			color: white;
+			t-weight: bold;
+			border: none;
+			font-size: 120%;
+			margin: 0;
+			background-color: @grey;
+			box-shadow: -23px 0 8px -6px #000000 inset;
+
+			&:hover {
+				background-color: @darkGrey;
+				border-left: 6px solid @gradient-blue;
+    			box-shadow: 0px 0px 25px -6px black inset;
+			}
+		}
+		
 		input[type=submit]:not([data-use="new-card-submit"]) {
 			width: 100%;
-			padding: 10%;
+			padding: 2%;
 			color: white;
-			border-radius: 3px;
-			font-weight: bold;
+			t-weight: bold;
 			border: none;
-			/* gradient */
-		  	background: rgba(209,167,61,1);
-			background: -webkit-gradient(left top, right top, color-stop(0%, rgba(209,167,61,1)), color-stop(3%, rgba(209,167,61,1)), color-stop(85%, rgba(217,85,159,1)), color-stop(100%, rgba(219,70,177,1)));
-			background: -webkit-linear-gradient(left, rgba(209,167,61,1) 0%, rgba(209,167,61,1) 3%, rgba(217,85,159,1) 85%, rgba(219,70,177,1) 100%);
-			background: linear-gradient(to right, rgba(209,167,61,1) 0%, rgba(209,167,61,1) 3%, rgba(217,85,159,1) 85%, rgba(219,70,177,1) 100%);
-			&:hover {
-				/* gradient 2 */
-				background: rgba(165,61,209,1);
-				background: -webkit-gradient(left top, right top, color-stop(0%, rgba(165,61,209,1)), color-stop(100%, rgba(146,210,232,1)));
-				background: -webkit-linear-gradient(left, rgba(165,61,209,1) 0%, rgba(146,210,232,1) 100%);
-				background: linear-gradient(to right, rgba(165,61,209,1) 0%, rgba(146,210,232,1) 100%);
-			}
+			font-size: 120%;
+			margin: 0;
+			background-color: rgba(0,0,0,0);
 		}
 		[data-use="new-card-submit"] {
 			width: 100%;
@@ -136,17 +142,34 @@ body {
 			width: 170px;
 		}
 	}
+	.activ-btn {
+		background-color: @darkGrey !important;
+		border: none !important;
+		border-left: 6px solid @gradient-blue !important;
+		box-shadow: 0px 0px 25px -6px black inset !important;
+	}
 	[data-use="login"] {
 		background-color: white;
 		position: absolute;
 		z-index: 1;
 		box-shadow: 5px 5px 23px #aaa;
 		margin-top: 22vh;
+		margin-left: 24vw;
+		max-width: 40%;
+		padding: 10%;
 		input[type=text] {
 			border: solid 1px @main;
+			margin-bottom: 20px;
+			margin-right: 15px;
+			padding: 5px;
+			border-radius: 3px;
 		}
 		input[type=password] {
 			border: solid 1px @main;
+			margin-bottom: 20px;
+			margin-right: 15px;
+			padding: 5px;
+			border-radius: 3px;
 		}
 		[data-submit="login"] {
 			position: relative;
@@ -162,6 +185,49 @@ body {
 			position: fixed;
 			bottom: 0;
 			right: 54px;
+			color: white;
+			background-color: #db46b1;
+			padding-top: 20px;
+			padding-bottom: 20px;
+			min-width: 10%;
+		}
+	}
+	[data-use="signin"] {
+		background-color: white;
+		position: absolute;
+		box-shadow: 5px 5px 23px #aaa;
+		margin-top: 22vh;
+		margin-left: 6vw;
+		padding: 10%;
+		max-width: 65%;
+		input[type=text] {
+			border: solid 1px @main;
+			margin-bottom: 20px;
+			margin-right: 15px;
+			padding: 5px;
+			border-radius: 3px;
+		}
+		input[type=password] {
+			border: solid 1px @main;
+			margin-bottom: 20px;
+			margin-right: 15px;
+			padding: 5px;
+			border-radius: 3px;
+		}
+		[data-submit="signin"] {
+			position: relative;
+			right: -110%;
+			bottom: 10%;
+			padding: 3%;
+			border-radius: 50%;
+			&:hover {
+				box-shadow: 5px 5px 23px #aaa;
+			}
+		}
+		[data-submit="back-to-login"] {
+			position: fixed;
+			bottom: 0;
+			left:72px;
 			color: white;
 			background-color: #db46b1;
 			padding-top: 20px;
@@ -218,19 +284,26 @@ body {
               position: absolute;
               top: 100%;
               right: 0px;
+			  z-index: 20;
               ul {
                 padding: 0px;
               }
               ul li {
-              background-color: black;
+              background-color: rgba(255,255,255,0.8);
               list-style-type: none;
               text-align: right;
+			  padding: 5px;
+			  color: black
               }
               ul li:hover {
-                color: red;
+                background-color: rgba(255,255,255,0.9);
                 cursor: pointer;
               }
             }
+			  svg {
+				  font-size: 2em;
+				  cursor: pointer;
+			  }
           }
           img {
             width: 80%;
@@ -241,16 +314,28 @@ body {
           }
         }
         > div:nth-of-type(2){
+			[data-use="image-container"] {
+				width: 30px;
+				height: 30px;
+				overflow: hidden;
+				border: white solid 2px;
+    			box-shadow: 1px 1px 5px;
+				margin : 1em 1em 0 0;
+			}
           img {
-              width: 20px;
-			  border-radius: 50%;
+              width: 50px;
+			  position: relative;
+    		  left: -25%;
           }
 			padding: 10%;
+			flex-wrap: wrap;
+    		justify-content: flex-start;
         }
         > div:nth-of-type(3){
-			background-color: @lightGrey;
 			margin: 5%;
 			padding: 10%;
+			border: 1px solid lightgrey;
+			background-color: white;
 			svg {
 				color : white;
 				font-size: 20px;
@@ -263,6 +348,9 @@ body {
         }
 		  > div:nth-of-type(4) {
 			  padding: 10%;
+			  ul li {
+				  cursor: pointer;
+			  }
 		  }
 		  > div:nth-of-type(6) {
 			  padding: 10%;
@@ -331,6 +419,7 @@ body {
 		width: 100vw;
 		height: 100vh;
 		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 15;
 		.modal-header {
 			width: 50vw;
 			padding: 10%;
@@ -406,10 +495,10 @@ body {
 
     }
     .error {
-      color: red;
+      color: @red;
     }
     .success {
-      color: green;
+      color: @green;
     }
     .line-through {
       text-decoration: line-through;
