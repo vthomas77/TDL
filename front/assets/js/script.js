@@ -374,7 +374,7 @@ $(document).ready(function(){
     $('[data-action="create-card"]').on('click',function(){
       $('[data-use="create-card"]').toggleClass('hidden');
       $('[data-action="create-card"]').toggleClass('activ-btn');
-	  
+
     })
 
     // Add/Remove asterisk for mandatory fields
@@ -493,16 +493,16 @@ $(document).ready(function(){
       $(event.target).attr('src','./assets/img/cardMenu.svg');
     })
 	*/
-	
+
 
     $('body').on('mouseleave','[data-use="card-menu"]',function(event){
       $('[data-use="card-menu"]').addClass('hidden');
     })
-	
+
 
     // Show card menu when click on hamburger menu
     $('body').on('click','[data-action="card-menu"]',function(event){
-      $(event.target).next().toggleClass('hidden');
+      $(this).next().toggleClass('hidden');
     })
 
     // Get card
@@ -681,8 +681,8 @@ $(document).ready(function(){
 			var newTask = decodeURI(data.title);
 			var idTask = data.idTask[0].id_task;
 
-			$('[data-idCard="' + data.idCard + '"] [data-task="inul"]').append('<div class="flex-left"><i class="fas fa-trash" data-dropTask="' + idTask + '"></i><li>' + newTask + '</li></div>');
-
+			$('[data-idCard="' + data.idCard + '"] [data-task="inul"]').append('<div class="flex-left"><i class="fas fa-trash" data-dropTask="' + idTask + '"></i><li data-taskcard="' + data.idCard + '" data-task="' + idTask + '">' + newTask + '</li></div>');
+      taskCompletion(data.idCard,idTask);
 			$('[data-idCard="' + data.idCard + '"] [data-use="add-input-task"]').toggleClass('hidden');
 
 
@@ -841,6 +841,7 @@ $(document).ready(function(){
 
     // Task completion
     $('body').on('click','[data-use="task-list"] li',function(event){
+
       var taskCardID = $(event.target).attr('data-taskcard');
       var taskID = $(event.target).attr('data-task');
       $(event.target).toggleClass('line-through');
@@ -854,6 +855,13 @@ $(document).ready(function(){
           console.log('Task completion error');
         }
       })
+      taskCompletion(taskCardID,taskID);
+
+    });
+
+
+
+    function taskCompletion(taskCardID,taskID){
       var taskSelection = '[data-taskcard="' + taskCardID + '"]';
       var numberOfTasks = $(taskSelection).length;
       var taskWithLineTroughSelection = '[data-taskcard="' + taskCardID + '"].line-through';
@@ -862,8 +870,8 @@ $(document).ready(function(){
       var displayProgress = '<p><progress value="' + pourcent + '" max="100"></progress></p>'
       var progressBarSelection = '[data-progress="' + taskCardID + '"]'
       $(progressBarSelection).html(displayProgress);
-
-    });
+      debugger;
+    }
 
     // Change filter
     $('#by-category-cards:checkbox').on('click',function(){
