@@ -461,7 +461,7 @@ $(document).ready(function(){
         var status = 0;
 
         // Create card
-        $.post('http://192.168.33.10:8000/createCard/' + userToken + '/' + title + '/' + priority + '/' + category + '/' + deadline + '/' + status,function(data){
+        $.post('http://192.168.33.10:8000/createCard/' + userToken + '/' + encodeURI(title) + '/' + priority + '/' + category + '/' + deadline + '/' + status,function(data){
 
           if (data == 0){
             $('[data-use="new-card-notification"]').removeClass('error');
@@ -545,7 +545,7 @@ $(document).ready(function(){
         for (var i=0; i < data.length; i++){
           cardRender += '<div data-idCard="' + data[i].id + '">';
             cardRender += '<div class="gradient-head">';
-              cardRender += '<h3>' + data[i].title + '</h3>';
+              cardRender += '<h3>' + decodeURI(data[i].title) + '</h3>';
               cardRender += '<div>';
                 cardRender += '<i class="fa fa-bars" data-action="card-menu"></i>';
                 cardRender += '<nav data-use="card-menu" class="hidden">';
@@ -584,13 +584,6 @@ $(document).ready(function(){
 			}
 
 
-            if (data[i].status == 0) {
-              cardRender += '<i class="fa fa-check-circle"></i>';
-            }
-            else if (data[i].status == 1)
-            {
-              cardRender += '<i class="fa fa-frown"></i>';
-            }
 
             switch (data[i].category) {
               case 1:
