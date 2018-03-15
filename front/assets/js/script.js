@@ -212,7 +212,7 @@ $(document).ready(function(){
             $('[data-use="read-user"]').addClass('hidden');
 			$('[data-use="get-card"]').removeClass('hidden');
         });
-		
+
     });
 
     /*
@@ -314,7 +314,7 @@ $(document).ready(function(){
         if(token) {
             $.post('http://192.168.33.10:8000/admin/read_account/' + token, function(data) {
                 if(data == "Lumen (5.6.1) (Laravel Components 5.6.*)") {
-                    
+
                     localStorage.removeItem('token');
 					setTimeout(function(){
 						location.reload();
@@ -548,6 +548,7 @@ $(document).ready(function(){
           cardRender += '<div data-idCard="' + data[i].id + '">';
             cardRender += '<div class="gradient-head">';
               cardRender += '<h3>' + decodeURI(data[i].title) + '</h3>';
+              cardRender += '<input data-card-update="' + data[i].id + '" class="hidden" type="text" placeholder="new name">'
               cardRender += '<div>';
                 cardRender += '<i class="fa fa-bars" data-action="card-menu"></i>';
                 cardRender += '<nav data-use="card-menu" class="hidden">';
@@ -885,5 +886,37 @@ $(document).ready(function(){
     $('[data-use="filter-category"] select').on('change',function(){
         showCard();
     })
+
+    // update Card Title
+    $('body').on('click','[data-use="get-card"] h3',function(){
+        $(this).addClass('hidden');
+        var cardID = $(this).parent().parent().attr('data-idcard');
+        var dataCardUpdate = 'data-card-update="' + cardID + '"';
+        var dataCardUpdateSelection = '[' + dataCardUpdate + ']';
+        $(dataCardUpdateSelection).removeClass('hidden');
+        $(dataCardUpdateSelection).focus();
+
+        $(dataCardUpdateSelection).on('keydown',function(event){
+          if (event.keyCode == 13){
+            var newCardTitle = $(dataCardUpdateSelection)[0].value;
+            if (newCardTitle != '')
+            {
+
+              $.post('http://192.168.33.10:8000/updateCard/' + cardID + '/' + encodeURI(newCardTitle), function(data){
+                if (data == 0){
+                  showCard();
+                }
+              })
+            } else {
+              $('[data-use="get-card"] h3').removeClass('hidden');
+              $(dataCardUpdateSelection).addClass('hidden');
+            }
+
+          }
+        })
+
+    })
+
+
 
 });
