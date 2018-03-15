@@ -161,6 +161,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
             $dataTable = [
                 'username' => $newUsername,
+				'avatar'=> $updateAvatar,
                 'status' => 200
             ];
 

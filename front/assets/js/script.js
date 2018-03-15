@@ -66,7 +66,7 @@ $(document).ready(function(){
         var password = $('[data-signin="password"]')[0].value;
         var repeatPassword = $('[data-signin="repeat-password"]')[0].value;
         var email = $('[data-signin="email"]')[0].value;
-        if(avatar == ""){
+        if(avatar == "" || avatar == undefined){
             avatar = "./default.png";
         }
         if(password === repeatPassword) {
@@ -150,7 +150,7 @@ $(document).ready(function(){
     /*
     //update user profile
     */
-	
+	var updateAvatar;
     $('[data-action="updateUser"]').on('click', function(){
 
         var token = localStorage.getItem('token');
@@ -171,22 +171,22 @@ $(document).ready(function(){
         $('[data-use="read-user"]').addClass('hidden');
 		$('[data-use="get-card"]').addClass('hidden');
 
-		var updateAvatar;
         $('body').on('click', '[data-submit="update-user"]', function(){
 
-            if(token) {
+			if(updateAvatar == "" || updateAvatar == undefined){
+				updateAvatar = "./default.png";
+			}
+            
+			if(token) {
 
                 var newUsername = $('[data-update="username"]')[0].value;
                 var newPassword = $('[data-update="password"]')[0].value;
                 var newEmail = $('[data-update="email"]')[0].value;
 				//var avatar = $('[data-signin="avatar"]')[0].value.substr(12);
 
-				debugger;
 				
                 $.post('http://192.168.33.10:8000/admin/update/' + encodeURI(token) + '/' + encodeURI(newPassword) + '/' + encodeURI(newUsername) + '/' + encodeURI(newEmail) + '/' + updateAvatar , function(data) {
-
                     if(data.status == 200) {
-						debugger;
                         //notification to user
                         $('[data-use="notification-update-user"]').html('<p class="success">' + data.username + ', your account has been successfully updated !</p>');
 						
@@ -195,6 +195,7 @@ $(document).ready(function(){
 
                         //refresh name in sidebar
                          $('[data-use="insidebar"] h1').html(newUsername + '<i class="fa fa-cog"></i>');
+                         $('[data-use="insidebar"]').html('<img src="http://192.168.33.10:8000/' + data.avatar + '" class="img-avatar">');
                     } else {
                         $('[data-use="notification-update-user"]').html('<span class="error">Error with your update, check your inputs or try another username</span>');
                     }
@@ -224,7 +225,6 @@ $(document).ready(function(){
 	//for avatar on update
 	// Upload avatar to server
     $('[data-update="avatar"]').on('change', function(){
-		debugger;
       var selectedFile = $('[data-update="avatar"]')[0].files;
       if (!selectedFile.length) {
         $('[data-use="update-preview"]').html("<span>No files selected!</span>");
@@ -242,7 +242,6 @@ $(document).ready(function(){
     })
 
     $('[data-use="update-send-avatar"]').on('click',function(){
-		debugger;
       var img = document.querySelectorAll(".update-avatar")
       if (img.length != 0)
       {
@@ -260,7 +259,7 @@ $(document).ready(function(){
         success: function(data)
         {
           $('[data-use="update-notification-upload"]').removeClass('hidden');
-          avatar=data;
+          updateAvatar=data;
         }
         });
       }
@@ -698,7 +697,6 @@ $(document).ready(function(){
       var cardID = this.dataset.use;
       $.post('http://192.168.33.10:8000/deleteCard/' + userToken + '/' + cardID,function(data){
           //if (data == 1){
-          debugger;
             showCard();
           //}
       })
