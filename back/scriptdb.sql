@@ -192,3 +192,12 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+INSERT INTO categories VALUES(NULL, "default", "red");
+
+
+INSERT INTO categories VALUES(NULL, "default", "green");
+
+
+INSERT INTO categories VALUES(NULL, "default", "blue");

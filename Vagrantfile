@@ -67,6 +67,7 @@ Vagrant.configure("2") do |config|
     cd /var/www/html/
     sudo apt-get update
     sudo apt-get install apache2 -y
+    sudo cp apache2.conf /etc/apache2/
     sudo cp ports.conf /etc/apache2/
     sudo cp envvars /etc/apache2/
     sudo cp 000-default.conf /etc/apache2/sites-enabled/
