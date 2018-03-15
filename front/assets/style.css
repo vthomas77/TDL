@@ -358,7 +358,7 @@ body [data-use="get-card"] > div > div:nth-of-type(3) {
   background-color: white;
 }
 body [data-use="get-card"] > div > div:nth-of-type(3) svg {
-  color: red;
+  color: #e34443;
   font-size: 20px;
   margin-left: 10px;
   margin-right: 10px;
@@ -504,10 +504,10 @@ body .img-avatar {
   max-width: 150px;
 }
 body .error {
-  color: #a10000;
+  color: #e34443;
 }
 body .success {
-  color: #296e10;
+  color: #53a339;
 }
 body .line-through {
   text-decoration: line-through;

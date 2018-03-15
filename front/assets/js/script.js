@@ -66,12 +66,9 @@ $(document).ready(function(){
         var password = $('[data-signin="password"]')[0].value;
         var repeatPassword = $('[data-signin="repeat-password"]')[0].value;
         var email = $('[data-signin="email"]')[0].value;
-        //still need to be personalized
-        //var avatar = "./assets/img/default.png";
         if(avatar == ""){
             avatar = "./default.png";
         }
-
         if(password === repeatPassword) {
             //test the input existance
             if(username && email) {
@@ -153,7 +150,7 @@ $(document).ready(function(){
     /*
     //update user profile
     */
-
+	
     $('[data-action="updateUser"]').on('click', function(){
 
         var token = localStorage.getItem('token');
@@ -174,18 +171,27 @@ $(document).ready(function(){
         $('[data-use="read-user"]').addClass('hidden');
 		$('[data-use="get-card"]').addClass('hidden');
 
+		var updateAvatar;
         $('body').on('click', '[data-submit="update-user"]', function(){
 
             if(token) {
+
                 var newUsername = $('[data-update="username"]')[0].value;
                 var newPassword = $('[data-update="password"]')[0].value;
                 var newEmail = $('[data-update="email"]')[0].value;
+				//var avatar = $('[data-signin="avatar"]')[0].value.substr(12);
 
-                $.post('http://192.168.33.10:8000/admin/update/' + encodeURI(token) + '/' + encodeURI(newPassword) + '/' + encodeURI(newUsername) + '/' + encodeURI(newEmail) , function(data) {
+				debugger;
+				
+                $.post('http://192.168.33.10:8000/admin/update/' + encodeURI(token) + '/' + encodeURI(newPassword) + '/' + encodeURI(newUsername) + '/' + encodeURI(newEmail) + '/' + updateAvatar , function(data) {
 
                     if(data.status == 200) {
+						debugger;
                         //notification to user
-                        $('[data-use="notification-update-user"]').html(data.username + ', your account has been successfully updated !');
+                        $('[data-use="notification-update-user"]').html('<p class="success">' + data.username + ', your account has been successfully updated !</p>');
+						
+						//hide upload notification
+                        $('[data-use="notification-upload"]').addClass('hidden');
 
                         //refresh name in sidebar
                          $('[data-use="insidebar"] h1').html(newUsername + '<i class="fa fa-cog"></i>');
@@ -213,6 +219,51 @@ $(document).ready(function(){
 			$('[data-use="get-card"]').removeClass('hidden');
         });
 		
+    });
+	
+	//for avatar on update
+	// Upload avatar to server
+    $('[data-update="avatar"]').on('change', function(){
+		debugger;
+      var selectedFile = $('[data-update="avatar"]')[0].files;
+      if (!selectedFile.length) {
+        $('[data-use="update-preview"]').html("<span>No files selected!</span>");
+      } else {
+        var img = document.createElement("img");
+        img.src = window.URL.createObjectURL(selectedFile[0]);
+        //img.height = 17;
+        img.file = selectedFile[0];
+        img.classList.add("update-avatar");
+        img.onload = function() {
+          window.URL.revokeObjectURL(this.src);
+        }
+        $('[data-use="update-preview"]').html(img);
+      }
+    })
+
+    $('[data-use="update-send-avatar"]').on('click',function(){
+		debugger;
+      var img = document.querySelectorAll(".update-avatar")
+      if (img.length != 0)
+      {
+        var fd = new FormData();
+  //      var userToken = localStorage.getItem('token');
+        fd.append('myFile', img[0].file);
+  //      fd.append('myToken', userToken);
+        $.ajax({
+        url: "http://192.168.33.10:8000/uploadImg",
+        type: "POST",
+        data: fd,
+        contentType: false,
+        cache: false,
+        processData:false,
+        success: function(data)
+        {
+          $('[data-use="update-notification-upload"]').removeClass('hidden');
+          avatar=data;
+        }
+        });
+      }
     });
 
     /*
@@ -394,6 +445,8 @@ $(document).ready(function(){
 
       var userID;
       var userToken = localStorage.getItem('token');
+		
+	  $('[data-action="create-card"]').removeClass('activ-btn');
 
       /*
       $.ajax({
@@ -589,13 +642,13 @@ $(document).ready(function(){
 
             switch (data[i].category) {
               case 1:
-              cardRender += '<i class="fa fa-flag" style="color:red"></i>';
+              cardRender += '<i class="fa fa-flag" style="color:#E34443"></i>';
               break;
               case 2:
-              cardRender += '<i class="fa fa-flag" style="color:green"></i>';
+              cardRender += '<i class="fa fa-flag" style="color:#53A339"></i>';
               break;
               case 3:
-              cardRender += '<i class="fa fa-flag" style="color:blue"></i>';
+              cardRender += '<i class="fa fa-flag" style="color:#5E9EF3"></i>';
               break;
             }
             cardRender += '</div>';
@@ -681,8 +734,8 @@ $(document).ready(function(){
       taskCompletion(data.idCard,idTask);
 			$('[data-idCard="' + data.idCard + '"] [data-use="add-input-task"]').toggleClass('hidden');
 
-
 		});
+		$('[data-idCard="' + idCard + '"] [data-task="taskName"]')[0].value = "";
 	});
 
 	/*
@@ -692,10 +745,15 @@ $(document).ready(function(){
 
 		var token = localStorage.getItem('token');
 		var idTask = $(this).attr('data-droptask');
+		var idCard = $(this).closest('[data-idcard]').attr('data-idcard');
+		
+		$('[data-dropTask="' + parseInt(idTask) + '"]').closest('div').html("");
+		
 		$.post('http://192.168.33.10:8000/admin/dropTask/' + token + '/' + idTask, function(data) {
-
-			$('[data-dropTask="' + data + '"]').closest('div').hide("drop");
+			//$('[data-dropTask="' + parseInt(data[0]) + '"]').closest('div').hide("drop");
+			
 		});
+		taskCompletion(idCard, idTask);
 	});
 
     // Show Collaborators
@@ -852,7 +910,6 @@ $(document).ready(function(){
         }
       })
       taskCompletion(taskCardID,taskID);
-
     });
 
 

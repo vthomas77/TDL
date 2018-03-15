@@ -48,9 +48,10 @@ class Task extends Model
 
     static public function dropTask($token, $idTask) {
 
+		$idCard = DB::select('SELECT cards_id_card FROM tasks WHERE id_task=' . $idTask);
         DB::select('DELETE FROM tasks WHERE id_task=' . $idTask . ' LIMIT 1');
 
-        return $idTask;
+        return [$idTask, $idCard];
 
     }
 

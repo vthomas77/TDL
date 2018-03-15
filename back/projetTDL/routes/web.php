@@ -71,7 +71,7 @@ $router->group(['prefix' => 'admin', 'middleware' => ['App\Http\Middleware\Token
     $router->post('read_account/{token}','UserController@readUser');
 
     //U user
-    $router->post('update/{token}/{newPassword}/{newUsername}/{newEmail}','UserController@updateUser');
+    $router->post('update/{token}/{newPassword}/{newUsername}/{newEmail}/{updateAvatar}','UserController@updateUser');
 
     //D user
     $router->post('remove_user/{username}/{token}','UserController@deleteUser');

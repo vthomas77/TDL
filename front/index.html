@@ -186,6 +186,18 @@
                 <input type="text" data-update="password" placeholder="update password">
                 <input type="text" data-update="repeat-password" placeholder="repeat password">
                 <input type="text" data-update="email" placeholder="update email">
+				
+				<div data-use="update-avatar">
+				    <input type="file" id="update-avatar" data-update="avatar" class="hidden" accept=".png, .jpg, .jpeg, .svg">
+				    <label for="avatar" class="button">Select an image for your avatar</label>
+				    <div data-use="update-preview">
+						<span>No files selected!</span>
+				    </div>
+				    <div>
+				  		<input data-use="update-send-avatar" type="submit" class="button" value="Upload">
+				    </div>
+                </div>
+                <p data-use="update-notification-upload" class="hidden success">File uploaded successfully</p>
             </div>
 
             <div data-update="submit">
