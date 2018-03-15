@@ -197,9 +197,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 INSERT INTO categories VALUES(NULL, "default", "red");
 
 
-[10:35]
 INSERT INTO categories VALUES(NULL, "default", "green");
 
 
-[10:35]
 INSERT INTO categories VALUES(NULL, "default", "blue");
