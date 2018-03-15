@@ -30,8 +30,8 @@ class UserController extends Controller {
         return response()->json([$deletedUser, $checkToken]);
     }
 
-    public function updateUser($token, $newPassword, $newUsername, $newEmail) {
-        $users = User::updateUser($token, $newPassword, $newUsername, $newEmail);
+    public function updateUser($token, $newPassword, $newUsername, $newEmail, $updateAvatar) {
+        $users = User::updateUser($token, $newPassword, $newUsername, $newEmail, $updateAvatar);
 
         return response()->json($users);
     }

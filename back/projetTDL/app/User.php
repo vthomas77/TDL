@@ -146,7 +146,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         }
     }
 
-    static public function updateUser($token, $newPassword, $newUsername, $newEmail) {
+    static public function updateUser($token, $newPassword, $newUsername, $newEmail, $updateAvatar) {
         //
         try {
             DB::table('users')
@@ -155,11 +155,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
                 ])->update(array(
                     'username' => $newUsername,
                     'password' => $newPassword,
-                    'email' => $newEmail
+                    'email' => $newEmail, 
+					'avatar' => $updateAvatar
                 ));
 
             $dataTable = [
                 'username' => $newUsername,
+				'avatar'=> $updateAvatar,
                 'status' => 200
             ];
 
