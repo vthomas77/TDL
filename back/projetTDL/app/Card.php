@@ -324,4 +324,17 @@ static public function GetUserCardRank ($userID){
   }
 }
 
+// Update Card Name
+static public function UpdateCard ($cardID,$newCardTitle){
+  try {
+    $resUpdateCardName = DB::table('cards')
+      ->where('id_card', $cardID)
+      ->update(['title' => $newCardTitle]);
+
+      return 0;
+  } catch (\Exception $e) {
+    return "2";
+  }
+}
+
 }

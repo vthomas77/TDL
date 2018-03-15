@@ -37,6 +37,12 @@ class CardController extends Controller
         return response()->json(card::ShareCard($cardID));
     }
 
+    // Update Card
+    public function UpdateCard($cardID,$newCardTitle)
+    {
+        return response()->json(card::UpdateCard($cardID,$newCardTitle));
+    }
+
     // Update Collaborators
     public function UpdateCollaborators(Request $request)
     {

@@ -49,6 +49,9 @@ $router->post('uploadImg', 'UserController@UploadImg');
 // Task completion
 $router->post('taskCompletion/{taskID}/{taskStatus}', 'TaskController@UpdateTaskCompletion');
 
+// Update Task Name
+$router->post('updateCard/{cardID}/{newCardTitle}', 'CardController@UpdateCard');
+
 /*
 //Auth user
 */
