@@ -6,6 +6,49 @@ body {
   color: #515157;
   font-family: 'Arial', sans-serif;
 }
+body [data-use="notification-update-user"] {
+  margin-top: 45px;
+}
+body [data-use="update-notification-upload"] {
+  margin-top: 30px;
+}
+body [data-update="submit"] {
+  position: relative;
+  top: 40px;
+}
+body [data-update="update"] input[type=text] {
+  border: 1px solid #db46b1;
+}
+body [data-update="update"] input[type=text] {
+  border: 1px solid #db46b1;
+}
+body [data-card-update] {
+  border: 2px solid white;
+  margin: 12px 16px;
+  border-radius: 50px;
+  color: white;
+  font-weight: bold;
+}
+body [data-use="update-preview"] img {
+  width: 35%;
+  margin: 23px 0;
+  border: solid 6px white;
+  box-shadow: 2px 4px 27px 0px #515157;
+}
+body [data-use="update-avatar"] {
+  position: relative;
+  top: 25px;
+}
+body [data-use="update-avatar"] div {
+  margin-top: 30px;
+}
+body [data-use="update-avatar"] label {
+  padding: 7px;
+  border: 1px solid #db46b1;
+}
+body [data-use="update-avatar"] label:hover {
+  border: none;
+}
 body [data-use="sidebar"] {
   background-color: #515157;
   width: 20vw;
@@ -30,6 +73,13 @@ body [data-use="sidebar"] h1 svg {
 }
 body [data-use="sidebar"] h1 svg:hover {
   color: #db46b1;
+}
+body [data-use="sidebar"] [data-use="filter-category"] select {
+  border: none;
+  background-color: white;
+  padding: 5px;
+  border-radius: 3px;
+  width: 100%;
 }
 body [data-use="sidebar"] [data-encre="null"] {
   margin-top: 100px;
@@ -75,7 +125,7 @@ body [data-use="available-actions"] [data-action="categories-editor"] {
   width: 100%;
   padding: 2%;
   color: white;
-  font-weight: bold;
+  t-weight: bold;
   border: none;
   font-size: 120%;
   margin: 0;
@@ -120,7 +170,7 @@ body [data-use="available-actions"] div[data-action="create-card"] {
   width: 100%;
   padding: 2%;
   color: white;
-  font-weight: bold;
+  t-weight: bold;
   border: none;
   font-size: 120%;
   margin: 0;
@@ -138,7 +188,7 @@ body [data-use="available-actions"] input[type=submit]:not([data-use="new-card-s
   width: 100%;
   padding: 2%;
   color: white;
-  font-weight: bold;
+  t-weight: bold;
   border: none;
   font-size: 120%;
   margin: 0;

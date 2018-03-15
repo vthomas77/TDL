@@ -1,12 +1,67 @@
 // out: ./style.css, sourcemap: true, compress: false
 @import "var.less";
+
 body {
     padding: 0;
     margin: 0;
     background-color: white;
     color: @grey;
     font-family: 'Arial', sans-serif;
-
+	
+	[data-use="notification-update-user"] {
+		margin-top: 45px;
+	}
+	
+	[data-use="update-notification-upload"]{
+		margin-top: 30px; 
+	}
+	
+	[data-update="submit"] {
+		position: relative;
+    	top: 40px;
+	}
+	
+	[data-update="update"] {
+		input[type=text] {
+			border: 1px solid @main;
+		}
+		input[type=text] {
+			border: 1px solid @main;
+		}
+	}
+	
+	[data-card-update] {
+		border: 2px solid white;
+		margin: 12px 16px;
+		border-radius: 50px;
+		color: white;
+		font-weight: bold;
+	}
+	
+	[data-use="update-preview"] {
+		img {
+			width: 35%;
+			margin: 23px 0;
+			border: solid 6px white;
+			box-shadow: 2px 4px 27px 0px @grey;
+		}
+	}
+	
+	[data-use="update-avatar"] {
+		position: relative;
+    	top: 25px;
+		div {
+			margin-top: 30px;
+		}
+		label {
+			padding: 7px;
+    		border: 1px solid @main;
+			&:hover {
+				border: none;
+			}
+		}
+	}
+	
     [data-use="sidebar"] {
         background-color: @grey;
         width: 20vw;
@@ -31,6 +86,15 @@ body {
                 }
             }
         }
+		[data-use="filter-category"] {
+			select {
+				border: none;
+				background-color: white;
+				padding: 5px;
+				border-radius: 3px;
+				width: 100%;
+			}
+		}
 		[data-encre="null"] {
 			margin-top: 100px;
 			background-color: rgba(0,0,0,0);

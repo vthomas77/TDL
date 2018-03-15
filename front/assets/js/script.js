@@ -600,7 +600,7 @@ $(document).ready(function(){
           cardRender += '<div data-idCard="' + data[i].id + '">';
             cardRender += '<div class="gradient-head">';
               cardRender += '<h3>' + decodeURI(data[i].title) + '</h3>';
-              cardRender += '<input data-card-update="' + data[i].id + '" class="hidden" type="text" placeholder="new name">'
+              cardRender += '<input data-card-update="' + data[i].id + '" class="hidden" type="text" placeholder="new name" style="border: 2px solid white;margin: 12px 16px;border-radius: 50px;color: white;font-weight: bold;">';
               cardRender += '<div>';
                 cardRender += '<i class="fa fa-bars" data-action="card-menu"></i>';
                 cardRender += '<nav data-use="card-menu" class="hidden">';
